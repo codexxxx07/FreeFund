@@ -4,34 +4,50 @@
   color-scheme: light;
 
   --bg: #ffffff;
-  --card: #f7f6f3;
-  --surface: #f7f6f3;
-  --surface-alt: #efeeea;
+  --card: #ffffff;
+  --surface: #f7f7f5;
+  --surface-alt: #f2f2f0;
   --surface-raised: #ffffff;
   --text: #111111;
-  --muted: #6b6b6b;
-  --border: #e8e6e1;
-  --input-border: #e8e6e1;
+  --muted: #666666;
+  --border: #e5e5e5;
+  --input-border: #d4d4d4;
   --ring: #111111;
-  --accent: #1d4ed8;
+  --accent: #2749cc;
   --on-accent: #ffffff;
-  --danger: #111111;
-  --highlight: rgba(255, 255, 255, 0.8);
+  --danger: #b42318;
+  --highlight: rgba(255, 255, 255, 0.9);
+  --edge-sheen: rgba(255, 255, 255, 0.85);
+  --btn-edge-sheen: rgba(255, 255, 255, 0.25);
+  --active-shadow: inset 0 1px 0 var(--highlight), 0 1px 2px rgba(0, 0, 0, 0.02),
+    0 4px 10px -6px rgba(0, 0, 0, 0.08);
+  --quick-shadow: 0 1px 1px rgba(0, 0, 0, 0.01), 0 4px 10px -6px rgba(0, 0, 0, 0.08);
+  --quick-shadow-hover: 0 2px 3px rgba(0, 0, 0, 0.02), 0 8px 18px -8px rgba(0, 0, 0, 0.12);
+  --input-shadow: var(--inset-shadow), 0 1px 1px rgba(0, 0, 0, 0.01), 0 4px 10px -6px rgba(0, 0, 0, 0.06);
+  --input-focus-shadow: var(--inset-shadow), 0 1px 1px rgba(0, 0, 0, 0.01),
+    0 6px 16px -8px rgba(0, 0, 0, 0.1), 0 0 0 3px color-mix(in srgb, var(--ring) 14%, transparent);
+  --icon-shadow: inset 0 1px 0 var(--highlight), 0 1px 1px rgba(0, 0, 0, 0.01),
+    0 6px 14px -8px rgba(0, 0, 0, 0.08);
+  --pressed-shift: 1px;
+  --notice-shadow: inset 0 1px 0 var(--highlight), 0 1px 1px rgba(0, 0, 0, 0.01),
+    0 4px 10px -6px rgba(0, 0, 0, 0.08);
+  --hero-layer-back-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--edge-sheen);
+  --hero-layer-mid-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.26), inset 0 1px 0 var(--edge-sheen);
 
   --font-stack: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --btn-primary-start: #1c1c1c;
-  --btn-primary-end: #0b0b0b;
-  --btn-primary-start-hover: #2a2a2a;
-  --btn-primary-end-hover: #111111;
+  --btn-primary-start: #2749cc;
+  --btn-primary-end: #2749cc;
+  --btn-primary-start-hover: #1f3fb8;
+  --btn-primary-end-hover: #1f3fb8;
   --btn-primary-text: #ffffff;
-  --btn-primary-border: #0b0b0b;
+  --btn-primary-border: #2749cc;
 
   --btn-secondary-bg: #ffffff;
   --btn-secondary-text: #111111;
 
   --navbar-bg: #ffffff;
-  --active-bg: #f7f6f3;
+  --active-bg: #f7f7f5;
 
   --brand-bg: #0b0b0b;
   --brand-fg: #ffffff;
@@ -40,7 +56,7 @@
   --solid-fg: #ffffff;
 
   --tile-start: #ffffff;
-  --tile-end: #f7f6f3;
+  --tile-end: #f7f7f5;
 
   --input-bg: #ffffff;
 
@@ -50,29 +66,49 @@
   --cta-border: rgba(255, 255, 255, 0.18);
 
   --inverse-bg: #ffffff;
-  --inverse-bg-hover: #f0efec;
+  --inverse-bg-hover: #f7f7f5;
   --inverse-text: #0b0b0b;
 
-  --badge-bg: #f7f6f3;
+  --badge-bg: #f7f7f5;
 
-  --soft-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
-  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08),
+  --soft-shadow: 0 1px 1px rgba(0, 0, 0, 0.02), 0 4px 10px rgba(0, 0, 0, 0.04), 0 12px 30px rgba(0, 0, 0, 0.06);
+  --card-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.015),
+    0 6px 16px rgba(0, 0, 0, 0.05),
+    0 18px 40px -12px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 var(--highlight);
-  --card-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.07), 0 14px 32px rgba(0, 0, 0, 0.11),
+  --card-shadow-hover:
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 10px 24px rgba(0, 0, 0, 0.06),
+    0 28px 56px -18px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 var(--highlight);
-  --panel-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.09),
+  --panel-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.015),
+    0 8px 22px rgba(0, 0, 0, 0.06),
+    0 30px 60px -20px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 var(--highlight);
-  --nav-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08),
+  --nav-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.01),
+    0 10px 28px rgba(0, 0, 0, 0.06),
+    0 40px 70px -24px rgba(0, 0, 0, 0.09),
     inset 0 1px 0 var(--highlight);
-  --primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.16),
-    0 8px 20px rgba(0, 0, 0, 0.2);
-  --primary-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.18),
-    0 12px 26px rgba(0, 0, 0, 0.24);
-  --secondary-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
-  --inset-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
-  --cta-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 28px 56px -24px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --pressed-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.28);
+  --primary-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 10px 24px -10px rgba(0, 0, 0, 0.32);
+  --primary-shadow-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 16px 36px -12px rgba(0, 0, 0, 0.38);
+  --secondary-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.01),
+    0 6px 18px rgba(0, 0, 0, 0.05),
+    0 16px 40px -14px rgba(0, 0, 0, 0.09),
+    inset 0 1px 0 var(--highlight);
+  --inset-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  --cta-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 36px 70px -28px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --pressed-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.28);
 }
 
 :root[data-theme="dark"] {
@@ -92,6 +128,18 @@
   --on-accent: #ffffff;
   --danger: #f5f5f5;
   --highlight: rgba(255, 255, 255, 0.06);
+  --edge-sheen: transparent;
+  --btn-edge-sheen: transparent;
+  --active-shadow: inset 0 1px 0 var(--highlight), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --quick-shadow: none;
+  --quick-shadow-hover: none;
+  --input-shadow: var(--inset-shadow);
+  --input-focus-shadow: var(--inset-shadow), 0 0 0 3px color-mix(in srgb, var(--ring) 14%, transparent);
+  --icon-shadow: inset 0 1px 0 var(--highlight), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --pressed-shift: 0;
+  --notice-shadow: inset 0 1px 0 var(--highlight);
+  --hero-layer-back-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.28);
+  --hero-layer-mid-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.24);
 
   --btn-primary-start: #f5f5f5;
   --btn-primary-end: #e4e4e4;
@@ -319,6 +367,16 @@
       border-color 0.25s ease;
   }
 
+  .surface-card::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
+  }
+
   .surface-card-hover:hover {
     transform: translateY(-4px);
     box-shadow: var(--card-shadow-hover);
@@ -332,25 +390,60 @@
     box-shadow: var(--panel-shadow);
   }
 
+  .surface-panel::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
+  }
+
   .surface-muted {
+    position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 0.94rem;
     box-shadow: var(--card-shadow);
   }
 
+  .surface-muted::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
+  }
+
   .surface-inset {
+    position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 0.8rem;
-    box-shadow: var(--inset-shadow);
+    box-shadow:
+      var(--inset-shadow),
+      inset 0 -1px 0 var(--edge-sheen);
   }
 
   .surface-soft {
+    position: relative;
     background: var(--surface-raised);
     border: 1px solid var(--border);
     border-radius: 0.8rem;
     box-shadow: var(--soft-shadow);
+  }
+
+  .surface-soft::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   /* ---------- Navigation ---------- */
@@ -365,6 +458,17 @@
     border-radius: 1rem;
     padding: 0.5rem 0.65rem 0.5rem 0.8rem;
     box-shadow: var(--nav-shadow);
+    position: relative;
+  }
+
+  .nav-shell::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .nav-link {
@@ -391,9 +495,7 @@
     color: var(--accent);
     background: var(--active-bg);
     font-weight: 600;
-    box-shadow:
-      inset 0 1px 0 var(--highlight),
-      0 1px 2px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--active-shadow);
   }
 
   .theme-toggle {
@@ -424,7 +526,7 @@
   }
 
   .theme-toggle:active {
-    transform: translateY(0);
+    transform: translateY(var(--pressed-shift));
     box-shadow: var(--pressed-shadow);
   }
 
@@ -529,6 +631,17 @@
     border: 1px solid var(--btn-primary-border);
     color: var(--btn-primary-text);
     box-shadow: var(--primary-shadow);
+    position: relative;
+  }
+
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--btn-edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .btn-primary:hover {
@@ -542,7 +655,7 @@
   }
 
   .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(var(--pressed-shift));
     box-shadow: var(--pressed-shadow);
   }
 
@@ -569,6 +682,17 @@
     border: 1px solid var(--border);
     color: var(--btn-secondary-text);
     box-shadow: var(--secondary-shadow);
+    position: relative;
+  }
+
+  .btn-secondary::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .btn-secondary:hover {
@@ -579,7 +703,7 @@
   }
 
   .btn-secondary:active {
-    transform: translateY(0);
+    transform: translateY(var(--pressed-shift));
     box-shadow: var(--pressed-shadow);
   }
 
@@ -679,7 +803,7 @@
     background: var(--input-bg);
     padding: 0.7rem 1rem;
     color: var(--text);
-    box-shadow: var(--inset-shadow);
+    box-shadow: var(--input-shadow);
     transition:
       border-color 0.18s ease,
       box-shadow 0.18s ease,
@@ -703,9 +827,7 @@
   .field-textarea:focus {
     outline: none;
     border-color: var(--ring);
-    box-shadow:
-      var(--inset-shadow),
-      0 0 0 3px color-mix(in srgb, var(--ring) 14%, transparent);
+    box-shadow: var(--input-focus-shadow);
   }
 
   .field-input[aria-invalid="true"],
@@ -818,6 +940,17 @@
     background: var(--surface-raised);
     border-color: var(--border);
     box-shadow: var(--soft-shadow);
+    position: relative;
+  }
+
+  .badge-primary::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .badge-primary.badge-dot::before {
@@ -829,6 +962,17 @@
     background: var(--surface-raised);
     border-color: var(--border);
     box-shadow: var(--soft-shadow);
+    position: relative;
+  }
+
+  .badge-neutral::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .badge-closed {
@@ -856,6 +1000,7 @@
     font-size: 0.82rem;
     font-weight: 500;
     color: var(--text);
+    box-shadow: var(--quick-shadow);
   }
 
   .meta-chip svg {
@@ -872,9 +1017,18 @@
     border-radius: 0.8rem;
     background: linear-gradient(180deg, var(--tile-start) 0%, var(--tile-end) 100%);
     color: var(--text);
-    box-shadow:
-      inset 0 1px 0 var(--highlight),
-      0 2px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--icon-shadow);
+    position: relative;
+  }
+
+  .icon-tile::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .icon-tile-solid {
@@ -903,7 +1057,7 @@
     border-radius: 0.94rem;
     background: var(--surface);
     padding: 0.9rem 1rem;
-    box-shadow: inset 0 1px 0 var(--highlight);
+    box-shadow: var(--notice-shadow);
     font-size: 0.875rem;
   }
 
@@ -965,14 +1119,14 @@
     inset: 1.75rem -0.8rem -0.9rem 2.4rem;
     background: var(--surface-alt);
     transform: skewY(-3.5deg);
-    box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--hero-layer-back-shadow);
   }
 
   .hero-layer-mid {
     inset: 0.9rem -0.35rem -0.35rem 1.3rem;
     background: var(--surface);
     transform: skewY(-2deg);
-    box-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.24);
+    box-shadow: var(--hero-layer-mid-shadow);
   }
 
   .hero-panel {
@@ -983,6 +1137,16 @@
     background: var(--surface-raised);
     padding: 1.3rem;
     box-shadow: var(--panel-shadow);
+  }
+
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
+    pointer-events: none;
   }
 
   .quick-link {
@@ -996,10 +1160,12 @@
     color: var(--muted);
     font-size: 0.8rem;
     font-weight: 500;
+    box-shadow: var(--quick-shadow);
     transition:
       color 0.18s ease,
       border-color 0.18s ease,
       background-color 0.18s ease,
+      box-shadow 0.18s ease,
       transform 0.18s ease;
   }
 
@@ -1008,6 +1174,7 @@
     border-color: var(--muted);
     background: var(--surface-raised);
     transform: translateY(-1px);
+    box-shadow: var(--quick-shadow-hover);
   }
 
   /* ---------- CTA panel ---------- */
