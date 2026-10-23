@@ -101,9 +101,9 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/jobs" className="btn-primary btn-lg group">
+              <Link to="/jobs" className="btn-primary btn-lg">
                 Browse jobs
-                <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <HiArrowRight aria-hidden="true" />
               </Link>
               <a href="#how-it-works" className="btn-secondary btn-lg">
                 How it works
@@ -172,9 +172,9 @@ export default function Home() {
             title={IS_DEMO ? "Selected sample openings" : "Selected openings"}
             description="A tight selection of open roles. Review the full details before applying."
             action={
-              <Link to="/jobs" className="btn-secondary group">
+              <Link to="/jobs" className="btn-secondary">
                 View all jobs
-                <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <HiArrowRight aria-hidden="true" />
               </Link>
             }
           />
@@ -195,10 +195,10 @@ export default function Home() {
             action={
               <Link
                 to={`/jobs?workMode=${encodeURIComponent(activeTab)}`}
-                className="btn-secondary group"
+                className="btn-secondary"
               >
                 View all {activeTab.toLowerCase()}
-                <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <HiArrowRight aria-hidden="true" />
               </Link>
             }
           />
@@ -224,11 +224,7 @@ export default function Home() {
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setActiveTab(mode)}
                   onKeyDown={(event) => onTabKeyDown(event, index)}
-                  className={`min-h-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-                    selected
-                      ? "border-line bg-bg text-fg shadow-soft"
-                      : "border-line bg-secondary text-muted hover:text-fg"
-                  }`}
+                  className="btn-tab"
                 >
                   {mode}
                 </button>
@@ -327,9 +323,9 @@ export default function Home() {
                   Open the jobs page to search, filter, and review available roles.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Link to="/jobs" className="btn-inverse btn-lg group">
+                  <Link to="/jobs" className="btn-inverse btn-lg">
                     Browse jobs
-                    <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    <HiArrowRight aria-hidden="true" />
                   </Link>
                   <Link to="/about" className="btn-outline-inverse btn-lg">
                     Learn more

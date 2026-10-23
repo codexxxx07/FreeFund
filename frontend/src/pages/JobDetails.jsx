@@ -258,9 +258,9 @@ export default function JobDetails() {
               title={IS_DEMO ? "Related sample jobs" : "Related jobs"}
               description="Other open roles that may be a good fit."
               action={
-                <Link to="/jobs" className="btn-secondary group">
+                <Link to="/jobs" className="btn-secondary">
                   Browse all jobs
-                  <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  <HiArrowRight aria-hidden="true" />
                 </Link>
               }
             />

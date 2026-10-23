@@ -16,9 +16,9 @@ export default function NotFound() {
           The job or page you requested could not be found.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Link to="/jobs" className="btn-primary group">
+          <Link to="/jobs" className="btn-primary">
             Back to jobs
-            <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            <HiArrowRight aria-hidden="true" />
           </Link>
           <Link to="/" className="btn-secondary">
             Go to home
