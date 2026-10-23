@@ -27,7 +27,7 @@ function Detail({ label, value, icon }) {
         {Icon ? <Icon size={18} aria-hidden="true" /> : null}
       </span>
       <div className="min-w-0">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{label}</p>
         <p className="mt-1 text-sm leading-snug">{value}</p>
       </div>
     </div>

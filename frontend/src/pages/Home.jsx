@@ -113,10 +113,10 @@ export default function Home() {
         <div className="page-shell relative grid items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
           <div>
             <p className="eyebrow">Recruitment portal · Phase 1</p>
-            <h1 className="mt-5 max-w-2xl text-balance text-4xl leading-[1.05] sm:text-5xl lg:text-[3.6rem]">
+            <h1 className="hero-title mt-5 max-w-2xl text-balance">
               Find the <span className="text-accent-word">right role</span>. Apply with clarity.
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="mt-5 max-w-xl text-lg leading-[1.7] text-muted">
               {BRAND_NAME} helps candidates browse work-from-home, office, and hybrid opportunities with clean job
               cards, precise filters, and a job-specific application flow.
             </p>
@@ -173,7 +173,7 @@ export default function Home() {
               </div>
 
               <div className="mt-5 border-t border-line pt-4">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
                   Browse by work mode
                 </p>
                 <div className="mt-2.5 flex flex-wrap gap-2">
@@ -384,7 +384,7 @@ export default function Home() {
                     <Icon aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted">{item.label}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{item.label}</p>
                     <p className="mt-1 break-words text-sm">{item.value}</p>
                   </div>
                 </div>

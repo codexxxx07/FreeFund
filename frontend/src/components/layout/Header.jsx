@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { HiArrowRight, HiBars3, HiXMark } from "react-icons/hi2";
+import { HiArrowRight, HiBars3, HiMoon, HiSun, HiXMark } from "react-icons/hi2";
 import { BRAND_NAME } from "../../data/constants";
 
 const links = [
@@ -14,8 +14,29 @@ function navClass({ isActive }) {
   return `nav-link${isActive ? " is-active" : ""}`;
 }
 
+function getInitialTheme() {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+      window.localStorage.setItem("theme", theme);
+    } catch {
+      // localStorage can be unavailable in restricted browsing modes.
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#0b0b0b" : "#ffffff");
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme((value) => (value === "dark" ? "light" : "dark"));
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-bg/85 py-3 backdrop-blur-xl">
@@ -40,6 +61,15 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
+            </button>
             <Link to="/jobs" className="btn-primary hidden sm:inline-flex">
               Browse Jobs
               <HiArrowRight aria-hidden="true" />

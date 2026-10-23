@@ -152,7 +152,7 @@ export default function Contact() {
                       <Icon aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
                         {row.label}
                       </p>
                       <p className="mt-1 break-words text-sm">{row.value}</p>

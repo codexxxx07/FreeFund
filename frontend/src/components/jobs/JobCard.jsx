@@ -16,7 +16,7 @@ function Meta({ icon, label, value }) {
         <Icon aria-hidden="true" />
       </span>
       <div className="min-w-0">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-muted">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{label}</p>
         <p className="mt-0.5 text-sm leading-snug">{value}</p>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default function JobCard({ job, compact = false }) {
       )}
 
       <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">{job.id}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{job.id}</span>
         <Link to={`/jobs/${job.id}`} className="btn-secondary group shrink-0">
           View Details
           <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
