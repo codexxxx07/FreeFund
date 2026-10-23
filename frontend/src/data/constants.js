@@ -1,5 +1,15 @@
 export const BRAND_NAME = "Jobs Mania - Freefund";
 
+// Before switching to "live": replace demo data with real jobs and connect a working submit endpoint.
+export const SITE_MODE = "demo"; // "demo" | "live"
+export const IS_DEMO = SITE_MODE === "demo";
+
+export function isPlaceholder(value) {
+  if (!value) return false;
+  const normalized = String(value).toLowerCase();
+  return normalized.includes("placeholder") || normalized.includes("example.com") || normalized.includes("xxxxx");
+}
+
 export const CATEGORIES = [
   "Customer Support",
   "BPO",
@@ -43,4 +53,4 @@ export const CONTACT_PLACEHOLDERS = {
 };
 
 export const DEMO_NOTICE =
-  "Listings on this prototype are sample/demo content for design and navigation only. They are not live, authorised vacancies.";
+  "Sample listings. Applications are not sent to employers.";

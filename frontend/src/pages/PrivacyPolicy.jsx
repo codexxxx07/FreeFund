@@ -1,11 +1,11 @@
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
-import { BRAND_NAME } from "../data/constants";
+import { BRAND_NAME, IS_DEMO } from "../data/constants";
 
 export default function PrivacyPolicy() {
   return (
     <div>
-      <PageMeta title="Privacy Policy" description={`Privacy information for the ${BRAND_NAME} website prototype.`} />
+      <PageMeta title="Privacy Policy" description={`Privacy information for ${BRAND_NAME}.`} />
 
       <section className="border-b border-line bg-secondary">
         <div className="page-shell py-10 lg:py-14">
@@ -33,11 +33,11 @@ export default function PrivacyPolicy() {
 
           <div className="mt-8 grid gap-8">
             <section>
-              <h2 className="text-xl sm:text-2xl">What this prototype collects</h2>
+              <h2 className="text-xl sm:text-2xl">What this site collects</h2>
               <p className="mt-2 text-muted">
-                Phase 1 is frontend-only. The application and contact forms validate input in the browser. Demo
-                submissions may be stored in session storage on the visitor&apos;s device. They are not sent to a
-                server, email inbox, or CRM.
+                {IS_DEMO
+                  ? "The application and contact forms validate input in the browser. Sample submissions may be stored in session storage on the visitor's device. They are not sent to a server, email inbox, or CRM."
+                  : "The application and contact forms collect the details you enter so they can be used for recruitment-related communication."}
               </p>
             </section>
 
@@ -63,7 +63,7 @@ export default function PrivacyPolicy() {
               <h2 className="text-xl sm:text-2xl">Requests</h2>
               <p className="mt-2 text-muted">
                 Candidates should be able to ask about access, correction, or deletion once a production process
-                exists. This prototype does not yet provide that workflow.
+                exists. This site does not yet provide that workflow.
               </p>
             </section>
           </div>
@@ -72,3 +72,4 @@ export default function PrivacyPolicy() {
     </div>
   );
 }
+

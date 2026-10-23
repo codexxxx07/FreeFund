@@ -59,20 +59,24 @@ export default function JobFilters({ filters, onChange, onClear, resultCount }) 
         </div>
       </div>
 
-      <div
-        id="job-filter-fields"
-        className={`${open ? "grid" : "hidden"} mt-5 gap-4 sm:grid-cols-2 lg:grid lg:grid-cols-1`}
-      >
-        <label htmlFor="job-search" className="sm:col-span-2 lg:col-span-1">
+      <div className="mt-5">
+        <label htmlFor="job-search" className="block">
           <span className="field-label">Search</span>
           <input
             id="job-search"
             className="field-input"
+            type="search"
             value={filters.q}
             onChange={(event) => update("q", event.target.value)}
             placeholder="Title, ID, or keyword"
           />
         </label>
+      </div>
+
+      <div
+        id="job-filter-fields"
+        className={`${open ? "grid" : "hidden"} mt-4 gap-4 sm:grid-cols-2 lg:grid lg:grid-cols-1`}
+      >
         <Select
           id="filter-location"
           label="Location"

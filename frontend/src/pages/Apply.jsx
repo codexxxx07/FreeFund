@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   HiArrowLeft,
@@ -8,12 +8,19 @@ import {
   HiInformationCircle,
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
-import { EDUCATION_OPTIONS, EXPERIENCE_FILTERS, LOCATIONS, WORK_MODES } from "../data/constants";
+import { EDUCATION_OPTIONS, EXPERIENCE_FILTERS, IS_DEMO, LOCATIONS, WORK_MODES } from "../data/constants";
 import { getJobById } from "../utils/jobsApi";
 import { isEmptyErrors, validateApplication } from "../utils/validation";
 import NotFound from "./NotFound";
 
 const STORAGE_KEY = "jm-demo-applications";
+
+const RESUME_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+const RESUME_EXTS = [".pdf", ".doc", ".docx"];
 
 export default function Apply() {
   const { jobId } = useParams();
@@ -31,28 +38,71 @@ export default function Apply() {
     consent: false,
   });
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("idle");
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  const successRef = useRef(null);
 
   const closed = job && job.status !== "open";
 
-  const fieldProps = useMemo(
-    () => (name) => ({
-      className: "field-input",
-      value: values[name],
-      onChange: (event) => setValues((current) => ({ ...current, [name]: event.target.value })),
-      "aria-invalid": Boolean(errors[name]),
-      "aria-describedby": errors[name] ? `${name}-error` : undefined,
-    }),
-    [values, errors]
-  );
+  useEffect(() => {
+    if (status === "success" && successRef.current) {
+      successRef.current.focus();
+    }
+  }, [status]);
 
   if (!job) return <NotFound />;
 
+  function touchField(name) {
+    setTouched((current) => ({ ...current, [name]: true }));
+  }
+
+  function validateOnBlur(name) {
+    setTouched((current) => ({ ...current, [name]: true }));
+    const next = validateApplication(values);
+    setErrors((current) => ({ ...current, [name]: next[name] }));
+  }
+
+  function fieldProps(name) {
+    const showError = (touched[name] || submitAttempted) && errors[name];
+    return {
+      className: "field-input",
+      value: values[name],
+      onChange: (event) => {
+        const nextValues = { ...values, [name]: event.target.value };
+        setValues(nextValues);
+        if (touched[name] || submitAttempted) {
+          const next = validateApplication(nextValues);
+          setErrors((current) => ({ ...current, [name]: next[name] }));
+        }
+      },
+      onBlur: () => validateOnBlur(name),
+      "aria-invalid": Boolean(showError),
+      "aria-describedby": showError ? `${name}-error` : undefined,
+    };
+  }
+
+  function validateCurrent(currentValues) {
+    return validateApplication(currentValues);
+  }
+
   function onSubmit(event) {
     event.preventDefault();
-    const nextErrors = validateApplication(values);
+    setSubmitAttempted(true);
+    const nextTouched = {};
+    Object.keys(values).forEach((key) => {
+      if (key !== "resume") nextTouched[key] = true;
+    });
+    setTouched((current) => ({ ...current, ...nextTouched }));
+    const nextErrors = validateCurrent(values);
     setErrors(nextErrors);
-    if (!isEmptyErrors(nextErrors) || closed) return;
+    if (!isEmptyErrors(nextErrors) || closed) {
+      requestAnimationFrame(() => {
+        const firstKey = Object.keys(nextErrors)[0];
+        if (firstKey) document.getElementById(firstKey)?.focus();
+      });
+      return;
+    }
 
     setStatus("loading");
     window.setTimeout(() => {
@@ -76,9 +126,45 @@ export default function Apply() {
     }, 700);
   }
 
+  function onResumeChange(event) {
+    const file = event.target.files?.[0] || null;
+    touchField("resume");
+    if (!file) {
+      setValues((current) => ({ ...current, resume: null }));
+      setErrors((current) => ({ ...current, resume: undefined }));
+      return;
+    }
+    const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+    if (file.size > 2 * 1024 * 1024) {
+      setValues((current) => ({ ...current, resume: null }));
+      setErrors((current) => ({ ...current, resume: "Keep the file under 2 MB." }));
+      event.target.value = "";
+      return;
+    }
+    if (!RESUME_TYPES.includes(file.type) || !RESUME_EXTS.includes(ext)) {
+      setValues((current) => ({ ...current, resume: null }));
+      setErrors((current) => ({ ...current, resume: "Upload a PDF, DOC, or DOCX file." }));
+      event.target.value = "";
+      return;
+    }
+    setValues((current) => ({ ...current, resume: file }));
+    setErrors((current) => ({ ...current, resume: undefined }));
+  }
+
+  function removeResume() {
+    setValues((current) => ({ ...current, resume: null }));
+    setErrors((current) => ({ ...current, resume: undefined }));
+    const input = document.getElementById("resume-input");
+    if (input) input.value = "";
+  }
+
+  const errorList = (submitAttempted || Object.keys(touched).some((key) => touched[key]))
+    ? Object.entries(errors).filter(([, value]) => Boolean(value))
+    : [];
+
   return (
     <div>
-      <PageMeta title={`Apply · ${job.title}`} description={`Prototype application form for sample job ${job.id}.`} />
+      <PageMeta title={`Apply · ${job.title}`} description={`Application form for ${job.id}.`} />
 
       <section className="border-b border-line bg-secondary">
         <div className="page-shell py-8 lg:py-12">
@@ -90,12 +176,8 @@ export default function Apply() {
             <div>
               <p className="eyebrow">Application</p>
               <h1 className="mt-3 max-w-2xl text-balance text-3xl sm:text-4xl lg:text-[2.9rem]">
-                Apply for this sample role
+                Apply for this role
               </h1>
-              <p className="mt-3 max-w-2xl text-muted">
-                This is a frontend-only demonstration. Nothing is emailed, stored on a server, or delivered to HR. Do not
-                submit real personal information. A copy of the demo payload may be kept in this browser session only.
-              </p>
             </div>
             <div className="surface-soft flex flex-wrap items-center gap-2 p-3">
               <span className="badge badge-primary">{job.id}</span>
@@ -107,6 +189,12 @@ export default function Apply() {
       </section>
 
       <div className="page-shell max-w-5xl py-10">
+        {IS_DEMO ? (
+          <div className="mb-5 rounded-xl border border-line bg-secondary px-4 py-2.5 text-sm text-muted">
+            Sample form. Your application is not sent to an employer.
+          </div>
+        ) : null}
+
         {closed ? (
           <div className="surface-panel mb-6 flex items-start gap-3 border-l-4 border-l-muted p-5">
             <span className="icon-tile">
@@ -114,7 +202,7 @@ export default function Apply() {
             </span>
             <div>
               <h2 className="text-lg">Applications are not open</h2>
-              <p className="mt-1 text-sm text-muted">{job.id} is marked {job.status}. The form below is disabled.</p>
+              <p className="mt-1 text-sm text-muted">This role is not accepting applications right now. The form is disabled.</p>
             </div>
           </div>
         ) : null}
@@ -125,14 +213,18 @@ export default function Apply() {
               <span className="icon-tile icon-tile-solid icon-tile-lg">
                 <HiCheckCircle aria-hidden="true" size={28} />
               </span>
-              <h2 className="mt-5 text-2xl sm:text-3xl">Prototype submission recorded locally</h2>
+              <h2 ref={successRef} tabIndex={-1} className="mt-5 text-2xl focus:outline-none sm:text-3xl">
+                Application received {IS_DEMO ? "(demo)" : ""}
+              </h2>
               <p className="mt-3 text-muted">
-                This is not a real application. No recruiter has been notified. You can return to the jobs list or
-                review another sample vacancy.
+                Job ID: {job.id} · {job.title} · {values.fullName}
               </p>
+              {IS_DEMO ? (
+                <p className="mt-2 text-sm text-muted">Form data is not delivered anywhere.</p>
+              ) : null}
               <div className="mt-7 flex flex-wrap justify-center gap-3">
                 <Link to="/jobs" className="btn-primary">
-                  Back to Jobs
+                  Back to jobs
                   <HiArrowRight aria-hidden="true" />
                 </Link>
                 <Link to={`/jobs/${job.id}`} className="btn-secondary">
@@ -153,40 +245,78 @@ export default function Apply() {
               </div>
             </div>
 
+            {errorList.length ? (
+              <div className="mt-6 rounded-2xl border border-line bg-secondary p-4" role="alert" aria-live="assertive">
+                <p className="text-sm font-semibold">Please fix the following:</p>
+                <ul className="mt-2 grid gap-1 text-sm text-muted">
+                  {errorList.map(([key, value]) => (
+                    <li key={key}>
+                      <a
+                        href={`#${key}`}
+                        className="underline underline-offset-4"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          document.getElementById(key)?.focus();
+                        }}
+                      >
+                        {value}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
             <div className="mt-6 grid gap-5 md:grid-cols-2">
               <label>
                 <span className="field-label">Full name (required)</span>
-                <input {...fieldProps("fullName")} autoComplete="name" disabled={closed} />
-                {errors.fullName ? <p id="fullName-error" className="field-error">{errors.fullName}</p> : null}
+                <input id="fullName" {...fieldProps("fullName")} autoComplete="name" disabled={closed} />
+                {(touched.fullName || submitAttempted) && errors.fullName ? (
+                  <p id="fullName-error" className="field-error">{errors.fullName}</p>
+                ) : null}
               </label>
               <label>
                 <span className="field-label">Mobile number (required)</span>
-                <input {...fieldProps("mobile")} inputMode="tel" autoComplete="tel" disabled={closed} />
-                {errors.mobile ? <p id="mobile-error" className="field-error">{errors.mobile}</p> : null}
+                <input
+                  id="mobile"
+                  {...fieldProps("mobile")}
+                  inputMode="tel"
+                  autoComplete="tel"
+                  disabled={closed}
+                  aria-describedby={(touched.mobile || submitAttempted) && errors.mobile ? "mobile-error mobile-hint" : "mobile-hint"}
+                />
+                <p id="mobile-hint" className="field-hint">10-digit number, +91 optional</p>
+                {(touched.mobile || submitAttempted) && errors.mobile ? (
+                  <p id="mobile-error" className="field-error">{errors.mobile}</p>
+                ) : null}
               </label>
               <label>
                 <span className="field-label">Email address (required)</span>
-                <input {...fieldProps("email")} type="email" autoComplete="email" disabled={closed} />
-                {errors.email ? <p id="email-error" className="field-error">{errors.email}</p> : null}
+                <input id="email" {...fieldProps("email")} type="email" autoComplete="email" disabled={closed} />
+                {(touched.email || submitAttempted) && errors.email ? (
+                  <p id="email-error" className="field-error">{errors.email}</p>
+                ) : null}
               </label>
               <label>
                 <span className="field-label">Preferred job location (required)</span>
                 <select
+                  id="preferredLocation"
                   className="field-select"
                   value={values.preferredLocation}
                   onChange={(event) =>
                     setValues((current) => ({ ...current, preferredLocation: event.target.value }))
                   }
+                  onBlur={() => validateOnBlur("preferredLocation")}
                   disabled={closed}
-                  aria-invalid={Boolean(errors.preferredLocation)}
-                  aria-describedby={errors.preferredLocation ? "preferredLocation-error" : undefined}
+                  aria-invalid={Boolean((touched.preferredLocation || submitAttempted) && errors.preferredLocation)}
+                  aria-describedby={(touched.preferredLocation || submitAttempted) && errors.preferredLocation ? "preferredLocation-error" : undefined}
                 >
                   <option value="">Select a location</option>
                   {LOCATIONS.map((item) => (
                     <option key={item} value={item}>{item}</option>
                   ))}
                 </select>
-                {errors.preferredLocation ? (
+                {(touched.preferredLocation || submitAttempted) && errors.preferredLocation ? (
                   <p id="preferredLocation-error" className="field-error">{errors.preferredLocation}</p>
                 ) : null}
               </label>
@@ -203,40 +333,49 @@ export default function Apply() {
               <label>
                 <span className="field-label">Highest education (required)</span>
                 <select
+                  id="education"
                   className="field-select"
                   value={values.education}
                   onChange={(event) => setValues((current) => ({ ...current, education: event.target.value }))}
+                  onBlur={() => validateOnBlur("education")}
                   disabled={closed}
-                  aria-invalid={Boolean(errors.education)}
-                  aria-describedby={errors.education ? "education-error" : undefined}
+                  aria-invalid={Boolean((touched.education || submitAttempted) && errors.education)}
+                  aria-describedby={(touched.education || submitAttempted) && errors.education ? "education-error" : undefined}
                 >
                   <option value="">Select education</option>
                   {EDUCATION_OPTIONS.map((item) => (
                     <option key={item} value={item}>{item}</option>
                   ))}
                 </select>
-                {errors.education ? <p id="education-error" className="field-error">{errors.education}</p> : null}
+                {(touched.education || submitAttempted) && errors.education ? (
+                  <p id="education-error" className="field-error">{errors.education}</p>
+                ) : null}
               </label>
               <label>
                 <span className="field-label">Work experience (required)</span>
                 <select
+                  id="experience"
                   className="field-select"
                   value={values.experience}
                   onChange={(event) => setValues((current) => ({ ...current, experience: event.target.value }))}
+                  onBlur={() => validateOnBlur("experience")}
                   disabled={closed}
-                  aria-invalid={Boolean(errors.experience)}
-                  aria-describedby={errors.experience ? "experience-error" : undefined}
+                  aria-invalid={Boolean((touched.experience || submitAttempted) && errors.experience)}
+                  aria-describedby={(touched.experience || submitAttempted) && errors.experience ? "experience-error" : undefined}
                 >
                   <option value="">Select experience</option>
                   {EXPERIENCE_FILTERS.map((item) => (
                     <option key={item.value} value={item.label}>{item.label}</option>
                   ))}
                 </select>
-                {errors.experience ? <p id="experience-error" className="field-error">{errors.experience}</p> : null}
+                {(touched.experience || submitAttempted) && errors.experience ? (
+                  <p id="experience-error" className="field-error">{errors.experience}</p>
+                ) : null}
               </label>
               <label>
                 <span className="field-label">Preferred work mode (optional)</span>
                 <select
+                  id="preferredWorkMode"
                   className="field-select"
                   value={values.preferredWorkMode}
                   onChange={(event) =>
@@ -251,50 +390,65 @@ export default function Apply() {
                 </select>
               </label>
 
-              <label className="md:col-span-2">
-                <span className="field-label">Resume (optional, not uploaded)</span>
+              <div className="md:col-span-2">
+                <label htmlFor="resume-input">
+                  <span className="field-label">Resume (optional)</span>
+                </label>
                 <input
+                  id="resume-input"
                   className="field-input field-file"
                   type="file"
-                  accept=".pdf,.doc,.docx"
+                  accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                   disabled={closed}
-                  onChange={(event) =>
-                    setValues((current) => ({ ...current, resume: event.target.files?.[0] || null }))
-                  }
+                  onChange={onResumeChange}
+                  aria-invalid={Boolean((touched.resume || submitAttempted) && errors.resume)}
+                  aria-describedby={(touched.resume || submitAttempted) && errors.resume ? "resume-error resume-hint" : "resume-hint"}
                 />
-                <p className="field-hint">
-                  PDF, DOC, or DOCX. The file stays in this browser session and is not sent anywhere.
+                <p id="resume-hint" className="field-hint">
+                  PDF, DOC, or DOCX · Max 2 MB
                 </p>
-                {errors.resume ? <p className="field-error">{errors.resume}</p> : null}
-              </label>
+                {(touched.resume || submitAttempted) && errors.resume ? (
+                  <p id="resume-error" className="field-error">{errors.resume}</p>
+                ) : null}
+                {values.resume ? (
+                  <div className="mt-2 flex items-center justify-between gap-3 rounded-xl border border-line px-3 py-2 text-sm">
+                    <span className="truncate">{values.resume.name}</span>
+                    <button type="button" className="btn-ghost min-h-0 px-2 py-1" onClick={removeResume}>
+                      Remove file
+                    </button>
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             <div className="surface-inset mt-6 p-4 sm:p-5">
               <label className="flex items-start gap-3 text-sm">
                 <input
+                  id="consent"
                   type="checkbox"
                   className="field-checkbox mt-0.5"
                   checked={values.consent}
                   disabled={closed}
-                  onChange={(event) => setValues((current) => ({ ...current, consent: event.target.checked }))}
-                  aria-invalid={Boolean(errors.consent)}
-                  aria-describedby={errors.consent ? "consent-error" : undefined}
+                  onChange={(event) => {
+                    setValues((current) => ({ ...current, consent: event.target.checked }));
+                    touchField("consent");
+                  }}
+                  onBlur={() => validateOnBlur("consent")}
+                  aria-invalid={Boolean((touched.consent || submitAttempted) && errors.consent)}
+                  aria-describedby={(touched.consent || submitAttempted) && errors.consent ? "consent-error" : undefined}
                 />
                 <span>
-                  I understand this is a prototype form and I consent to processing this sample information for
-                  recruitment demonstration purposes in this browser only. (required)
+                  I consent to submit this application. (required)
                 </span>
               </label>
-              {errors.consent ? <p id="consent-error" className="field-error">{errors.consent}</p> : null}
+              {(touched.consent || submitAttempted) && errors.consent ? (
+                <p id="consent-error" className="field-error">{errors.consent}</p>
+              ) : null}
             </div>
 
-            <div className="mt-6 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs text-muted sm:max-w-sm">
-                Submitting stores a demo payload in session storage only. No backend, CRM, or email delivery is
-                connected.
-              </p>
-              <button type="submit" className="btn-primary btn-lg sm:w-auto" disabled={closed || status === "loading"}>
-                {status === "loading" ? "Saving locally…" : "Submit prototype application"}
+            <div className="mt-6 flex justify-end border-t border-line pt-6">
+              <button type="submit" className="btn-primary btn-lg w-full sm:w-auto" disabled={closed || status === "loading"}>
+                {status === "loading" ? "Submitting..." : "Submit application"}
               </button>
             </div>
           </form>
@@ -303,3 +457,4 @@ export default function Apply() {
     </div>
   );
 }
+

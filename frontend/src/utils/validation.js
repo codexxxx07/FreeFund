@@ -18,11 +18,7 @@ export function validateApplication(values) {
   if (!values.preferredLocation) errors.preferredLocation = "Select a preferred location.";
   if (!values.education) errors.education = "Select your highest education.";
   if (!values.experience) errors.experience = "Select your work experience.";
-  if (!values.consent) errors.consent = "Consent is required to continue this prototype form.";
-
-  if (values.resume && values.resume.size > 2 * 1024 * 1024) {
-    errors.resume = "Keep the sample file under 2 MB for this prototype.";
-  }
+  if (!values.consent) errors.consent = "Consent is required.";
 
   return errors;
 }

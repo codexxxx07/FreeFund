@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HiArrowRight, HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
-import { BRAND_NAME, CONTACT_PLACEHOLDERS } from "../../data/constants";
+import { BRAND_NAME, CONTACT_PLACEHOLDERS, IS_DEMO, isPlaceholder } from "../../data/constants";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -15,10 +15,15 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const showEmail = !isPlaceholder(CONTACT_PLACEHOLDERS.email);
+  const showPhone = !isPlaceholder(CONTACT_PLACEHOLDERS.phone);
+  const showRegion = !isPlaceholder(CONTACT_PLACEHOLDERS.region);
+  const showContact = showEmail || showPhone || showRegion;
+
   return (
     <footer className="border-t border-line bg-secondary">
       <div className="page-shell py-12 sm:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_0.7fr_0.8fr_1fr]">
+        <div className={`grid gap-10 ${showContact ? "lg:grid-cols-[1.5fr_0.7fr_0.8fr_1fr]" : "lg:grid-cols-[1.5fr_0.7fr_0.8fr]"}`}>
           <div>
             <div className="flex items-center gap-3">
               <span className="brand-mark" aria-hidden="true">
@@ -30,11 +35,10 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
-              A calm, clear place to explore sample vacancies, review job details, and preview the application flow.
-              Built as a Phase 1 frontend prototype with honest demo labels.
+              A calm, clear place to explore job listings, review job details, and apply with confidence.
             </p>
             <Link to="/jobs" className="btn-primary mt-6 inline-flex">
-              Browse Current Jobs
+              Browse jobs
               <HiArrowRight aria-hidden="true" />
             </Link>
           </div>
@@ -65,23 +69,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <p className="font-display text-sm font-bold">Contact placeholders</p>
-            <ul className="mt-4 space-y-3 text-sm text-muted">
-              <li className="flex items-start gap-2.5">
-                <HiEnvelope className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                <span>{CONTACT_PLACEHOLDERS.email}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <HiPhone className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                <span>{CONTACT_PLACEHOLDERS.phone}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <HiMapPin className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                <span>{CONTACT_PLACEHOLDERS.region}</span>
-              </li>
-            </ul>
-          </div>
+          {showContact ? (
+            <div>
+              <p className="font-display text-sm font-bold">Contact</p>
+              <ul className="mt-4 space-y-3 text-sm text-muted">
+                {showEmail ? (
+                  <li className="flex items-start gap-2.5">
+                    <HiEnvelope className="mt-1 shrink-0 text-primary" aria-hidden="true" />
+                    <span>{CONTACT_PLACEHOLDERS.email}</span>
+                  </li>
+                ) : null}
+                {showPhone ? (
+                  <li className="flex items-start gap-2.5">
+                    <HiPhone className="mt-1 shrink-0 text-primary" aria-hidden="true" />
+                    <span>{CONTACT_PLACEHOLDERS.phone}</span>
+                  </li>
+                ) : null}
+                {showRegion ? (
+                  <li className="flex items-start gap-2.5">
+                    <HiMapPin className="mt-1 shrink-0 text-primary" aria-hidden="true" />
+                    <span>{CONTACT_PLACEHOLDERS.region}</span>
+                  </li>
+                ) : null}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-10 border-t border-line pt-6">
@@ -89,7 +101,7 @@ export default function Footer() {
             <p>
               © {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.
             </p>
-            <p className="text-xs">Frontend prototype · Sample listings only</p>
+            {IS_DEMO ? <p className="text-xs">Sample listings only</p> : null}
           </div>
         </div>
       </div>

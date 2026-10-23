@@ -1,11 +1,11 @@
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
-import { BRAND_NAME } from "../data/constants";
+import { BRAND_NAME, IS_DEMO } from "../data/constants";
 
 export default function Terms() {
   return (
     <div>
-      <PageMeta title="Terms & Conditions" description={`Terms for using the ${BRAND_NAME} website prototype.`} />
+      <PageMeta title="Terms & Conditions" description={`Terms for using ${BRAND_NAME}.`} />
 
       <section className="border-b border-line bg-secondary">
         <div className="page-shell py-10 lg:py-14">
@@ -26,23 +26,24 @@ export default function Terms() {
           </div>
 
           <p className="mt-6 text-muted">
-            These terms describe acceptable use of the {BRAND_NAME} website prototype. They are not a complete
+            These terms describe acceptable use of the {BRAND_NAME} website. They are not a complete
             commercial contract and have not been independently legally reviewed.
           </p>
 
           <div className="mt-8 grid gap-8">
             <section>
-              <h2 className="text-xl sm:text-2xl">Sample content</h2>
+              <h2 className="text-xl sm:text-2xl">{IS_DEMO ? "Sample content" : "Job listings"}</h2>
               <p className="mt-2 text-muted">
-                Job listings currently shown are sample/demo records. They must not be treated as genuine employment
-                offers. Applying through this prototype does not create a candidate–employer relationship.
+                {IS_DEMO
+                  ? "Job listings currently shown are sample records. They must not be treated as genuine employment offers. Submitting an application does not create a candidate–employer relationship."
+                  : "Job listings are provided for information. Submitting an application does not create a candidate–employer relationship."}
               </p>
             </section>
 
             <section className="border-t border-line pt-8">
               <h2 className="text-xl sm:text-2xl">Acceptable use</h2>
               <p className="mt-2 text-muted">
-                Do not submit other people&apos;s personal information, attempt to disrupt the site, or represent demo
+                Do not submit other people&apos;s personal information, attempt to disrupt the site, or misrepresent
                 submissions as completed hiring actions.
               </p>
             </section>
@@ -51,14 +52,14 @@ export default function Terms() {
               <h2 className="text-xl sm:text-2xl">No employment guarantee</h2>
               <p className="mt-2 text-muted">
                 {BRAND_NAME} does not guarantee interviews, selection, salary, or employment. Recruiter contact, if it
-                happens later, depends on processes that are not part of Phase 1.
+                happens later, depends on the recruitment process for the role.
               </p>
             </section>
 
             <section className="border-t border-line pt-8">
               <h2 className="text-xl sm:text-2xl">Limitation</h2>
               <p className="mt-2 text-muted">
-                The site is provided as a design and navigation prototype. [To confirm: registered company name,
+                The site is provided as-is. [To confirm: registered company name,
                 jurisdiction, and any liability language required before launch.]
               </p>
             </section>
@@ -68,3 +69,4 @@ export default function Terms() {
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 /**
- * Sample vacancies for Phase 1 frontend demonstration only.
- * Replace this module with an API client in a later phase.
+ * Sample vacancies for demonstration only.
+ * Replace this module with an API client before switching SITE_MODE to "live".
  */
 export const jobs = [
   {

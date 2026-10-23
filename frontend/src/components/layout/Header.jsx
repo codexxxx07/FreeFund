@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiArrowRight, HiBars3, HiMoon, HiSun, HiXMark } from "react-icons/hi2";
 import { BRAND_NAME } from "../../data/constants";
 
@@ -22,6 +22,24 @@ function getInitialTheme() {
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const menuButtonRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -75,6 +93,7 @@ export default function Header() {
               <HiArrowRight aria-hidden="true" />
             </Link>
             <button
+              ref={menuButtonRef}
               type="button"
               className="btn-secondary min-h-0 px-3 py-2.5 lg:hidden"
               aria-expanded={open}

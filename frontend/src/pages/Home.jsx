@@ -1,26 +1,30 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   HiArrowRight,
-  HiArrowTrendingUp,
   HiBriefcase,
   HiChatBubbleLeftRight,
   HiCheckCircle,
-  HiDocumentCheck,
   HiEnvelope,
   HiMagnifyingGlass,
   HiMapPin,
   HiPhone,
   HiRectangleStack,
-  HiShieldCheck,
   HiSparkles,
   HiUserGroup,
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
-import DemoNotice from "../components/common/DemoNotice";
 import SectionHeading from "../components/common/SectionHeading";
 import JobCard from "../components/jobs/JobCard";
 import JobSearchBar from "../components/jobs/JobSearchBar";
-import { BRAND_NAME, CATEGORIES, CONTACT_PLACEHOLDERS, WORK_MODES } from "../data/constants";
+import {
+  BRAND_NAME,
+  CATEGORIES,
+  CONTACT_PLACEHOLDERS,
+  IS_DEMO,
+  WORK_MODES,
+  isPlaceholder,
+} from "../data/constants";
 import { getFeaturedJobs, getJobsByWorkMode, getOpenJobs } from "../utils/jobsApi";
 
 const categoryIcons = {
@@ -34,85 +38,55 @@ const categoryIcons = {
 
 const steps = [
   {
-    title: "Explore available jobs",
-    body: "Browse sample listings filtered by location, category, and work mode with clear Job IDs.",
+    title: "Explore jobs",
+    body: "Browse listings filtered by location, category, and work mode with clear job details.",
   },
   {
-    title: "Review details & apply",
-    body: "Open the job-specific application form. This prototype keeps the Job ID and title linked without sending data to HR.",
+    title: "Review details and apply",
+    body: "Open the job page to review responsibilities and apply using the job-specific form.",
   },
   {
     title: "Stay informed",
-    body: "Job status is clearly marked. Closed or paused roles are disabled with transparent messaging.",
+    body: "Job status is clearly marked. Closed or paused roles are shown accordingly.",
   },
 ];
-
-const benefits = [
-  {
-    icon: HiDocumentCheck,
-    title: "Clear, scannable job data",
-    body: "Each listing surfaces work mode, salary range, experience, and requirements for faster decisions.",
-  },
-  {
-    icon: HiArrowTrendingUp,
-    title: "Purposeful, guided application path",
-    body: "Apply directly from the job page with validation and helpful feedback throughout the form.",
-  },
-  {
-    icon: HiShieldCheck,
-    title: "Honest demo labels",
-    body: "Sample content is clearly labeled. Only open sample roles appear as current vacancies.",
-  },
-];
-
-function JobStrip({ title, workMode, muted = false, openCount }) {
-  const jobs = getJobsByWorkMode(workMode).slice(0, 3);
-  if (jobs.length === 0) return null;
-
-  const content = (
-    <div className="page-shell">
-      <SectionHeading
-        eyebrow="Opportunities"
-        title={title}
-        description={`${openCount} open sample ${openCount === 1 ? "role" : "roles"} with this arrangement. Review the full details before applying.`}
-        action={
-          <Link to={`/jobs?workMode=${encodeURIComponent(workMode)}`} className="btn-secondary group">
-            View all
-            <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
-          </Link>
-        }
-      />
-      <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {jobs.map((job) => (
-          <JobCard key={job.id} job={job} compact />
-        ))}
-      </div>
-    </div>
-  );
-
-  if (muted) {
-    return <section className="section-band">{content}</section>;
-  }
-
-  return <section className="section">{content}</section>;
-}
 
 export default function Home() {
   const featured = getFeaturedJobs();
   const openJobs = getOpenJobs();
   const openCount = openJobs.length;
+  const [activeTab, setActiveTab] = useState(WORK_MODES[0]);
+  const tabRefs = useRef([]);
+  const tabJobs = getJobsByWorkMode(activeTab).slice(0, 3);
+
+  const showEmail = !isPlaceholder(CONTACT_PLACEHOLDERS.email);
+  const showPhone = !isPlaceholder(CONTACT_PLACEHOLDERS.phone);
+  const showRegion = !isPlaceholder(CONTACT_PLACEHOLDERS.region);
+  const showContactSection = showEmail || showPhone || showRegion;
+
+  function onTabKeyDown(event, index) {
+    let nextIndex = null;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % WORK_MODES.length;
+    else if (event.key === "ArrowLeft") nextIndex = (index - 1 + WORK_MODES.length) % WORK_MODES.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = WORK_MODES.length - 1;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    setActiveTab(WORK_MODES[nextIndex]);
+    tabRefs.current[nextIndex]?.focus();
+  }
 
   return (
     <div>
       <PageMeta
         title="Home"
-        description={`${BRAND_NAME} is a recruitment website prototype for exploring sample job listings.`}
+        description={`${BRAND_NAME} helps candidates browse work-from-home, office, and hybrid job listings.`}
       />
 
       <section className="relative overflow-hidden border-b border-line bg-secondary">
-        <div className="page-shell relative grid items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
+        <div className="page-shell relative grid items-center gap-12 py-12 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
           <div>
-            <p className="eyebrow">Recruitment portal · Phase 1</p>
+            <p className="eyebrow">Recruitment portal</p>
             <h1 className="hero-title mt-5 max-w-2xl text-balance">
               Find the <span className="text-accent-word">right role</span>. Apply with clarity.
             </h1>
@@ -123,7 +97,7 @@ export default function Home() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/jobs" className="btn-primary btn-lg group">
-                Explore Jobs
+                Browse jobs
                 <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Link>
               <a href="#how-it-works" className="btn-secondary btn-lg">
@@ -134,7 +108,7 @@ export default function Home() {
             <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
               <li className="flex items-center gap-2">
                 <HiCheckCircle className="text-primary" aria-hidden="true" />
-                {openCount} open demo roles
+                {openCount} open {IS_DEMO ? "sample " : ""}roles
               </li>
               <li className="flex items-center gap-2">
                 <HiCheckCircle className="text-primary" aria-hidden="true" />
@@ -145,10 +119,6 @@ export default function Home() {
                 {WORK_MODES.length} work modes
               </li>
             </ul>
-
-            <div className="mt-7 max-w-xl">
-              <DemoNotice compact />
-            </div>
           </div>
 
           <div className="hero-stage">
@@ -161,11 +131,11 @@ export default function Home() {
                     <HiMagnifyingGlass aria-hidden="true" />
                   </span>
                   <div>
-                    <p className="font-display text-base font-bold">Search sample openings</p>
+                    <p className="font-display text-base font-bold">Search jobs</p>
                     <p className="text-xs text-muted">Title, location, category, or Job ID</p>
                   </div>
                 </div>
-                <span className="badge badge-primary badge-dot">Demo data</span>
+                {IS_DEMO ? <span className="badge badge-primary badge-dot">Sample data</span> : null}
               </div>
 
               <div className="mt-5">
@@ -185,22 +155,17 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              <p className="mt-4 flex items-center gap-1.5 text-[0.72rem] text-muted">
-                <HiShieldCheck className="text-primary" aria-hidden="true" />
-                Sample listings only — no live vacancies are claimed.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="Featured"
-            title="Selected sample openings"
-            description="A tight selection of open demo roles. Review the full details before applying."
+            title={IS_DEMO ? "Selected sample openings" : "Selected openings"}
+            description="A tight selection of open roles. Review the full details before applying."
             action={
               <Link to="/jobs" className="btn-secondary group">
                 View all jobs
@@ -216,25 +181,72 @@ export default function Home() {
         </div>
       </section>
 
-      <JobStrip
-        title="Work From Home opportunities"
-        workMode="Work From Home"
-        muted
-        openCount={openJobs.filter((job) => job.workMode === "Work From Home").length}
-      />
-      <JobStrip
-        title="Work From Office opportunities"
-        workMode="Work From Office"
-        openCount={openJobs.filter((job) => job.workMode === "Work From Office").length}
-      />
-      <JobStrip
-        title="Hybrid opportunities"
-        workMode="Hybrid"
-        muted
-        openCount={openJobs.filter((job) => job.workMode === "Hybrid").length}
-      />
+      <section className="section-band py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading
+            eyebrow="Opportunities"
+            title="Browse by work mode"
+            description="Pick the arrangement that fits you and explore matching roles."
+            action={
+              <Link
+                to={`/jobs?workMode=${encodeURIComponent(activeTab)}`}
+                className="btn-secondary group"
+              >
+                View all {activeTab.toLowerCase()}
+                <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            }
+          />
 
-      <section className="section">
+          <div
+            role="tablist"
+            aria-label="Work mode"
+            className="mt-6 flex flex-wrap gap-2"
+          >
+            {WORK_MODES.map((mode, index) => {
+              const selected = mode === activeTab;
+              return (
+                <button
+                  key={mode}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`workmode-tab-${index}`}
+                  aria-selected={selected}
+                  aria-controls="workmode-panel"
+                  tabIndex={selected ? 0 : -1}
+                  onClick={() => setActiveTab(mode)}
+                  onKeyDown={(event) => onTabKeyDown(event, index)}
+                  className={`min-h-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                    selected
+                      ? "border-accent bg-bg text-accent shadow-soft"
+                      : "border-line bg-secondary text-muted hover:text-fg"
+                  }`}
+                >
+                  {mode}
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            id="workmode-panel"
+            role="tabpanel"
+            aria-labelledby={`workmode-tab-${WORK_MODES.indexOf(activeTab)}`}
+            className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          >
+            {tabJobs.length ? (
+              tabJobs.map((job) => <JobCard key={job.id} job={job} compact />)
+            ) : (
+              <p className="text-sm text-muted">No open roles in this work mode right now.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="Browse"
@@ -257,7 +269,8 @@ export default function Home() {
                   <div className="min-w-0">
                     <span className="block truncate font-display text-lg font-bold">{category}</span>
                     <span className="text-sm text-muted">
-                      {count} open sample {count === 1 ? "role" : "roles"}
+                      {count} open {IS_DEMO ? "sample " : ""}
+                      {count === 1 ? "role" : "roles"}
                     </span>
                   </div>
                   <HiArrowRight
@@ -271,12 +284,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="how-it-works" className="section-band scroll-mt-28">
+      <section id="how-it-works" className="section-band scroll-mt-28 py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="Process"
             title="How it works"
-            description="A clear path from discovery to application. No placement guarantees in this prototype."
+            description="A clear path from discovery to application."
           />
           <div className="mt-7 grid gap-5 md:grid-cols-3">
             {steps.map((step, index) => (
@@ -285,7 +298,7 @@ export default function Home() {
                   <span className="icon-tile font-display text-sm font-bold">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="h-px flex-1 mx-4 bg-line" aria-hidden="true" />
+                  <span className="mx-4 h-px flex-1 bg-line" aria-hidden="true" />
                   <HiArrowRight className="text-muted" aria-hidden="true" />
                 </div>
                 <h3 className="mt-5 text-xl">{step.title}</h3>
@@ -296,42 +309,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="page-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-          <div>
-            <SectionHeading
-              eyebrow="For candidates"
-              title="Designed for confident decisions"
-              description="The interface stays out of the way so the role, the details, and the next step are always easy to find."
-            />
-            <Link to="/about" className="btn-secondary mt-6 inline-flex">
-              About the prototype
-              <HiArrowRight aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="grid gap-4">
-            {benefits.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article
-                  key={item.title}
-                  className="surface-card surface-card-hover flex items-start gap-4 p-5 sm:p-6"
-                >
-                  <span className="icon-tile icon-tile-lg">
-                    <Icon size={22} aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3 className="text-lg">{item.title}</h3>
-                    <p className="mt-1.5 text-muted">{item.body}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="section pt-0">
+      <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <div className="cta-panel p-8 sm:p-10 lg:p-12">
             <span className="cta-shape cta-shape-lg" aria-hidden="true" />
@@ -339,14 +317,13 @@ export default function Home() {
             <div className="relative grid gap-8 lg:grid-cols-[1.25fr_auto] lg:items-center">
               <div className="max-w-2xl">
                 <p className="eyebrow">Ready to start</p>
-                <h2 className="mt-3 text-balance text-3xl sm:text-4xl">Ready to browse sample roles?</h2>
+                <h2 className="mt-3 text-balance text-3xl sm:text-4xl">Ready to find your next role?</h2>
                 <p className="mt-3 text-lg">
-                  Open the current jobs page to search, filter, and review Job IDs. Applications submitted here stay in
-                  your browser for demonstration only.
+                  Open the jobs page to search, filter, and review available roles.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
                   <Link to="/jobs" className="btn-inverse btn-lg group">
-                    Explore Jobs
+                    Browse jobs
                     <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </Link>
                   <Link to="/about" className="btn-outline-inverse btn-lg">
@@ -364,35 +341,39 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-band">
-        <div className="page-shell">
-          <SectionHeading
-            eyebrow="Support"
-            title="Contact information"
-            description="Official details will replace these placeholders before launch."
-          />
-          <div className="mt-7 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: HiEnvelope, label: "Email", value: CONTACT_PLACEHOLDERS.email },
-              { icon: HiPhone, label: "Phone", value: CONTACT_PLACEHOLDERS.phone },
-              { icon: HiMapPin, label: "Region", value: CONTACT_PLACEHOLDERS.region },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="surface-card flex items-start gap-3 p-5">
-                  <span className="icon-tile">
-                    <Icon aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{item.label}</p>
-                    <p className="mt-1 break-words text-sm">{item.value}</p>
-                  </div>
-                </div>
-              );
-            })}
+      {showContactSection ? (
+        <section className="section-band py-10 sm:py-12">
+          <div className="page-shell">
+            <SectionHeading
+              eyebrow="Support"
+              title="Contact information"
+              description="Reach out if you have a question about a role."
+            />
+            <div className="mt-7 grid gap-4 sm:grid-cols-3">
+              {[
+                showEmail ? { icon: HiEnvelope, label: "Email", value: CONTACT_PLACEHOLDERS.email } : null,
+                showPhone ? { icon: HiPhone, label: "Phone", value: CONTACT_PLACEHOLDERS.phone } : null,
+                showRegion ? { icon: HiMapPin, label: "Region", value: CONTACT_PLACEHOLDERS.region } : null,
+              ]
+                .filter(Boolean)
+                .map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className="surface-card flex items-start gap-3 p-5">
+                      <span className="icon-tile">
+                        <Icon aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{item.label}</p>
+                        <p className="mt-1 break-words text-sm">{item.value}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </div>
   );
 }

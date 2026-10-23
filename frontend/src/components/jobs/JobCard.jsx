@@ -3,10 +3,41 @@ import {
   HiArrowRight,
   HiBriefcase,
   HiBuildingOffice2,
+  HiClock,
   HiCurrencyRupee,
   HiMapPin,
 } from "react-icons/hi2";
-import { statusLabel } from "../../utils/format";
+import { IS_DEMO } from "../../data/constants";
+import { formatDate, statusLabel } from "../../utils/format";
+
+function daysUntil(deadline) {
+  if (!deadline) return null;
+  const now = new Date();
+  const target = new Date(`${deadline}T00:00:00`);
+  if (Number.isNaN(target.getTime())) return null;
+  const diff = Math.ceil((target - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / (1000 * 60 * 60 * 24));
+  if (diff < 0) return null;
+  return diff;
+}
+
+function DeadlineChip({ deadline }) {
+  const days = daysUntil(deadline);
+  if (days === null) return null;
+  if (days <= 3) {
+    return (
+      <span className="badge badge-closed badge-dot">
+        <HiClock aria-hidden="true" />
+        Closing soon
+      </span>
+    );
+  }
+  return (
+    <span className="badge badge-closed">
+      <HiClock aria-hidden="true" />
+      {days <= 14 ? `Closes in ${days} ${days === 1 ? "day" : "days"}` : `Closes on ${formatDate(deadline)}`}
+    </span>
+  );
+}
 
 function Meta({ icon, label, value }) {
   const Icon = icon;
@@ -41,7 +72,8 @@ export default function JobCard({ job, compact = false }) {
       <div className="flex flex-wrap items-center gap-2">
         <span className="badge badge-primary badge-dot">{job.workMode}</span>
         {closed ? <span className="badge badge-closed badge-dot">{statusLabel(job.status)}</span> : null}
-        {job.isDemo ? <span className="badge">Sample</span> : null}
+        {IS_DEMO && job.isDemo ? <span className="badge">Sample</span> : null}
+        <DeadlineChip deadline={job.deadline} />
       </div>
 
       <h3 className={`${compact ? "mt-3 text-lg" : "mt-4 text-xl sm:text-[1.35rem]"} text-balance`}>{job.title}</h3>

@@ -11,18 +11,17 @@ export default function NotFound() {
           <HiMagnifyingGlass size={24} aria-hidden="true" />
         </span>
         <p className="eyebrow mt-5 justify-center">Error 404</p>
-        <h1 className="mt-3 text-3xl sm:text-4xl">This page is not available</h1>
+        <h1 className="mt-3 text-3xl sm:text-4xl">Page not found</h1>
         <p className="mt-3 text-muted">
-          The job or page you requested does not exist in this prototype. It may have an incorrect Job ID, or the
-          link may be out of date.
+          The job or page you requested could not be found.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Link to="/jobs" className="btn-primary group">
-            Back to Jobs
+            Back to jobs
             <HiArrowRight className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Link>
           <Link to="/" className="btn-secondary">
-            Go to Home
+            Go to home
           </Link>
         </div>
       </div>

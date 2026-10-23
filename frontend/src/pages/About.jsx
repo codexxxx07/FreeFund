@@ -6,41 +6,41 @@ import { BRAND_NAME } from "../data/constants";
 const principles = [
   {
     icon: HiEye,
-    title: "Honest demo content",
-    body: "Sample listings are labelled. Verified company details, client names, and performance statistics will only be added when the business owner confirms them.",
+    title: "Clear listings",
+    body: "Job status is clearly marked so candidates know what's open or closed at a glance.",
   },
   {
     icon: HiCheckBadge,
-    title: "Clear job status",
-    body: "Open roles remain visible while closed or paused roles are clearly marked and removed from the current vacancies list.",
+    title: "Focused application flow",
+    body: "Apply directly from the job page with a job-specific form and helpful validation.",
   },
   {
     icon: HiShieldCheck,
     title: "No placement guarantees",
-    body: `${BRAND_NAME} does not guarantee interviews, selection, or employment. Future recruitment communication depends on processes not yet implemented.`,
+    body: `${BRAND_NAME} does not guarantee interviews, selection, or employment.`,
   },
 ];
 
 const designPoints = [
   "Clean typography and strong hierarchy",
   "Consistent color tokens and components",
-  "Layered depth with restrained shadows",
   "Responsive layouts across all pages",
+  "Accessible focus states and keyboard support",
   "Purposeful interactions with reduced-motion support",
 ];
 
 export default function About() {
   return (
     <div>
-      <PageMeta title="About Us" description={`About ${BRAND_NAME}, a recruitment website prototype.`} />
+      <PageMeta title="About Us" description={`About ${BRAND_NAME}.`} />
 
       <section className="border-b border-line bg-secondary">
         <div className="page-shell py-10 lg:py-14">
           <SectionHeading
             as="h1"
             eyebrow="About"
-            title="A refined recruitment website"
-            description="Built to make job discovery clear, honest, and easy to act on."
+            title="Find roles with clarity"
+            description="A simple place to browse jobs and apply with confidence."
           />
         </div>
       </section>
@@ -48,23 +48,17 @@ export default function About() {
       <div className="page-shell py-10">
         <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           <article className="surface-panel space-y-5 p-6 sm:p-8">
-            <h2 className="text-2xl">What we are building</h2>
+            <h2 className="text-2xl">About the site</h2>
             <p>
-              {BRAND_NAME} is being built as a place for candidates to review job information, keep track of unique Job
-              IDs, and submit applications against a specific vacancy.
+              {BRAND_NAME} helps candidates browse job listings, review job details, and apply through a focused
+              application flow.
             </p>
             <p className="text-muted">
-              This Phase 1 website is a frontend prototype. It does not yet connect to a database, CRM, or recruiter
-              dashboard. Sample listings exist so the browsing and application experience can be tested.
+              Listings are kept clear and easy to scan. Open roles are easy to spot, and closed roles are marked
+              accordingly.
             </p>
             <p className="text-muted">
-              The intended approach is simple: publish only authorised vacancies, show job status clearly, and collect
-              applications against the correct Job ID. Verified company background, team credentials, client names, and
-              performance statistics will be added by the business owner when they are available.
-            </p>
-            <p className="text-muted">
-              {BRAND_NAME} does not guarantee interviews, selection, or employment. Any future recruitment
-              communication will depend on processes that have not been implemented in this phase.
+              {BRAND_NAME} does not guarantee interviews, selection, or employment.
             </p>
           </article>
 
@@ -89,7 +83,7 @@ export default function About() {
         </div>
 
         <section className="mt-10">
-          <SectionHeading eyebrow="Principles" title="How the prototype stays honest" />
+          <SectionHeading eyebrow="Principles" title="What to expect" />
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {principles.map((item) => {
               const Icon = item.icon;

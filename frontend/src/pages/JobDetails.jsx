@@ -1,23 +1,37 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   HiArrowLeft,
+  HiArrowPathRoundedSquare,
   HiArrowRight,
   HiCalendarDays,
   HiClock,
   HiCurrencyRupee,
   HiDocumentText,
+  HiLink,
   HiMapPin,
-  HiShieldCheck,
+  HiShare,
   HiSparkles,
   HiWrenchScrewdriver,
 } from "react-icons/hi2";
+import { FaWhatsapp } from "react-icons/fa";
 import PageMeta from "../components/common/PageMeta";
-import DemoNotice from "../components/common/DemoNotice";
 import JobCard from "../components/jobs/JobCard";
 import SectionHeading from "../components/common/SectionHeading";
 import NotFound from "./NotFound";
+import { IS_DEMO } from "../data/constants";
 import { getJobById, getRelatedJobs } from "../utils/jobsApi";
 import { formatDate, statusLabel } from "../utils/format";
+
+function daysUntil(deadline) {
+  if (!deadline) return null;
+  const now = new Date();
+  const target = new Date(`${deadline}T00:00:00`);
+  if (Number.isNaN(target.getTime())) return null;
+  const diff = Math.ceil((target - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / (1000 * 60 * 60 * 24));
+  if (diff < 0) return null;
+  return diff;
+}
 
 function Detail({ label, value, icon }) {
   const Icon = icon;
@@ -46,6 +60,12 @@ function SummaryRow({ label, value }) {
 export default function JobDetails() {
   const { jobId } = useParams();
   const job = getJobById(jobId);
+  const [copied, setCopied] = useState(false);
+  const liveRef = useRef(null);
+
+  useEffect(() => {
+    if (!copied && liveRef.current) liveRef.current.textContent = "";
+  }, [copied]);
 
   if (!job) {
     return <NotFound />;
@@ -53,16 +73,39 @@ export default function JobDetails() {
 
   const related = getRelatedJobs(job);
   const canApply = job.status === "open";
+  const days = daysUntil(job.deadline);
+
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const waText = encodeURIComponent(`${job.title} | ${job.id} | ${shareUrl}`);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      if (liveRef.current) liveRef.current.textContent = "Link copied";
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = shareUrl;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopied(true);
+      if (liveRef.current) liveRef.current.textContent = "Link copied";
+      window.setTimeout(() => setCopied(false), 1600);
+    }
+  }
 
   return (
     <div>
-      <PageMeta title={job.title} description={`${job.title} (${job.id}) is a sample vacancy on Jobs Mania - Freefund.`} />
+      <PageMeta title={job.title} description={`${job.title} (${job.id}) on Jobs Mania - Freefund.`} />
 
       <section className="border-b border-line bg-secondary">
         <div className="page-shell py-8 lg:py-12">
           <Link to="/jobs" className="btn-ghost -ml-2 inline-flex items-center gap-2">
             <HiArrowLeft aria-hidden="true" />
-            Back to Jobs
+            Back to jobs
           </Link>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -71,7 +114,17 @@ export default function JobDetails() {
               {statusLabel(job.status)}
             </span>
             <span className="badge">Job ID · {job.id}</span>
-            <span className="badge">Sample listing</span>
+            {IS_DEMO && job.isDemo ? <span className="badge">Sample</span> : null}
+            {days !== null ? (
+              <span className="badge badge-closed">
+                <HiClock aria-hidden="true" />
+                {days <= 3
+                  ? "Closing soon"
+                  : days <= 14
+                    ? `Closes in ${days} ${days === 1 ? "day" : "days"}`
+                    : `Closes on ${formatDate(job.deadline)}`}
+              </span>
+            ) : null}
           </div>
 
           <h1 className="mt-4 max-w-4xl text-balance text-3xl sm:text-4xl lg:text-[2.9rem]">{job.title}</h1>
@@ -95,23 +148,6 @@ export default function JobDetails() {
               {job.location}
             </span>
           </div>
-
-          <div className="mt-6 max-w-3xl">
-            <DemoNotice compact />
-          </div>
-
-          <div className="mt-6 lg:hidden">
-            {canApply ? (
-              <Link to={`/apply/${job.id}`} className="btn-primary btn-lg w-full">
-                Apply Now
-                <HiArrowRight aria-hidden="true" />
-              </Link>
-            ) : (
-              <button type="button" className="btn-primary btn-lg w-full" disabled>
-                Applications closed
-              </button>
-            )}
-          </div>
         </div>
       </section>
 
@@ -121,9 +157,9 @@ export default function JobDetails() {
             <Detail label="Salary" value={job.salary} icon={HiCurrencyRupee} />
             <Detail label="Education" value={job.education} icon={HiDocumentText} />
             <Detail label="Experience" value={job.experience} icon={HiWrenchScrewdriver} />
-            <Detail label="Shift timings" value={job.shift} icon={HiClock} />
+            <Detail label="Shift timings" value={job.shift} icon={HiArrowPathRoundedSquare} />
             <Detail label="Weekly offs" value={job.weeklyOffs} icon={HiCalendarDays} />
-            <Detail label="Application deadline" value={formatDate(job.deadline)} icon={HiShieldCheck} />
+            <Detail label="Application deadline" value={formatDate(job.deadline)} icon={HiClock} />
           </div>
         </section>
 
@@ -170,8 +206,8 @@ export default function JobDetails() {
             <h2 className="mt-3 text-2xl">Apply for this role</h2>
             <p className="mt-2 text-sm text-muted">
               {canApply
-                ? "The application form keeps this Job ID and title attached. It is a frontend demonstration and does not send data to HR."
-                : `This sample role is ${statusLabel(job.status).toLowerCase()}. Applications are disabled.`}
+                ? "The application form keeps this Job ID and title attached."
+                : `This role is ${statusLabel(job.status).toLowerCase()}. Applications are disabled.`}
             </p>
 
             <div className="surface-inset mt-5 grid gap-2.5 p-4">
@@ -183,7 +219,7 @@ export default function JobDetails() {
 
             {canApply ? (
               <Link to={`/apply/${job.id}`} className="btn-primary btn-lg mt-5 w-full">
-                Apply Now
+                Apply now
                 <HiArrowRight aria-hidden="true" />
               </Link>
             ) : (
@@ -192,7 +228,26 @@ export default function JobDetails() {
               </button>
             )}
 
-            <p className="mt-3 text-center text-xs text-muted">No account needed · Demo form only</p>
+            <div className="mt-6 border-t border-line pt-5">
+              <p className="text-sm font-semibold">Share</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <a
+                  href={`https://wa.me/?text=${waText}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary min-h-0 px-3 py-2"
+                  aria-label="Share on WhatsApp"
+                >
+                  <FaWhatsapp aria-hidden="true" />
+                  WhatsApp
+                </a>
+                <button type="button" className="btn-secondary min-h-0 px-3 py-2" onClick={handleCopy}>
+                  <HiLink aria-hidden="true" />
+                  {copied ? "Copied" : "Copy link"}
+                </button>
+              </div>
+              <div aria-live="polite" className="sr-only" ref={liveRef}></div>
+            </div>
           </aside>
         </div>
 
@@ -200,8 +255,8 @@ export default function JobDetails() {
           <section className="mt-14">
             <SectionHeading
               eyebrow="Related"
-              title="Related sample jobs"
-              description="Other open demo roles that may be a good fit."
+              title={IS_DEMO ? "Related sample jobs" : "Related jobs"}
+              description="Other open roles that may be a good fit."
               action={
                 <Link to="/jobs" className="btn-secondary group">
                   Browse all jobs
@@ -217,6 +272,39 @@ export default function JobDetails() {
           </section>
         ) : null}
       </div>
+
+      {canApply ? (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur lg:hidden">
+          <div className="page-shell flex items-center justify-between gap-3 py-2.5" style={{ paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom))" }}>
+            <div className="min-w-0">
+              <p className="text-xs text-muted">Apply now</p>
+              {days !== null ? (
+                <p className="text-sm font-semibold">
+                  {days <= 3
+                    ? "Closing soon"
+                    : days <= 14
+                      ? `Closes in ${days} ${days === 1 ? "day" : "days"}`
+                      : `Closes on ${formatDate(job.deadline)}`}
+                </p>
+              ) : (
+                <p className="text-sm font-semibold">Open</p>
+              )}
+            </div>
+            <Link to={`/apply/${job.id}`} className="btn-primary shrink-0">
+              Apply now
+              <HiArrowRight aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur lg:hidden">
+          <div className="page-shell py-2.5" style={{ paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom))" }}>
+            <button type="button" className="btn-primary w-full" disabled>
+              Applications closed
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
