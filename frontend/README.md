@@ -22,6 +22,6 @@ npm run build
 - Central sample job dataset in `src/data/jobs.js`
 - Search and filters via URL query parameters
 - Frontend-only form validation
-- Skewmorphic + minimal visual system in `src/styles/index.css`
+- Minimal + Skewmorphic visual system in `src/styles/index.css`, built on white surfaces, `#111111` typography, `#2749cc` brand blue, and layered depth shadows
 
 Listings are sample/demo content. Forms do not email, store, or deliver applications to HR.

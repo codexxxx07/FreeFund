@@ -1,13 +1,23 @@
-export default function SectionHeading({ eyebrow, title, description, align = "left", action }) {
-  const alignment = align === "center" ? "mx-auto text-center" : "";
+export default function SectionHeading({ as, eyebrow, title, description, align = "left", action }) {
+  const Heading = as || "h2";
+  const centered = align === "center";
+  const headingSize =
+    as === "h1"
+      ? "text-balance text-3xl sm:text-4xl lg:text-[2.9rem]"
+      : "text-balance text-2xl sm:text-3xl lg:text-[2.35rem]";
+
   return (
-    <div className={`flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between ${alignment ? "items-center" : ""}`}>
-      <div className={`max-w-2xl ${alignment}`}>
+    <div
+      className={`flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between ${
+        centered ? "items-center text-center" : ""
+      }`}
+    >
+      <div className={`max-w-2xl ${centered ? "mx-auto" : ""}`}>
         {eyebrow ? (
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-accent">{eyebrow}</p>
+          <p className={`eyebrow mb-3 ${centered ? "justify-center" : ""}`}>{eyebrow}</p>
         ) : null}
-        <h2 className="text-balance text-2xl sm:text-3xl lg:text-4xl">{title}</h2>
-        {description ? <p className="mt-3 max-w-xl text-ink-muted">{description}</p> : null}
+        <Heading className={headingSize}>{title}</Heading>
+        {description ? <p className="mt-3 max-w-xl text-muted sm:text-[1.02rem]">{description}</p> : null}
       </div>
       {action ? <div className="flex-shrink-0">{action}</div> : null}
     </div>

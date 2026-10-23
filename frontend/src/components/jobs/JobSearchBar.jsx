@@ -19,16 +19,24 @@ export default function JobSearchBar({ initialQuery = "", compact = false }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className={`surface-panel relative overflow-hidden p-4 sm:p-5 ${compact ? "" : "lg:grid lg:grid-cols-[1.4fr_1fr_1fr_auto] lg:items-center lg:gap-3"}`}>
-      <label className={`${compact ? "" : "lg:col-span-1"}`}>
-        <span className="sr-only">Job title, category, or location</span>
+    <form
+      onSubmit={onSubmit}
+      className={`grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}
+      role="search"
+      aria-label="Search jobs"
+    >
+      <label className={compact ? "" : "sm:col-span-2"}>
+        <span className="sr-only">Job title, ID, or keyword</span>
         <div className="relative">
-          <HiMagnifyingGlass className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" aria-hidden="true" />
+          <HiMagnifyingGlass
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"
+            aria-hidden="true"
+          />
           <input
-            className="field-input pl-11"
+            className="field-input pl-10"
             value={q}
             onChange={(event) => setQ(event.target.value)}
-            placeholder="Search job title, ID, or keyword"
+            placeholder="Job title, ID, or keyword"
           />
         </div>
       </label>
@@ -58,10 +66,10 @@ export default function JobSearchBar({ initialQuery = "", compact = false }) {
           </label>
         </>
       )}
-      <button type="submit" className="btn-primary w-full lg:w-auto">
+      <button type="submit" className={`btn-primary w-full ${compact ? "" : "sm:col-span-2"}`}>
+        <HiMagnifyingGlass aria-hidden="true" />
         Search jobs
       </button>
-      <span className="skew-decor -right-12 -top-8 h-24 w-24 opacity-40" aria-hidden="true" />
     </form>
   );
 }
