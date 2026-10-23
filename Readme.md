@@ -47,14 +47,18 @@ npm run build
 
 ## Design direction (Phase 1)
 
-Phase 1 follows a light, recruitment-focused palette rather than a black-and-gold theme:
+Phase 1 follows a light, recruitment-focused palette with a single brand accent:
 
-- Backgrounds: `#FFFFFF`, `#F5F6F8`
-- Text: `#171717`, `#626262`
-- Accents: teal `#1D7874`, yellow `#F4D35E`, orange `#EE964B`
-- Visual language: restrained Skewmorphism (layered cards, elevated buttons, skewed decorative shapes) with NuralPath-inspired whitespace and typography
+- Background, cards, popovers: `#FFFFFF`
+- Primary text and focus rings: `#111111`
+- Primary brand blue: `#2749CC` (with `#FFFFFF` foreground)
+- Secondary, muted, and accent surfaces: `#F7F7F5`, `#F2F2F0`
+- Secondary text: `#666666`
+- Borders and inputs: `#E5E5E5`, `#D4D4D4`
+- Destructive and error states: `#B42318`
+- Visual language: minimal layouts with Skewmorphism-inspired depth — layered soft shadows, tactility, rounded corners, and restrained skewed geometry
 
-Colours live in `frontend/src/styles/index.css` as CSS variables so they can be adjusted later.
+No teal, yellow, orange, or other accent colours are used. Tokens live in `frontend/src/styles/index.css` as CSS variables and Tailwind theme values so they can be adjusted later.
 
 ## Project structure
 
