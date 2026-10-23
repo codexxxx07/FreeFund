@@ -312,6 +312,15 @@
       scroll-behavior: auto;
     }
 
+    .typewriter-cursor {
+      display: none !important;
+      animation: none !important;
+    }
+
+    .typewriter-animated {
+      min-width: auto;
+    }
+
     *,
     *::before,
     *::after {
@@ -606,6 +615,32 @@
 
   .text-accent-word {
     color: var(--muted);
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    width: 1px;
+    margin-left: 2px;
+    background-color: currentColor;
+    animation: typewriter-blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    height: 1em;
+  }
+
+  @keyframes typewriter-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .typewriter-animated {
+    display: inline-block;
+    min-width: 10ch;
+    text-align: left;
   }
 
   /* ---------- Buttons ---------- */

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   HiArrowRight,
@@ -26,6 +26,7 @@ import {
   isPlaceholder,
 } from "../data/constants";
 import { getFeaturedJobs, getJobsByWorkMode, getOpenJobs } from "../utils/jobsApi";
+import TypewriterText from "../components/common/TypewriterText";
 
 const categoryIcons = {
   "Customer Support": HiChatBubbleLeftRight,
@@ -87,8 +88,12 @@ export default function Home() {
         <div className="page-shell relative grid items-center gap-12 py-12 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
           <div>
             <p className="eyebrow">Recruitment portal</p>
-            <h1 className="hero-title mt-5 max-w-2xl text-balance">
-              Find the <span className="text-accent-word">right role</span>. Apply with clarity.
+            <h1 className="hero-title mt-5 max-w-3xl text-balance">
+              Find the <span className="text-accent-word">right role</span>. Apply with{" "}
+              <span className="relative">
+                <TypewriterText words={["Clarity", "Confidence", "Purpose", "Success"]} />
+                <noscript>Clarity</noscript>
+              </span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-[1.7] text-muted">
               {BRAND_NAME} helps candidates browse work-from-home, office, and hybrid opportunities with clean job
