@@ -221,7 +221,7 @@ export default function Home() {
                   onKeyDown={(event) => onTabKeyDown(event, index)}
                   className={`min-h-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
                     selected
-                      ? "border-accent bg-bg text-accent shadow-soft"
+                      ? "border-line bg-bg text-fg shadow-soft"
                       : "border-line bg-secondary text-muted hover:text-fg"
                   }`}
                 >

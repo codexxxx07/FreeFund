@@ -13,7 +13,7 @@
   --border: #e5e5e5;
   --input-border: #d4d4d4;
   --ring: #111111;
-  --accent: #2749cc;
+  --accent: #111111;
   --on-accent: #ffffff;
   --danger: #b42318;
   --highlight: rgba(255, 255, 255, 0.95);
@@ -36,15 +36,20 @@
 
   --font-stack: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --btn-primary-start: #2749cc;
-  --btn-primary-end: #2749cc;
-  --btn-primary-start-hover: #1f3fb8;
-  --btn-primary-end-hover: #1f3fb8;
+  --btn-primary-start: #111111;
+  --btn-primary-end: #111111;
+  --btn-primary-start-hover: #ffffff;
+  --btn-primary-end-hover: #f7f7f5;
   --btn-primary-text: #ffffff;
-  --btn-primary-border: #2749cc;
+  --btn-primary-text-hover: #111111;
+  --btn-primary-border: #111111;
+  --btn-primary-border-hover: #111111;
 
   --btn-secondary-bg: #ffffff;
   --btn-secondary-text: #111111;
+  --btn-secondary-bg-hover: #f7f7f5;
+  --btn-secondary-text-hover: #111111;
+  --btn-secondary-border-hover: #111111;
 
   --navbar-bg: #ffffff;
   --active-bg: #f7f7f5;
@@ -124,8 +129,8 @@
   --border: #262626;
   --input-border: #262626;
   --ring: #f5f5f5;
-  --accent: #1d4ed8;
-  --on-accent: #ffffff;
+  --accent: #f5f5f5;
+  --on-accent: #0b0b0b;
   --danger: #f5f5f5;
   --highlight: rgba(255, 255, 255, 0.06);
   --edge-sheen: transparent;
@@ -141,15 +146,20 @@
   --hero-layer-back-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.28);
   --hero-layer-mid-shadow: 0 14px 32px -22px rgba(0, 0, 0, 0.24);
 
-  --btn-primary-start: #f5f5f5;
-  --btn-primary-end: #e4e4e4;
-  --btn-primary-start-hover: #ffffff;
-  --btn-primary-end-hover: #ededed;
-  --btn-primary-text: #0b0b0b;
+  --btn-primary-start: #ffffff;
+  --btn-primary-end: #f5f5f5;
+  --btn-primary-start-hover: #0b0b0b;
+  --btn-primary-end-hover: #151515;
+  --btn-primary-text: #111111;
+  --btn-primary-text-hover: #f5f5f5;
   --btn-primary-border: #f5f5f5;
+  --btn-primary-border-hover: #f5f5f5;
 
   --btn-secondary-bg: #151515;
   --btn-secondary-text: #f5f5f5;
+  --btn-secondary-bg-hover: #1c1c1c;
+  --btn-secondary-text-hover: #f5f5f5;
+  --btn-secondary-border-hover: #3a3a3a;
 
   --navbar-bg: #151515;
   --active-bg: #1c1c1c;
@@ -492,7 +502,7 @@
   }
 
   .nav-link.is-active {
-    color: var(--accent);
+    color: var(--text);
     background: var(--active-bg);
     font-weight: 600;
     box-shadow: var(--active-shadow);
@@ -650,11 +660,16 @@
       var(--btn-primary-start-hover) 0%,
       var(--btn-primary-end-hover) 100%
     );
+    border-color: var(--btn-primary-border-hover);
+    color: var(--btn-primary-text-hover);
     transform: translateY(-2px);
     box-shadow: var(--primary-shadow-hover);
   }
 
   .btn-primary:active {
+    background-image: linear-gradient(180deg, var(--btn-primary-start) 0%, var(--btn-primary-end) 100%);
+    border-color: var(--btn-primary-border);
+    color: var(--btn-primary-text);
     transform: translateY(var(--pressed-shift));
     box-shadow: var(--pressed-shadow);
   }
@@ -697,12 +712,16 @@
 
   .btn-secondary:hover {
     transform: translateY(-2px);
-    border-color: var(--muted);
-    background: var(--btn-secondary-bg);
+    border-color: var(--btn-secondary-border-hover);
+    background: var(--btn-secondary-bg-hover);
+    color: var(--btn-secondary-text-hover);
     box-shadow: var(--card-shadow-hover);
   }
 
   .btn-secondary:active {
+    border-color: var(--border);
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
     transform: translateY(var(--pressed-shift));
     box-shadow: var(--pressed-shadow);
   }

@@ -68,8 +68,8 @@ export default function About() {
             </span>
             <h2 className="mt-4 text-xl">Design direction</h2>
             <p className="mt-2 text-sm text-muted">
-              Minimalism and Skewmorphism come together — dimensional white surfaces, layered shadows, restrained blue
-              accents, and generous whitespace for clarity.
+              Minimalism and Skewmorphism come together — dimensional white surfaces, layered shadows, monochrome
+              black-and-white accents, and generous whitespace for clarity.
             </p>
             <ul className="mt-5 grid gap-3">
               {designPoints.map((point) => (
