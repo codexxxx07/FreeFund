@@ -58,79 +58,81 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      <div className={`page-shell${open ? " pb-3" : ""}`}>
-        <div className="nav-shell">
-          <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
-            <span className="brand-mark" aria-hidden="true">
-              <span className="relative z-10">JM</span>
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate font-display text-sm font-bold sm:text-base">{BRAND_NAME}</span>
-              <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Portal</span>
-            </span>
-          </Link>
-
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-            {links.map((link) => (
-              <NavLink key={link.to} to={link.to} className={navClass} end={link.to === "/"}>
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2.5">
-            <button
-              type="button"
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            >
-              {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
-            </button>
-            <Link to="/jobs" className="btn-primary hidden sm:inline-flex">
-              Browse Jobs
-              <HiArrowRight aria-hidden="true" />
+      <div className="page-shell">
+        <div className="nav-bar">
+          <div className="nav-shell">
+            <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
+              <span className="brand-mark" aria-hidden="true">
+                <span className="relative z-10">JM</span>
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate font-display text-sm font-bold sm:text-base">{BRAND_NAME}</span>
+                <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Portal</span>
+              </span>
             </Link>
-            <button
-              ref={menuButtonRef}
-              type="button"
-              className="btn-secondary px-3 py-2.5 lg:hidden"
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              onClick={() => setOpen((value) => !value)}
-            >
-              {open ? <HiXMark aria-hidden="true" /> : <HiBars3 aria-hidden="true" />}
-              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            </button>
-          </div>
-        </div>
 
-        {open ? (
-          <nav
-            id="mobile-nav"
-            className="mt-1 rounded-2xl border border-line bg-card p-3 shadow-card lg:hidden"
-            aria-label="Mobile"
-          >
-            <div className="flex flex-col gap-1">
+            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
               {links.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className={navClass}
-                  end={link.to === "/"}
-                  onClick={() => setOpen(false)}
-                >
+                <NavLink key={link.to} to={link.to} className={navClass} end={link.to === "/"}>
                   {link.label}
                 </NavLink>
               ))}
-              <Link to="/jobs" className="btn-primary mt-2 justify-center" onClick={() => setOpen(false)}>
+            </nav>
+
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              >
+                {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
+              </button>
+              <Link to="/jobs" className="btn-primary hidden sm:inline-flex">
                 Browse Jobs
                 <HiArrowRight aria-hidden="true" />
               </Link>
+              <button
+                ref={menuButtonRef}
+                type="button"
+                className="btn-secondary px-3 py-2.5 lg:hidden"
+                aria-expanded={open}
+                aria-controls="mobile-nav"
+                onClick={() => setOpen((value) => !value)}
+              >
+                {open ? <HiXMark aria-hidden="true" /> : <HiBars3 aria-hidden="true" />}
+                <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              </button>
             </div>
-          </nav>
-        ) : null}
+          </div>
+
+          {open ? (
+            <nav
+              id="mobile-nav"
+              className="border-t border-line px-3 pb-3 pt-2 lg:hidden"
+              aria-label="Mobile"
+            >
+              <div className="flex flex-col gap-1">
+                {links.map((link) => (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    className={navClass}
+                    end={link.to === "/"}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+                <Link to="/jobs" className="btn-primary mt-2 justify-center" onClick={() => setOpen(false)}>
+                  Browse Jobs
+                  <HiArrowRight aria-hidden="true" />
+                </Link>
+              </div>
+            </nav>
+          ) : null}
+        </div>
       </div>
     </header>
   );
