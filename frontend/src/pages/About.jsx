@@ -161,7 +161,7 @@ function FaqItem({ item }) {
   const panelId = `${item.id}-panel`;
 
   return (
-    <div className="faq-item">
+    <div className={`faq-item${open ? " is-open" : ""}`}>
       <button
         type="button"
         id={item.id}
@@ -171,21 +171,23 @@ function FaqItem({ item }) {
         onClick={() => setOpen((o) => !o)}
       >
         <span>{item.question}</span>
-        <HiChevronDown
-          aria-hidden="true"
-          className={`faq-chevron${open ? " faq-chevron-open" : ""}`}
-          size={18}
-        />
+        <span className="faq-chevron-tile" aria-hidden="true">
+          <HiChevronDown
+            className={`faq-chevron${open ? " faq-chevron-open" : ""}`}
+            size={18}
+          />
+        </span>
       </button>
 
       <div
         id={panelId}
         role="region"
         aria-labelledby={item.id}
-        hidden={!open}
-        className="faq-panel"
+        className={`faq-panel${open ? " is-open" : ""}`}
       >
-        <p className="faq-answer">{item.answer}</p>
+        <div className="faq-panel-inner">
+          <p className="faq-answer">{item.answer}</p>
+        </div>
       </div>
     </div>
   );
@@ -263,7 +265,7 @@ export default function About() {
             {whatWeDo.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="surface-card p-5 sm:p-6">
+                <article key={item.title} className="surface-card surface-card-hover about-card p-5 sm:p-6">
                   <span className="icon-tile">
                     <Icon aria-hidden="true" />
                   </span>
@@ -286,7 +288,7 @@ export default function About() {
           />
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5" aria-label="Hiring steps">
             {hiringSteps.map((step, index) => (
-              <li key={step.label} className="surface-card p-5">
+              <li key={step.label} className="surface-card surface-card-hover about-card p-5">
                 <div className="flex items-center gap-3">
                   <span className="icon-tile font-display text-sm font-bold" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
@@ -313,10 +315,10 @@ export default function About() {
           />
           <ul className="mt-7 grid gap-4 sm:grid-cols-2" aria-label="Commitments">
             {commitments.map((c) => (
-              <li key={c} className="surface-card flex items-start gap-4 p-5">
+              <li key={c} className="surface-card surface-card-hover about-card flex items-start gap-4 p-5">
                 <HiCheckCircle
                   aria-hidden="true"
-                  className="mt-0.5 shrink-0 text-primary"
+                  className="about-card-icon mt-0.5 shrink-0 text-primary"
                   size={20}
                 />
                 <p className="text-sm leading-relaxed text-muted">{c}</p>
@@ -345,7 +347,7 @@ export default function About() {
             title="Stay safe from job scams"
             description="Genuine jobs don't ask for money. Here's how to protect yourself."
           />
-          <div className="mt-7 surface-card p-6 sm:p-8">
+          <div className="mt-7 surface-card surface-card-hover about-card p-6 sm:p-8">
             <div className="flex items-start gap-4 border-b border-line pb-6 mb-6">
               <span className="icon-tile icon-tile-solid shrink-0">
                 <HiExclamationTriangle aria-hidden="true" />
@@ -387,7 +389,7 @@ export default function About() {
         <section className="section py-12 sm:py-14">
           <div className="page-shell">
             <SectionHeading eyebrow="Company" title="Company details" />
-            <dl className="mt-7 surface-card divide-y divide-line overflow-hidden">
+            <dl className="mt-7 surface-card surface-card-hover about-card divide-y divide-line overflow-hidden">
               {companyRows.map((row) => (
                 <div
                   key={row.label}
@@ -427,7 +429,7 @@ export default function About() {
             title="Frequently asked questions"
             description="Honest answers about how this platform works today."
           />
-          <div className="mt-7 surface-card divide-y divide-line overflow-hidden">
+          <div className="mt-7 surface-card surface-card-hover about-card faq-list">
             {faqItems.map((item) => (
               <FaqItem key={item.id} item={item} />
             ))}
@@ -438,7 +440,7 @@ export default function About() {
       {/* ── 8. Employer / partner enquiry CTA ───────────────────────────── */}
       <section className={`${showCompanySection ? "section" : "section-band"} py-12 sm:py-14`}>
         <div className="page-shell">
-          <div className="surface-card p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
+          <div className="surface-card surface-card-hover about-card p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
             <div className="max-w-xl">
               <p className="eyebrow">For employers</p>
               <h2 className="mt-3 text-2xl sm:text-3xl">Want to list a vacancy?</h2>

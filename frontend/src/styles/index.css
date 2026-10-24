@@ -337,6 +337,8 @@
     }
 
     .surface-card-hover:hover,
+    .about-card:hover .icon-tile,
+    .about-card:hover .about-card-icon,
     .job-card:hover,
     .btn-primary:hover,
     .btn-secondary:hover,
@@ -425,6 +427,200 @@
   .surface-card-hover:hover {
     transform: translateY(-4px);
     box-shadow: var(--card-shadow-hover);
+  }
+
+  /* ---------- About page: card hover polish ----------
+     Pairs .surface-card (surface) + .surface-card-hover (lift & floating
+     shadow) with edge and icon refinement so every About card feels like one
+     family. Scoped to .about-card so no other page changes. */
+
+  .about-card .icon-tile,
+  .about-card .about-card-icon {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .about-card:focus-within {
+    border-color: color-mix(in srgb, var(--ring) 40%, var(--border));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .about-card:hover {
+      border-color: color-mix(in srgb, var(--text) 14%, var(--border));
+    }
+
+    .about-card:hover .icon-tile {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--text) 20%, var(--border));
+      box-shadow: var(--icon-shadow), 0 8px 18px -10px rgba(0, 0, 0, 0.35);
+    }
+
+    .about-card:hover .icon-tile-solid {
+      border-color: var(--solid-bg);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 14px 26px -8px rgba(0, 0, 0, 0.6);
+    }
+
+    .about-card:hover .about-card-icon {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ---------- FAQ accordion (About page) ----------
+     Each question is its own rounded, bordered row inside the card shell.
+     Answers open with a grid-template-rows (0fr → 1fr) + opacity-free height
+     transition, so there is no max-height guesswork, jump, or flicker. */
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.75rem;
+  }
+
+  .faq-item {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 0.85rem;
+    background: var(--card);
+    box-shadow: var(--quick-shadow);
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faq-item:hover {
+      border-color: color-mix(in srgb, var(--text) 20%, var(--border));
+      background: color-mix(in srgb, var(--text) 3%, var(--card));
+    }
+
+    .faq-item:hover .faq-chevron-tile {
+      background: var(--card);
+      border-color: color-mix(in srgb, var(--text) 20%, var(--border));
+    }
+  }
+
+  /* Open state must come after the hover rules so it wins on an open,
+     hovered row (equal specificity, later in the source). */
+  .faq-item.is-open {
+    background: var(--surface-alt);
+    border-color: color-mix(in srgb, var(--text) 32%, var(--border));
+    box-shadow: var(--notice-shadow);
+  }
+
+  .faq-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.05rem;
+    border: 0;
+    border-radius: 0.85rem;
+    background: transparent;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .faq-trigger:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -3px;
+  }
+
+  .faq-chevron-tile {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--quick-shadow);
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .faq-chevron {
+    transition: transform 0.3s ease;
+  }
+
+  .faq-chevron-open {
+    transform: rotate(180deg);
+  }
+
+  .faq-item.is-open .faq-chevron-tile {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+    box-shadow: var(--icon-shadow);
+  }
+
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows 0.3s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  .faq-panel.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition:
+      grid-template-rows 0.3s ease,
+      visibility 0s linear 0s;
+  }
+
+  .faq-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .faq-answer {
+    margin: 0;
+    padding: 0.9rem 1.05rem 1.05rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .faq-answer a {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  @media (min-width: 640px) {
+    .faq-list {
+      gap: 0.7rem;
+      padding: 1rem;
+    }
+
+    .faq-trigger {
+      padding: 1.1rem 1.25rem;
+      font-size: 1.04rem;
+    }
+
+    .faq-answer {
+      padding: 1rem 1.25rem 1.15rem;
+    }
   }
 
   .surface-panel {
