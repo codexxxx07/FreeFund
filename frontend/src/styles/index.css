@@ -493,42 +493,44 @@
 
   /* ---------- Navigation ---------- */
 
+  /* The header element itself carries the visual identity (glass, border, shadow).
+     .nav-shell is a pure layout container — no background, no box, no rectangle. */
+  .site-header {
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    box-shadow: 0 1px 0 var(--border), 0 4px 16px -6px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  :root[data-theme="dark"] .site-header {
+    box-shadow: 0 1px 0 var(--border), 0 4px 16px -6px rgba(0, 0, 0, 0.32);
+  }
+
   .nav-shell {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    background: var(--navbar-bg);
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 0.5rem 0.65rem 0.5rem 0.8rem;
-    box-shadow: var(--nav-shadow);
-    position: relative;
-  }
-
-  .nav-shell::after {
-    content: "";
-    position: absolute;
-    inset: 1px 1px auto 1px;
-    height: 1px;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent 0%, var(--edge-sheen) 50%, transparent 100%);
-    pointer-events: none;
+    padding-block: 0.875rem;
   }
 
   .nav-link {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    border-radius: 0.7rem;
-    padding: 0.55rem 0.95rem;
+    border-radius: 0.6rem;
+    padding: 0.5rem 0.85rem;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 500;
     transition:
-      color 0.18s ease,
-      background-color 0.18s ease,
-      box-shadow 0.18s ease;
+      color 0.16s ease,
+      background-color 0.16s ease;
   }
 
   .nav-link:hover {
@@ -541,6 +543,17 @@
     background: var(--active-bg);
     font-weight: 600;
     box-shadow: var(--active-shadow);
+  }
+
+  .nav-link.is-active::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0.6rem;
+    bottom: 0.25rem;
+    height: 1.5px;
+    border-radius: 999px;
+    background: var(--text);
+    opacity: 0.18;
   }
 
   .theme-toggle {

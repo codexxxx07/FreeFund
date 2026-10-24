@@ -57,8 +57,8 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-bg/85 py-3 backdrop-blur-xl">
-      <div className="page-shell">
+    <header className="site-header">
+      <div className={`page-shell${open ? " pb-3" : ""}`}>
         <div className="nav-shell">
           <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
             <span className="brand-mark" aria-hidden="true">
@@ -78,7 +78,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               type="button"
               className="theme-toggle"
@@ -95,7 +95,7 @@ export default function Header() {
             <button
               ref={menuButtonRef}
               type="button"
-              className="btn-secondary min-h-0 px-3 py-2.5 lg:hidden"
+              className="btn-secondary px-3 py-2.5 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               onClick={() => setOpen((value) => !value)}
@@ -109,7 +109,7 @@ export default function Header() {
         {open ? (
           <nav
             id="mobile-nav"
-            className="mt-2 rounded-2xl border border-line bg-card p-3 shadow-card lg:hidden"
+            className="mt-1 rounded-2xl border border-line bg-card p-3 shadow-card lg:hidden"
             aria-label="Mobile"
           >
             <div className="flex flex-col gap-1">
