@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { CATEGORIES, LOCATIONS } from "../../data/constants";
+import SelectDropdown from "../common/SelectDropdown";
 
 export default function JobSearchBar({ initialQuery = "", compact = false }) {
   const navigate = useNavigate();
@@ -42,28 +43,22 @@ export default function JobSearchBar({ initialQuery = "", compact = false }) {
       </label>
       {compact ? null : (
         <>
-          <label>
-            <span className="sr-only">Category</span>
-            <select className="field-select" value={category} onChange={(event) => setCategory(event.target.value)}>
-              <option value="">All categories</option>
-              {CATEGORIES.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span className="sr-only">Location</span>
-            <select className="field-select" value={location} onChange={(event) => setLocation(event.target.value)}>
-              <option value="">All locations</option>
-              {LOCATIONS.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
+          <SelectDropdown
+            label="Category"
+            labelHidden
+            value={category}
+            onChange={setCategory}
+            options={CATEGORIES}
+            placeholder="All categories"
+          />
+          <SelectDropdown
+            label="Location"
+            labelHidden
+            value={location}
+            onChange={setLocation}
+            options={LOCATIONS}
+            placeholder="All locations"
+          />
         </>
       )}
       <button type="submit" className={`btn-primary w-full ${compact ? "" : "sm:col-span-2"}`}>

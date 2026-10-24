@@ -110,7 +110,7 @@ export default function Header() {
           {open ? (
             <nav
               id="mobile-nav"
-              className="border-t border-line px-3 pb-3 pt-2 lg:hidden"
+              className="panel-reveal border-t border-line px-3 pb-3 pt-2 lg:hidden"
               aria-label="Mobile"
             >
               <div className="flex flex-col gap-1">

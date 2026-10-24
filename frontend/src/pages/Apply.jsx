@@ -8,6 +8,7 @@ import {
   HiInformationCircle,
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
+import SelectDropdown from "../components/common/SelectDropdown";
 import { EDUCATION_OPTIONS, EXPERIENCE_FILTERS, IS_DEMO, LOCATIONS, WORK_MODES } from "../data/constants";
 import { getJobById } from "../utils/jobsApi";
 import { isEmptyErrors, validateApplication } from "../utils/validation";
@@ -297,29 +298,25 @@ export default function Apply() {
                   <p id="email-error" className="field-error">{errors.email}</p>
                 ) : null}
               </label>
-              <label>
-                <span className="field-label">Preferred job location (required)</span>
-                <select
+              <div>
+                <SelectDropdown
                   id="preferredLocation"
-                  className="field-select"
+                  label="Preferred job location (required)"
                   value={values.preferredLocation}
-                  onChange={(event) =>
-                    setValues((current) => ({ ...current, preferredLocation: event.target.value }))
+                  onChange={(value) =>
+                    setValues((current) => ({ ...current, preferredLocation: value }))
                   }
                   onBlur={() => validateOnBlur("preferredLocation")}
+                  options={LOCATIONS}
+                  placeholder="Select a location"
                   disabled={closed}
-                  aria-invalid={Boolean((touched.preferredLocation || submitAttempted) && errors.preferredLocation)}
-                  aria-describedby={(touched.preferredLocation || submitAttempted) && errors.preferredLocation ? "preferredLocation-error" : undefined}
-                >
-                  <option value="">Select a location</option>
-                  {LOCATIONS.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
+                  invalid={Boolean((touched.preferredLocation || submitAttempted) && errors.preferredLocation)}
+                  ariaDescribedBy={(touched.preferredLocation || submitAttempted) && errors.preferredLocation ? "preferredLocation-error" : undefined}
+                />
                 {(touched.preferredLocation || submitAttempted) && errors.preferredLocation ? (
                   <p id="preferredLocation-error" className="field-error">{errors.preferredLocation}</p>
                 ) : null}
-              </label>
+              </div>
 
               <label>
                 <span className="field-label">Job ID</span>
@@ -330,65 +327,53 @@ export default function Apply() {
                 <input className="field-input field-readonly" value={job.title} readOnly />
               </label>
 
-              <label>
-                <span className="field-label">Highest education (required)</span>
-                <select
+              <div>
+                <SelectDropdown
                   id="education"
-                  className="field-select"
+                  label="Highest education (required)"
                   value={values.education}
-                  onChange={(event) => setValues((current) => ({ ...current, education: event.target.value }))}
+                  onChange={(value) => setValues((current) => ({ ...current, education: value }))}
                   onBlur={() => validateOnBlur("education")}
+                  options={EDUCATION_OPTIONS}
+                  placeholder="Select education"
                   disabled={closed}
-                  aria-invalid={Boolean((touched.education || submitAttempted) && errors.education)}
-                  aria-describedby={(touched.education || submitAttempted) && errors.education ? "education-error" : undefined}
-                >
-                  <option value="">Select education</option>
-                  {EDUCATION_OPTIONS.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
+                  invalid={Boolean((touched.education || submitAttempted) && errors.education)}
+                  ariaDescribedBy={(touched.education || submitAttempted) && errors.education ? "education-error" : undefined}
+                />
                 {(touched.education || submitAttempted) && errors.education ? (
                   <p id="education-error" className="field-error">{errors.education}</p>
                 ) : null}
-              </label>
-              <label>
-                <span className="field-label">Work experience (required)</span>
-                <select
+              </div>
+              <div>
+                <SelectDropdown
                   id="experience"
-                  className="field-select"
+                  label="Work experience (required)"
                   value={values.experience}
-                  onChange={(event) => setValues((current) => ({ ...current, experience: event.target.value }))}
+                  onChange={(value) => setValues((current) => ({ ...current, experience: value }))}
                   onBlur={() => validateOnBlur("experience")}
+                  options={EXPERIENCE_FILTERS.map((item) => ({ value: item.label, label: item.label }))}
+                  placeholder="Select experience"
                   disabled={closed}
-                  aria-invalid={Boolean((touched.experience || submitAttempted) && errors.experience)}
-                  aria-describedby={(touched.experience || submitAttempted) && errors.experience ? "experience-error" : undefined}
-                >
-                  <option value="">Select experience</option>
-                  {EXPERIENCE_FILTERS.map((item) => (
-                    <option key={item.value} value={item.label}>{item.label}</option>
-                  ))}
-                </select>
+                  invalid={Boolean((touched.experience || submitAttempted) && errors.experience)}
+                  ariaDescribedBy={(touched.experience || submitAttempted) && errors.experience ? "experience-error" : undefined}
+                />
                 {(touched.experience || submitAttempted) && errors.experience ? (
                   <p id="experience-error" className="field-error">{errors.experience}</p>
                 ) : null}
-              </label>
-              <label>
-                <span className="field-label">Preferred work mode (optional)</span>
-                <select
+              </div>
+              <div>
+                <SelectDropdown
                   id="preferredWorkMode"
-                  className="field-select"
+                  label="Preferred work mode (optional)"
                   value={values.preferredWorkMode}
-                  onChange={(event) =>
-                    setValues((current) => ({ ...current, preferredWorkMode: event.target.value }))
+                  onChange={(value) =>
+                    setValues((current) => ({ ...current, preferredWorkMode: value }))
                   }
+                  options={WORK_MODES}
+                  placeholder="No preference"
                   disabled={closed}
-                >
-                  <option value="">No preference</option>
-                  {WORK_MODES.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
+                />
+              </div>
 
               <div className="md:col-span-2">
                 <label htmlFor="resume-input">

@@ -1,25 +1,7 @@
 import { useState } from "react";
 import { HiChevronDown, HiFunnel } from "react-icons/hi2";
 import { CATEGORIES, EXPERIENCE_FILTERS, LOCATIONS, WORK_MODES } from "../../data/constants";
-
-function Select({ id, label, value, onChange, options, placeholder }) {
-  return (
-    <label htmlFor={id} className="block">
-      <span className="field-label">{label}</span>
-      <select id={id} className="field-select" value={value} onChange={(event) => onChange(event.target.value)}>
-        <option value="">{placeholder}</option>
-        {options.map((option) => {
-          const item = typeof option === "string" ? { value: option, label: option } : option;
-          return (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          );
-        })}
-      </select>
-    </label>
-  );
-}
+import SelectDropdown from "../common/SelectDropdown";
 
 export default function JobFilters({ filters, onChange, onClear, resultCount }) {
   const [open, setOpen] = useState(false);
@@ -75,9 +57,9 @@ export default function JobFilters({ filters, onChange, onClear, resultCount }) 
 
       <div
         id="job-filter-fields"
-        className={`${open ? "grid" : "hidden"} mt-4 gap-4 sm:grid-cols-2 lg:grid lg:grid-cols-1`}
+        className={`${open ? "grid panel-reveal" : "hidden"} mt-4 gap-4 sm:grid-cols-2 lg:grid lg:grid-cols-1`}
       >
-        <Select
+        <SelectDropdown
           id="filter-location"
           label="Location"
           value={filters.location}
@@ -85,7 +67,7 @@ export default function JobFilters({ filters, onChange, onClear, resultCount }) 
           options={LOCATIONS}
           placeholder="All locations"
         />
-        <Select
+        <SelectDropdown
           id="filter-category"
           label="Category"
           value={filters.category}
@@ -93,7 +75,7 @@ export default function JobFilters({ filters, onChange, onClear, resultCount }) 
           options={CATEGORIES}
           placeholder="All categories"
         />
-        <Select
+        <SelectDropdown
           id="filter-mode"
           label="Work mode"
           value={filters.workMode}
@@ -101,7 +83,7 @@ export default function JobFilters({ filters, onChange, onClear, resultCount }) 
           options={WORK_MODES}
           placeholder="All work modes"
         />
-        <Select
+        <SelectDropdown
           id="filter-experience"
           label="Experience"
           value={filters.experience}

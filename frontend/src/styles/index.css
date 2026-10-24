@@ -1372,6 +1372,179 @@
     color: var(--muted);
   }
 
+  /* ---------- Custom select dropdown ----------
+     SelectDropdown.jsx owns the markup: a .field-select trigger button and a
+     listbox menu that stays mounted through a short closing phase so the exit
+     animation always finishes. Open: fade + 8px rise + subtle scale (~200ms).
+     Close: fade + 4px lift (~150ms). Both use --btn-ease so dropdowns feel
+     like the buttons they trigger. All colors come from existing theme
+     tokens, so Light and Night Mode stay in sync automatically. */
+
+  .select-root {
+    position: relative;
+    min-width: 0;
+  }
+
+  .select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    text-align: left;
+  }
+
+  .select-trigger:disabled {
+    cursor: not-allowed;
+  }
+
+  .select-value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .select-chevron {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition:
+      transform 200ms var(--btn-ease),
+      color 200ms var(--btn-ease);
+  }
+
+  .select-trigger[aria-expanded="true"] .select-chevron {
+    transform: rotate(180deg);
+    color: var(--text);
+  }
+
+  .select-menu {
+    position: absolute;
+    z-index: 40;
+    top: calc(100% + 0.45rem);
+    right: 0;
+    left: 0;
+    max-height: 16.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 0.8rem;
+    background: var(--surface-raised);
+    box-shadow: var(--panel-shadow);
+    transform-origin: top center;
+    animation: dropdown-in 200ms var(--btn-ease) both;
+  }
+
+  .select-menu.is-closing {
+    pointer-events: none;
+    animation: dropdown-out 150ms var(--btn-ease) both;
+  }
+
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes dropdown-out {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.985);
+    }
+  }
+
+  .select-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.6rem;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.45;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+  }
+
+  .select-option-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .select-option-check {
+    flex-shrink: 0;
+    color: var(--text);
+  }
+
+  .select-option.is-selected {
+    background: var(--surface-alt);
+    font-weight: 600;
+  }
+
+  .select-option.is-active {
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+  }
+
+  .select-option.is-selected.is-active {
+    background: var(--surface-alt);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 12%, transparent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .select-option:hover {
+      background: color-mix(in srgb, var(--text) 6%, transparent);
+    }
+
+    .select-option.is-selected:hover {
+      background: var(--surface-alt);
+    }
+  }
+
+  .select-option:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  /* ---------- Mobile nav / collapsible panel reveal ----------
+     Header's mobile menu and the Jobs filter panel toggle between mounted and
+     unmounted, so a single mount animation is all they need. Scoped below
+     lg, where those toggles exist, so desktop layouts never animate. */
+
+  @keyframes panel-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .panel-reveal {
+      animation: panel-reveal 220ms var(--btn-ease) both;
+    }
+  }
+
   /* ---------- Badges, chips, tiles ---------- */
 
   .badge {
@@ -1553,6 +1726,249 @@
 
   .job-card:hover::before {
     opacity: 1;
+  }
+
+  /* ---------- Job ticker (Home) ----------
+     Ticker.jsx owns the markup: a pause/play control, a scrolling viewport,
+     the live track and an aria-hidden duplicate track that makes the loop
+     seamless. None of its presentation existed in this file, so the strip
+     fell back to raw inline text. All of it lives here. */
+
+  .ticker-strip {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 2vw, 1.1rem);
+    padding: 0.6rem clamp(0.75rem, 4vw, 1.5rem);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--notice-shadow);
+  }
+
+  .ticker-btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 2.1rem;
+    padding: 0.42rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: var(--secondary-shadow);
+    transition:
+      transform 180ms var(--btn-ease),
+      box-shadow 180ms var(--btn-ease),
+      background-color 180ms var(--btn-ease),
+      border-color 180ms var(--btn-ease),
+      color 180ms var(--btn-ease);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ticker-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--muted);
+      background-color: var(--btn-secondary-bg-hover);
+      box-shadow: var(--secondary-shadow-hover);
+    }
+  }
+
+  .ticker-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--pressed-shadow);
+  }
+
+  .ticker-btn:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  /* Paused state inverts the pill, so the black-and-white theme still reads
+     correctly in both light mode and night mode. */
+  .ticker-btn[aria-pressed="true"] {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+    box-shadow: var(--icon-shadow);
+  }
+
+  .ticker-btn-label {
+    white-space: nowrap;
+  }
+
+  /* Clips the loop and fades both edges into the strip background. */
+  .ticker-mask {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent 100%
+    );
+  }
+
+  /* Both tracks are identical, so shifting the row by 50% of its own width
+     lands the duplicate exactly where the first track started — a seamless
+     loop with no gap and no jump. */
+  .ticker-viewport {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    animation: ticker-marquee 60s linear infinite;
+    will-change: transform;
+  }
+
+  .ticker-track {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-inline-end: 0.75rem;
+  }
+
+  .ticker-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.32rem 0.6rem;
+    border: 1px solid transparent;
+    border-radius: 0.62rem;
+    color: var(--text);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease,
+      border-color 0.18s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ticker-link:hover {
+      color: var(--text);
+      background-color: color-mix(in srgb, var(--text) 5%, transparent);
+      border-color: var(--border);
+    }
+  }
+
+  .ticker-link:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  .ticker-title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .ticker-sep {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .ticker-meta {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .ticker-id {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.14rem 0.45rem;
+    border: 1px solid var(--border);
+    border-radius: 0.45rem;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: var(--quick-shadow);
+  }
+
+  .ticker-dot {
+    width: 0.3rem;
+    height: 0.3rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--muted);
+    opacity: 0.6;
+  }
+
+  /* The pause button, a hover, and keyboard focus all freeze the animation. */
+  .ticker-strip:hover .ticker-viewport,
+  .ticker-strip:focus-within .ticker-viewport,
+  .ticker-paused .ticker-viewport {
+    animation-play-state: paused;
+  }
+
+  @keyframes ticker-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ticker-strip {
+      padding: 0.55rem 0.75rem;
+    }
+
+    .ticker-btn {
+      padding: 0.4rem 0.65rem;
+    }
+
+    .ticker-link {
+      padding: 0.28rem 0.5rem;
+      font-size: 0.82rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-viewport {
+      animation: none;
+    }
+
+    .ticker-mask {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+      scrollbar-width: thin;
+    }
+
+    .ticker-track[aria-hidden="true"] {
+      display: none;
+    }
   }
 
   /* ---------- Hero ---------- */
