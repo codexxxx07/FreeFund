@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { HiCheckCircle, HiChatBubbleLeftRight, HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
@@ -6,7 +7,14 @@ import { CONTACT_PLACEHOLDERS, IS_DEMO, isPlaceholder } from "../data/constants"
 import { isEmptyErrors, validateContact } from "../utils/validation";
 
 export default function Contact() {
-  const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
+  const [searchParams] = useSearchParams();
+  const topicFromUrl = searchParams.get("topic") || "";
+  const initialTopic =
+    topicFromUrl === "employer" ? "employer"
+    : topicFromUrl === "candidate" ? "candidate"
+    : topicFromUrl === "report" ? "report"
+    : "";
+  const [values, setValues] = useState({ name: "", email: "", topic: initialTopic, subject: "", message: "" });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
 
@@ -73,6 +81,21 @@ export default function Contact() {
               </div>
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                <label className="sm:col-span-2">
+                  <span className="field-label">Topic</span>
+                  <select
+                    className="field-select"
+                    name="topic"
+                    value={values.topic}
+                    onChange={update}
+                  >
+                    <option value="">Select a topic (optional)</option>
+                    <option value="candidate">Candidate enquiry</option>
+                    <option value="employer">Employer / vacancy listing</option>
+                    <option value="report">Report a suspicious listing</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
                 <label>
                   <span className="field-label">Name (required)</span>
                   <input

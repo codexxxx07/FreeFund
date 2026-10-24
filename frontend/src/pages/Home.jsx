@@ -15,6 +15,7 @@ import {
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
+import Ticker from "../components/common/Ticker";
 import JobCard from "../components/jobs/JobCard";
 import JobSearchBar from "../components/jobs/JobSearchBar";
 import {
@@ -164,6 +165,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Ticker strip — only rendered when open jobs exist */}
+      <Ticker jobs={openJobs} />
 
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
