@@ -9,7 +9,6 @@
 /** Primary navigation, in order. `children` renders as a dropdown / sub-list. */
 export const primaryNav = [
   { to: "/", label: "Home", end: true },
-  { to: "/jobs", label: "Find Jobs" },
   { to: "/resume-builder", label: "Resume Builder" },
   {
     label: "Career Resources",
@@ -44,7 +43,6 @@ export const footerGroups = [
   {
     title: "Job Seekers",
     links: [
-      { to: "/jobs", label: "Find Jobs" },
       { whatsapp: true, label: "WhatsApp Channel" },
     ],
   },
@@ -60,7 +58,6 @@ export const footerGroups = [
 /** Static sitemap paths. Kept next to navigation so new pages are added once. */
 export const SITE_PATHS = [
   "/",
-  "/jobs",
   "/resume-builder",
   "/practice-tools",
   "/career-guidance",

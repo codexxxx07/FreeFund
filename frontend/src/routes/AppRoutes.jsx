@@ -1,9 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import Home from "../pages/Home";
-import Jobs from "../pages/Jobs";
-import JobDetails from "../pages/JobDetails";
-import Apply from "../pages/Apply";
 import ResumeBuilder from "../pages/ResumeBuilder";
 import PracticeTools from "../pages/PracticeTools";
 import CareerGuidance from "../pages/CareerGuidance";
@@ -20,11 +17,6 @@ export default function AppRoutes() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-
-        {/* Jobs */}
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobs/:jobId" element={<JobDetails />} />
-        <Route path="/apply/:jobId" element={<Apply />} />
 
         {/* Career resources */}
         <Route path="/resume-builder" element={<ResumeBuilder />} />

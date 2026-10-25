@@ -39,44 +39,42 @@ function hasValue(v) {
 const whatWeDo = [
   {
     icon: HiBriefcase,
-    title: "Browse openings across India",
-    body: "Explore roles that are WFH, Work From Office, or Hybrid — in cities including Bangalore, Noida, Gurugram, Mumbai, Pune, and Hyderabad, plus fully remote positions.",
+    title: "Recruitment across India",
+    body: "We work with authorised employers hiring for customer support, BPO, sales and back-office roles — including work-from-home, office and hybrid positions.",
   },
   {
     icon: HiCheckCircle,
-    title: "Apply per job — ID included",
-    body: "When you apply, the Job ID and job title are automatically attached to your submission so nothing gets mixed up.",
+    title: "Free preparation tools",
+    body: "A resume builder, practice tests and short guidance articles help you arrive at any application better prepared.",
   },
   {
     icon: HiShieldCheck,
-    title: "Clear status on every listing",
-    body: "Each job is clearly marked — Active, Paused, or Closed. Closed roles stop accepting applications immediately.",
+    title: "Honest guidance at every step",
+    body: "We never charge candidates a fee, and we will never ask you for money, an OTP or bank details at any stage.",
   },
   {
     icon: HiUserGroup,
     title: "Candidate support",
-    body: "Have a question about a listing or your application? Use the Contact page to reach our team.",
+    body: "Have a question about an offer or a process step? Use the Contact page to reach our team.",
   },
 ];
 
 const hiringSteps = [
-  { label: "Find a job", detail: "Search and filter listings by location, category, or work mode." },
-  { label: "Apply", detail: "Fill in the job-specific form. Your Job ID and title are pre-filled." },
-  { label: "Application reviewed", detail: "Our recruitment team reviews your submission against the role brief." },
+  { label: "Contact us", detail: "Tell us the kind of role you are looking for through the Contact page." },
+  { label: "Share your profile", detail: "Send your resume — the Resume Builder can help you put one together." },
+  { label: "We match you", detail: "Our recruitment team checks your profile against roles from authorised employers." },
   { label: "HR contacts you", detail: "If your profile matches, the relevant HR team will reach out." },
   { label: "Interview and outcome", detail: "The employer leads the interview process and communicates the result." },
 ];
 
 const commitments = [
-  "Only authorised, genuine vacancies are published on this site.",
-  "Closed roles are marked immediately and stop accepting applications.",
   "Your personal details are never displayed publicly.",
-  "We provide a clear privacy notice and ask for consent before you apply.",
+  "We provide a clear privacy notice and ask for consent before you share your details.",
 ];
 
 const safetyTips = [
   "Never pay money to anyone — not to an employer, recruiter, or agent — to get a job. Legitimate employers do not ask for payment.",
-  "Verify the Job ID on this site before engaging with any offer. If a Job ID does not appear here, be cautious.",
+  "Verify any offer with our team before you engage. If an employer or recruiter cannot be traced back to us, be cautious.",
   "Be careful with unknown WhatsApp numbers or numbers not listed on our Contact page.",
   "We will never ask you for an OTP, bank password, or any financial information.",
 ];
@@ -90,16 +88,10 @@ const faqItems = [
       : "We do not charge candidates a platform fee to browse or submit applications through this website. However, please read our Terms and the specific job listing carefully, as individual hiring processes can vary. If you are ever asked to pay money to secure a job, stop and report it.",
   },
   {
-    id: "faq-jobid",
-    question: "How do I find a Job ID?",
-    answer:
-      "Every job listing on our site shows its Job ID in the top section of the job details page (for example, BLR-002). The ID is also visible on job cards in search results. When you apply, the Job ID is automatically included in your form — you do not need to type it yourself.",
-  },
-  {
     id: "faq-multiple",
-    question: "Can I apply to more than one job?",
+    question: "Can I be considered for more than one role?",
     answer:
-      "Yes. You can apply for as many open roles as you are genuinely interested in and qualify for. Each application is linked to its specific job, so there is no confusion between roles.",
+      "Yes. Tell us about every kind of role you are genuinely interested in and qualify for, and our team will put you forward where there is a match.",
   },
   {
     id: "faq-after-apply",
@@ -111,14 +103,14 @@ const faqItems = [
     id: "faq-edit",
     question: "Can I edit my application after submitting?",
     answer:
-      "At this time, submitted applications cannot be edited through the website. If you made a mistake, contact us through the Contact page as soon as possible and mention the Job ID.",
+      "If you made a mistake or your details have changed, contact us through the Contact page as soon as possible and we will update our records.",
   },
   {
     id: "faq-data",
     question: "How is my personal data used?",
     answer: (
       <>
-        Your information is used only to process your job application. Please read our{" "}
+        Your information is used only to process your enquiry and any role we put you forward for. Please read our{" "}
         <Link to="/privacy-policy" className="underline underline-offset-2">
           Privacy Policy
         </Link>{" "}
@@ -131,7 +123,7 @@ const faqItems = [
     question: "How do I report a fake or suspicious job?",
     answer: (
       <>
-        If you see a listing that looks suspicious, or if someone contacts you claiming to be from Jobs Mania -{" "}
+        If someone contacts you claiming to be from Jobs Mania -{" "}
         Freefund but asks for money or sensitive information, please{" "}
         <Link to="/contact" className="underline underline-offset-2">
           contact us immediately
@@ -145,11 +137,11 @@ const faqItems = [
     question: "I'm an employer. Can my company list vacancies?",
     answer: (
       <>
-        Yes. If you want to list a vacancy on our platform,{" "}
+        Yes. If you want to list a vacancy with us,{" "}
         <Link to="/contact?topic=employer" className="underline underline-offset-2">
           get in touch with us
         </Link>
-        . We only publish authorised, genuine vacancies.
+        . We only work with authorised, genuine employers.
       </>
     ),
   },
@@ -164,7 +156,7 @@ function OrganizationJsonLd() {
     name: BRAND_NAME,
     url: typeof window !== "undefined" ? window.location.origin : "",
     description:
-      "A centralized recruitment platform where candidates explore authorised job openings across India and apply through one website, with each application linked to the correct Job ID.",
+      "A recruitment consultancy that helps candidates across India prepare properly, connect with authorised employers and get support at every step of the hiring process.",
   };
 
   return (
@@ -193,7 +185,7 @@ export default function About() {
     <div>
       <PageMeta
         title="About Us"
-        description={`${BRAND_NAME} is a centralized recruitment platform where candidates explore authorised job openings across India and apply through one website, with each application linked to the correct Job ID.`}
+        description={`${BRAND_NAME} is a recruitment consultancy that helps candidates across India prepare properly, connect with authorised employers and get support at every step.`}
       />
       <OrganizationJsonLd />
 
@@ -204,7 +196,7 @@ export default function About() {
             as="h1"
             eyebrow="About"
             title={`About ${BRAND_NAME}`}
-            description="A centralized recruitment platform where candidates explore authorised job openings across India and apply through one website — with each application linked to the correct Job ID."
+            description="A recruitment consultancy that helps candidates across India prepare properly, connect with authorised employers, and get support at every step."
           />
           {aboutConfig.noFeePolicyConfirmed && (
             <div className="about-fee-banner" role="note" aria-label="No fee policy">
@@ -220,8 +212,8 @@ export default function About() {
         <div className="page-shell">
           <SectionHeading
             eyebrow="What we do"
-            title="One place for authorised openings"
-            description="Browse, compare, and apply for genuine vacancies — without chasing multiple portals."
+            title="Recruitment help, and free preparation tools"
+            description="Genuine guidance from a real team, plus free tools that help you arrive better prepared."
           />
           <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {whatWeDo.map((item) => {
@@ -288,7 +280,7 @@ export default function About() {
             ))}
           </ul>
           <p className="mt-5 text-sm text-muted">
-            By applying through this site you agree to our{" "}
+            By using this site you agree to our{" "}
         <Link to="/privacy-policy" className="underline underline-offset-2">
           Privacy Policy
         </Link>{" "}
@@ -405,8 +397,8 @@ export default function About() {
               <p className="eyebrow">For employers</p>
               <h2 className="mt-3 text-2xl sm:text-3xl">Want to list a vacancy?</h2>
               <p className="mt-2 text-muted">
-                We publish only authorised, genuine vacancies. If you are an employer or hiring partner looking
-                to list a role on this platform, reach out and we will walk you through the process.
+                We work only with authorised, genuine employers. If you are an employer or hiring partner with a
+                role to fill, reach out and we will walk you through the process.
               </p>
             </div>
             <div className="mt-6 shrink-0 lg:mt-0">
@@ -428,13 +420,13 @@ export default function About() {
             <div className="relative grid gap-8 lg:grid-cols-[1.25fr_auto] lg:items-center">
               <div className="max-w-2xl">
                 <p className="eyebrow">Ready?</p>
-                <h2 className="mt-3 text-balance text-3xl sm:text-4xl">Browse current jobs</h2>
+                <h2 className="mt-3 text-balance text-3xl sm:text-4xl">Ready when you are</h2>
                 <p className="mt-3 text-lg">
-                  Explore authorised openings across India — WFH, office, and hybrid roles.
+                  Prepare your resume, practise for the interview, and get in touch when you are ready to talk.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Link to="/jobs" className="btn-inverse btn-lg">
-                    Find Jobs
+                  <Link to="/resume-builder" className="btn-inverse btn-lg">
+                    Build Your Resume
                     <HiArrowRight aria-hidden="true" />
                   </Link>
                   <Link to="/contact" className="btn-outline-inverse btn-lg">

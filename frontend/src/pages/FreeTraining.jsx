@@ -64,7 +64,7 @@ export default function FreeTraining() {
             as="h1"
             eyebrow="Career resources"
             title="Free Training"
-            description="Practical, job-focused programmes for candidates who want to improve their chances — taught by the same team that publishes our vacancies."
+            description="Practical, job-focused programmes for candidates who want to improve their chances — taught by our recruitment team."
           />
 
           {IS_DEMO ? (

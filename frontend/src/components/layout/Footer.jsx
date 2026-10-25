@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaLinkedin } from "react-icons/fa";
-import { HiArrowRight, HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
+import { HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
 import { BRAND_NAME, CONTACT_PLACEHOLDERS, IS_DEMO, isPlaceholder } from "../../data/constants";
 import { footerGroups } from "../../data/navigation";
 import aboutConfig from "../../data/aboutConfig";
@@ -28,16 +28,9 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
-              Explore current openings, build an ATS-friendly resume, and use free career resources prepared for
+              Build an ATS-friendly resume, practise for interviews, and use free career resources prepared for
               candidates.
             </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/jobs" className="btn-primary">
-                Find Jobs
-                <HiArrowRight aria-hidden="true" />
-              </Link>
-            </div>
 
             {showContact ? (
               <ul className="mt-6 space-y-2.5 text-sm text-muted">
@@ -108,7 +101,7 @@ export default function Footer() {
               © {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-              {IS_DEMO ? <p>Sample listings only</p> : null}
+              {IS_DEMO ? <p>Sample content where labelled</p> : null}
               <p>Career tools run entirely in your browser.</p>
             </div>
           </div>

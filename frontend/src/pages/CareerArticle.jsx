@@ -79,8 +79,8 @@ export default function CareerArticle() {
             <Link to="/practice-tools" className="btn-secondary">
               Free Practice Tools
             </Link>
-            <Link to="/jobs" className="btn-secondary">
-              Find Jobs
+            <Link to="/free-training" className="btn-secondary">
+              Free Training
             </Link>
           </div>
         </article>

@@ -1,6 +1,6 @@
 # Jobs Mania - Freefund (Phase 1 frontend)
 
-React website prototype for browsing sample vacancies and testing the candidate application interface.
+React website for a recruitment consultancy: free career resources, training information and company pages.
 
 ## Run locally
 
@@ -18,10 +18,9 @@ npm run build
 
 ## What is included
 
-- Home, jobs, job details, apply, about, contact, privacy, and terms pages
-- Central sample job dataset in `src/data/jobs.js`
-- Search and filters via URL query parameters
+- Home (including the WhatsApp Community section), resume builder, practice tools, career guidance, free training, about, contact, privacy and terms pages
 - Frontend-only form validation
+- Owner-editable configuration in `src/data/siteConfig.js` (WhatsApp Channel link, WhatsApp Community invitation link, enquiry number, contact details, site URL)
 - Minimal + Skewmorphic visual system in `src/styles/index.css`, built on white surfaces, `#111111` typography, black-and-white buttons, and layered depth shadows
 
-Listings are sample/demo content. Forms do not email, store, or deliver applications to HR.
+Everything runs in the browser. Forms do not email, store, or deliver anything to HR.

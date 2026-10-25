@@ -38,6 +38,16 @@ const siteConfig = {
   whatsappChannelUrl: "",
 
   /**
+   * WhatsApp Community invitation link, e.g.
+   * "https://whatsapp.com/channel/0029VaXXXXXXXXXXXXXXXX" or the community
+   * invite URL supplied by WhatsApp.
+   * Leave "" until the owner supplies it. The Home page "Join Community"
+   * button then explains that the link is coming soon instead of navigating
+   * to an invalid URL.
+   */
+  whatsappCommunityUrl: "",
+
+  /**
    * WhatsApp number for one-to-one enquiries, digits only with country code,
    * e.g. "919876543210". Leave "" to hide every "chat on WhatsApp" action.
    */
@@ -70,6 +80,11 @@ export function isUnset(value) {
 /** True when the official WhatsApp Channel URL has been configured. */
 export function hasWhatsAppChannel() {
   return !isUnset(siteConfig.whatsappChannelUrl);
+}
+
+/** True when the WhatsApp Community invitation link has been configured. */
+export function hasWhatsAppCommunity() {
+  return !isUnset(siteConfig.whatsappCommunityUrl);
 }
 
 /** True when a real WhatsApp enquiry number has been configured. */

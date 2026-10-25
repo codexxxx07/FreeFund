@@ -320,8 +320,8 @@ export default function Contact() {
             <div className="mt-6 border-t border-line pt-6">
               <p className="text-sm font-semibold">Quick links</p>
               <div className="mt-3 flex flex-wrap gap-3">
-                <Link to="/jobs" className="btn-secondary min-h-0 px-3 py-2">
-                  Find Jobs
+                <Link to="/career-guidance" className="btn-secondary min-h-0 px-3 py-2">
+                  Career Guidance
                 </Link>
                 <Link to="/free-training" className="btn-secondary min-h-0 px-3 py-2">
                   Free Training

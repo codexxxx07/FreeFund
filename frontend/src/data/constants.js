@@ -9,7 +9,7 @@ import siteConfig from "./siteConfig";
 
 export const BRAND_NAME = "Jobs Mania - Freefund";
 
-// Before switching to "live": replace demo data with real jobs and connect a working submit endpoint.
+// Before switching to "live": replace sample content with verified content and connect a working submit endpoint.
 export const SITE_MODE = "demo"; // "demo" | "live"
 export const IS_DEMO = SITE_MODE === "demo";
 
@@ -56,6 +56,3 @@ export const EDUCATION_OPTIONS = [
 ];
 
 export const CONTACT_PLACEHOLDERS = siteConfig.contact;
-
-export const DEMO_NOTICE =
-  "Sample listings. Applications are not sent to employers.";
