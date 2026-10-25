@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  HiArrowRight,
   HiBriefcase,
   HiCheckCircle,
-  HiChevronDown,
   HiEnvelope,
   HiExclamationTriangle,
   HiMapPin,
@@ -13,6 +12,8 @@ import {
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
+import FaqList from "../components/common/FaqList";
+import WhatsAppCta from "../components/common/WhatsAppCta";
 import { BRAND_NAME } from "../data/constants";
 import aboutConfig from "../data/aboutConfig";
 
@@ -118,7 +119,7 @@ const faqItems = [
     answer: (
       <>
         Your information is used only to process your job application. Please read our{" "}
-        <Link to="/privacy" className="underline underline-offset-2">
+        <Link to="/privacy-policy" className="underline underline-offset-2">
           Privacy Policy
         </Link>{" "}
         for full details on how we collect, store, and protect your data.
@@ -153,45 +154,6 @@ const faqItems = [
     ),
   },
 ];
-
-/* ─── sub-components ──────────────────────────────────────────────────────── */
-
-function FaqItem({ item }) {
-  const [open, setOpen] = useState(false);
-  const panelId = `${item.id}-panel`;
-
-  return (
-    <div className={`faq-item${open ? " is-open" : ""}`}>
-      <button
-        type="button"
-        id={item.id}
-        aria-expanded={open}
-        aria-controls={panelId}
-        className="faq-trigger"
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span>{item.question}</span>
-        <span className="faq-chevron-tile" aria-hidden="true">
-          <HiChevronDown
-            className={`faq-chevron${open ? " faq-chevron-open" : ""}`}
-            size={18}
-          />
-        </span>
-      </button>
-
-      <div
-        id={panelId}
-        role="region"
-        aria-labelledby={item.id}
-        className={`faq-panel${open ? " is-open" : ""}`}
-      >
-        <div className="faq-panel-inner">
-          <p className="faq-answer">{item.answer}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ─── JSON-LD ─────────────────────────────────────────────────────────────── */
 
@@ -327,13 +289,13 @@ export default function About() {
           </ul>
           <p className="mt-5 text-sm text-muted">
             By applying through this site you agree to our{" "}
-            <Link to="/privacy" className="underline underline-offset-2">
-              Privacy Policy
-            </Link>{" "}
-            and{" "}
-            <Link to="/terms" className="underline underline-offset-2">
-              Terms &amp; Conditions
-            </Link>
+        <Link to="/privacy-policy" className="underline underline-offset-2">
+          Privacy Policy
+        </Link>{" "}
+        and{" "}
+        <Link to="/terms-and-conditions" className="underline underline-offset-2">
+          Terms &amp; Conditions
+        </Link>
             .
           </p>
         </div>
@@ -429,10 +391,8 @@ export default function About() {
             title="Frequently asked questions"
             description="Honest answers about how this platform works today."
           />
-          <div className="mt-7 surface-card surface-card-hover about-card faq-list">
-            {faqItems.map((item) => (
-              <FaqItem key={item.id} item={item} />
-            ))}
+          <div className="mt-7 surface-card surface-card-hover about-card">
+            <FaqList items={faqItems} />
           </div>
         </div>
       </section>
@@ -474,11 +434,15 @@ export default function About() {
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
                   <Link to="/jobs" className="btn-inverse btn-lg">
-                    Browse jobs
+                    Find Jobs
+                    <HiArrowRight aria-hidden="true" />
                   </Link>
                   <Link to="/contact" className="btn-outline-inverse btn-lg">
                     Contact us
                   </Link>
+                  <WhatsAppCta className="btn-outline-inverse btn-lg">
+                    Join our WhatsApp Channel
+                  </WhatsAppCta>
                 </div>
               </div>
               <div className="hidden lg:block">

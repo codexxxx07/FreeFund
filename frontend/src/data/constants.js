@@ -1,3 +1,12 @@
+import siteConfig from "./siteConfig";
+
+/**
+ * Brand and catalogue constants used across the site.
+ *
+ * Owner-editable business information (WhatsApp Channel link, enquiry number,
+ * contact details, production origin) lives in ./siteConfig.js.
+ */
+
 export const BRAND_NAME = "Jobs Mania - Freefund";
 
 // Before switching to "live": replace demo data with real jobs and connect a working submit endpoint.
@@ -46,11 +55,7 @@ export const EDUCATION_OPTIONS = [
   "Other",
 ];
 
-export const CONTACT_PLACEHOLDERS = {
-  email: "contact@example.com (placeholder — to be confirmed)",
-  phone: "+91 XXXXX XXXXX (placeholder — to be confirmed)",
-  region: "India (full address to be confirmed)",
-};
+export const CONTACT_PLACEHOLDERS = siteConfig.contact;
 
 export const DEMO_NOTICE =
   "Sample listings. Applications are not sent to employers.";

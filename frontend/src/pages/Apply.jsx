@@ -191,8 +191,9 @@ export default function Apply() {
 
       <div className="page-shell max-w-5xl py-10">
         {IS_DEMO ? (
-          <div className="mb-5 rounded-xl border border-line bg-secondary px-4 py-2.5 text-sm text-muted">
-            Sample form. Your application is not sent to an employer.
+          <div className="demo-notice mb-5" role="note">
+            <HiInformationCircle size={18} aria-hidden="true" />
+            <p>Sample application form. Nothing you enter is sent to an employer.</p>
           </div>
         ) : null}
 
@@ -215,21 +216,29 @@ export default function Apply() {
                 <HiCheckCircle aria-hidden="true" size={28} />
               </span>
               <h2 ref={successRef} tabIndex={-1} className="mt-5 text-2xl focus:outline-none sm:text-3xl">
-                Application received {IS_DEMO ? "(demo)" : ""}
+                Application summary prepared
               </h2>
               <p className="mt-3 text-muted">
-                Job ID: {job.id} · {job.title} · {values.fullName}
+                Job ID {job.id} · {job.title} · {values.fullName}
               </p>
-              {IS_DEMO ? (
-                <p className="mt-2 text-sm text-muted">Form data is not delivered anywhere.</p>
-              ) : null}
+              <div className="demo-notice mt-5 w-full text-left" role="note">
+                <HiInformationCircle size={18} aria-hidden="true" />
+                <p>
+                  Nothing has been sent to an employer. This prototype keeps your entry in this browser tab only — it
+                  disappears when the tab closes and is never uploaded. To apply for real, contact us with the Job ID
+                  and we will take it from there.
+                </p>
+              </div>
               <div className="mt-7 flex flex-wrap justify-center gap-3">
-                <Link to="/jobs" className="btn-primary">
-                  Back to jobs
+                <Link
+                  to={`/contact?topic=candidate&subject=${encodeURIComponent(`Application for ${job.id}`)}`}
+                  className="btn-primary"
+                >
+                  Contact us about this job
                   <HiArrowRight aria-hidden="true" />
                 </Link>
-                <Link to={`/jobs/${job.id}`} className="btn-secondary">
-                  View job details
+                <Link to="/jobs" className="btn-secondary">
+                  Back to jobs
                 </Link>
               </div>
             </div>
@@ -242,7 +251,7 @@ export default function Apply() {
               </span>
               <div>
                 <h2 className="text-xl sm:text-2xl">Candidate details</h2>
-                <p className="mt-1 text-sm text-muted">Fields marked required must be completed before submitting.</p>
+                <p className="mt-1 text-sm text-muted">Fields marked required must be completed before continuing.</p>
               </div>
             </div>
 
@@ -423,7 +432,7 @@ export default function Apply() {
                   aria-describedby={(touched.consent || submitAttempted) && errors.consent ? "consent-error" : undefined}
                 />
                 <span>
-                  I consent to submit this application. (required)
+                  I confirm the details above are correct and can be used for this application. (required)
                 </span>
               </label>
               {(touched.consent || submitAttempted) && errors.consent ? (
@@ -433,7 +442,7 @@ export default function Apply() {
 
             <div className="mt-6 flex justify-end border-t border-line pt-6">
               <button type="submit" className="btn-primary btn-lg w-full sm:w-auto" disabled={closed || status === "loading"}>
-                {status === "loading" ? "Submitting..." : "Submit application"}
+                {status === "loading" ? "Preparing…" : "Prepare my application"}
               </button>
             </div>
           </form>

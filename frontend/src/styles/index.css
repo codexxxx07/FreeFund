@@ -16,6 +16,7 @@
   --accent: #111111;
   --on-accent: #ffffff;
   --danger: #b42318;
+  --danger-text: #b42318;
   --highlight: rgba(255, 255, 255, 0.95);
   --edge-sheen: rgba(255, 255, 255, 0.9);
   --btn-edge-sheen: rgba(255, 255, 255, 0.28);
@@ -137,6 +138,7 @@
   --accent: #f5f5f5;
   --on-accent: #0b0b0b;
   --danger: #f5f5f5;
+  --danger-text: #ff8f85;
   --highlight: rgba(255, 255, 255, 0.06);
   --edge-sheen: transparent;
   --btn-edge-sheen: transparent;
@@ -791,6 +793,23 @@
       0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
+  /* Tighten the navbar below 1440px so all seven links plus the WhatsApp
+     action fit inside the 1180px shell without wrapping or shrinking. */
+  @media (max-width: 1439px) {
+    .nav-shell {
+      gap: 0.7rem;
+    }
+
+    .nav-link {
+      padding-inline: 0.7rem;
+      font-size: 0.83rem;
+    }
+
+    .nav-dropdown-trigger {
+      padding-inline: 0.7rem;
+    }
+  }
+
   .theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -1186,7 +1205,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .btn-tab:not(:disabled):not([aria-selected="true"]):hover {
+    .btn-tab:not(:disabled):not([aria-selected="true"]):not(.is-selected):hover {
       color: var(--text);
       background-color: var(--surface);
       border-color: var(--muted);
@@ -1200,7 +1219,8 @@
     box-shadow: var(--pressed-shadow);
   }
 
-  .btn-tab[aria-selected="true"] {
+  .btn-tab[aria-selected="true"],
+  .btn-tab.is-selected {
     color: var(--text);
     background-color: var(--bg);
     border-color: var(--border);
@@ -2137,6 +2157,16 @@
     color: var(--text);
   }
 
+  /* Unconfigured external action (e.g. WhatsApp Channel link not yet set). */
+  .footer-link-placeholder {
+    cursor: not-allowed;
+    opacity: 0.72;
+  }
+
+  .footer-link-placeholder:hover {
+    color: var(--muted);
+  }
+
   @media (max-width: 640px) {
     .job-card {
       padding: 1.15rem;
@@ -2181,6 +2211,274 @@
     .page-shell,
     .page-shell-narrow {
       width: calc(100% - 1.5rem);
+    }
+  }
+}
+
+@layer components {
+  /* ---------- Navbar dropdown (Career Resources) ----------
+     Header.jsx owns the markup and all open/close, focus and Escape logic.
+     The menu stays mounted so its exit transition always finishes, and is
+     removed from the tab order with `visibility: hidden` while closed. */
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    gap: 0.3rem;
+    padding-inline: 0.9rem;
+  }
+
+  .nav-dropdown-trigger > svg {
+    transition:
+      transform 200ms var(--btn-ease),
+      color 200ms var(--btn-ease);
+    color: var(--muted);
+  }
+
+  .nav-dropdown-trigger[aria-expanded="true"] > svg {
+    transform: rotate(180deg);
+    color: var(--text);
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    z-index: 60;
+    top: calc(100% + 0.55rem);
+    left: 0;
+    min-width: 15.5rem;
+    margin: 0;
+    padding: 0.4rem;
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: var(--surface-raised);
+    box-shadow: var(--panel-shadow);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: top left;
+    transition:
+      opacity 180ms var(--btn-ease),
+      transform 180ms var(--btn-ease),
+      visibility 0s linear 180ms;
+  }
+
+  .nav-dropdown-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 180ms var(--btn-ease),
+      transform 180ms var(--btn-ease),
+      visibility 0s linear 0s;
+  }
+
+  .nav-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.6rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.4;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .nav-dropdown-item > svg {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition:
+      transform 180ms var(--btn-ease),
+      color 180ms var(--btn-ease);
+  }
+
+  .nav-dropdown-item:hover,
+  .nav-dropdown-item:focus-visible {
+    background: color-mix(in srgb, var(--text) 5%, transparent);
+  }
+
+  .nav-dropdown-item:hover > svg,
+  .nav-dropdown-item:focus-visible > svg {
+    color: var(--text);
+    transform: translateX(2px);
+  }
+
+  .nav-dropdown-item.is-active {
+    background: var(--active-bg);
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 var(--highlight);
+  }
+
+  .nav-dropdown-item:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  /* Label above a group of indented sub-links in the mobile menu. */
+  .nav-group-label {
+    display: block;
+    padding: 0.55rem 0.9rem 0.15rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-sub-link {
+    position: relative;
+    padding-left: 1.85rem;
+  }
+
+  .nav-sub-link::before {
+    content: "";
+    position: absolute;
+    left: 0.95rem;
+    top: 50%;
+    width: 0.55rem;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---------- Typing speed test ---------- */
+
+  .type-canvas {
+    font-family: var(--font-stack);
+    font-size: 1.15rem;
+    line-height: 2.1;
+    letter-spacing: 0.01em;
+    word-break: break-word;
+  }
+
+  .type-char {
+    border-radius: 3px;
+    transition:
+      color 120ms ease,
+      background-color 120ms ease;
+  }
+
+  .type-char-pending {
+    color: var(--muted);
+  }
+
+  .type-char-correct {
+    color: var(--text);
+  }
+
+  .type-char-wrong {
+    color: var(--danger-text);
+    background: color-mix(in srgb, var(--danger-text) 12%, transparent);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .type-char-current {
+    box-shadow: inset 0 -2px 0 0 var(--text);
+    animation: type-caret 1s step-end infinite;
+  }
+
+  @keyframes type-caret {
+    0%,
+    100% {
+      box-shadow: inset 0 -2px 0 0 var(--text);
+    }
+    50% {
+      box-shadow: inset 0 -2px 0 0 transparent;
+    }
+  }
+
+  /* ---------- Resume sheet (screen + print target) ---------- */
+
+  .resume-sheet {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    box-shadow: var(--card-shadow);
+  }
+
+  .resume-sheet h1,
+  .resume-sheet h2,
+  .resume-sheet h3,
+  .resume-sheet p,
+  .resume-sheet li,
+  .resume-sheet span,
+  .resume-sheet a,
+  .resume-sheet div {
+    color: #111111;
+  }
+
+  /* Print: the Resume Builder adds `print-resume` to <body> immediately before
+     calling window.print(). Everything except the resume is display:none (so it
+     leaves the flow and cannot create trailing blank pages — locking html/body
+     to a fixed height or leaving hidden layout in flow is a known cause of
+     phantom pages on mobile print engines), with the visibility fallback hiding
+     anything not explicitly marked. Without the class a normal Ctrl+P prints
+     the current page with the header and footer removed. */
+
+  @media print {
+    @page {
+      margin: 14mm;
+    }
+
+    html,
+    body {
+      background: #ffffff !important;
+    }
+
+    .site-header,
+    .site-footer,
+    .no-print,
+    .skip-link {
+      display: none !important;
+    }
+
+    body.print-resume * {
+      visibility: hidden !important;
+    }
+
+    body.print-resume .resume-sheet,
+    body.print-resume .resume-sheet * {
+      visibility: visible !important;
+    }
+
+    body.print-resume .resume-preview-column {
+      position: static !important;
+      max-height: none !important;
+      overflow: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    body.print-resume .resume-sheet {
+      position: static !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: #ffffff !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body.print-resume .resume-sheet * {
+      box-shadow: none !important;
+      animation: none !important;
     }
   }
 }

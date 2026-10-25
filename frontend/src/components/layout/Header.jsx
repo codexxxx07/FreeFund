@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { HiArrowRight, HiBars3, HiMoon, HiSun, HiXMark } from "react-icons/hi2";
+import { HiArrowRight, HiBars3, HiChevronDown, HiMoon, HiSun, HiXMark } from "react-icons/hi2";
 import { BRAND_NAME } from "../../data/constants";
+import { primaryNav } from "../../data/navigation";
+import WhatsAppCta from "../common/WhatsAppCta";
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/jobs", label: "Find Jobs" },
-  { to: "/about", label: "About Us" },
-  { to: "/contact", label: "Contact" },
-];
+function navClass({ isActive }, extra = "") {
+  return `nav-link${isActive ? " is-active" : ""}${extra ? ` ${extra}` : ""}`;
+}
 
-function navClass({ isActive }) {
-  return `nav-link${isActive ? " is-active" : ""}`;
+function isActivePath(pathname, link) {
+  if (link.end) return pathname === link.to;
+  if (!link.to) return false;
+  return pathname === link.to || pathname.startsWith(`${link.to}/`);
 }
 
 function getInitialTheme() {
@@ -20,26 +21,58 @@ function getInitialTheme() {
 }
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
   const menuButtonRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const triggerRef = useRef(null);
+  const itemRefs = useRef([]);
   const location = useLocation();
 
+  // Close every panel when the route changes.
   useEffect(() => {
-    setOpen(false);
+    setMenuOpen(false);
+    setDropdownOpen(false);
   }, [location.pathname]);
 
+  // Escape closes the mobile menu and returns focus to its toggle.
   useEffect(() => {
-    if (!open) return;
+    if (!menuOpen) return;
     function onKeyDown(event) {
       if (event.key === "Escape") {
-        setOpen(false);
+        setMenuOpen(false);
         menuButtonRef.current?.focus();
       }
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [menuOpen]);
+
+  // Escape closes the dropdown and returns focus to its trigger.
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        setDropdownOpen(false);
+        triggerRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [dropdownOpen]);
+
+  // Click outside closes the dropdown.
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function onPointerDown(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [dropdownOpen]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -56,30 +89,107 @@ export default function Header() {
     setTheme((value) => (value === "dark" ? "light" : "dark"));
   }
 
+  function onDropdownKeyDown(event) {
+    const items = primaryNav.find((item) => item.children)?.children || [];
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const startIndex = event.key === "ArrowDown" ? 0 : items.length - 1;
+      setDropdownOpen(true);
+      window.requestAnimationFrame(() => itemRefs.current[startIndex]?.focus());
+    } else if (event.key === "Escape") {
+      setDropdownOpen(false);
+    } else if (event.key === "Tab") {
+      setDropdownOpen(false);
+    }
+  }
+
+  function onMenuItemKeyDown(event, index, count) {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      itemRefs.current[(index + 1) % count]?.focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      itemRefs.current[(index - 1 + count) % count]?.focus();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      setDropdownOpen(false);
+      triggerRef.current?.focus();
+    } else if (event.key === "Tab") {
+      setDropdownOpen(false);
+    }
+  }
+
   return (
     <header className="site-header">
       <div className="page-shell">
         <div className="nav-bar">
           <div className="nav-shell">
-            <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
+            <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
               <span className="brand-mark" aria-hidden="true">
                 <span className="relative z-10">JM</span>
               </span>
               <span className="min-w-0">
                 <span className="block truncate font-display text-sm font-bold sm:text-base">{BRAND_NAME}</span>
-                <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Portal</span>
+                <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Consultancy</span>
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-              {links.map((link) => (
-                <NavLink key={link.to} to={link.to} className={navClass} end={link.to === "/"}>
-                  {link.label}
-                </NavLink>
-              ))}
+            <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
+              {primaryNav.map((link) => {
+                if (link.children) {
+                  const active = link.children.some((child) => isActivePath(location.pathname, child));
+                  return (
+                    <div key={link.label} className="nav-dropdown" ref={dropdownRef}>
+                      <button
+                        ref={triggerRef}
+                        type="button"
+                        className={`nav-link nav-dropdown-trigger${active ? " is-active" : ""}`}
+                        aria-expanded={dropdownOpen}
+                        aria-haspopup="menu"
+                        aria-controls="career-resources-menu"
+                        onClick={() => setDropdownOpen((value) => !value)}
+                        onKeyDown={onDropdownKeyDown}
+                      >
+                        {link.label}
+                        <HiChevronDown aria-hidden="true" />
+                      </button>
+                      <ul
+                        id="career-resources-menu"
+                        role="menu"
+                        aria-label={link.label}
+                        className={`nav-dropdown-menu${dropdownOpen ? " is-open" : ""}`}
+                      >
+                        {link.children.map((child, index) => (
+                          <li key={child.to} role="none">
+                            <NavLink
+                              role="menuitem"
+                              ref={(node) => {
+                                itemRefs.current[index] = node;
+                              }}
+                              to={child.to}
+                              className={({ isActive }) => `nav-dropdown-item${isActive ? " is-active" : ""}`}
+                              onClick={() => setDropdownOpen(false)}
+                              onKeyDown={(event) => onMenuItemKeyDown(event, index, link.children.length)}
+                            >
+                              {child.label}
+                              <HiArrowRight aria-hidden="true" />
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+
+                return (
+                  <NavLink key={link.to} to={link.to} className={navClass} end={link.end}>
+                    {link.label}
+                  </NavLink>
+                );
+              })}
             </nav>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 className="theme-toggle"
@@ -89,46 +199,61 @@ export default function Header() {
               >
                 {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
               </button>
-              <Link to="/jobs" className="btn-primary hidden sm:inline-flex">
-                Browse Jobs
-                <HiArrowRight aria-hidden="true" />
-              </Link>
+              <WhatsAppCta className="hidden px-4 text-sm sm:inline-flex" />
               <button
                 ref={menuButtonRef}
                 type="button"
-                className="btn-secondary px-3 py-2.5 lg:hidden"
-                aria-expanded={open}
+                className="btn-secondary px-3 py-2.5 xl:hidden"
+                aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
-                onClick={() => setOpen((value) => !value)}
+                onClick={() => setMenuOpen((value) => !value)}
               >
-                {open ? <HiXMark aria-hidden="true" /> : <HiBars3 aria-hidden="true" />}
-                <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+                {menuOpen ? <HiXMark aria-hidden="true" /> : <HiBars3 aria-hidden="true" />}
+                <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
               </button>
             </div>
           </div>
 
-          {open ? (
+          {menuOpen ? (
             <nav
               id="mobile-nav"
-              className="panel-reveal border-t border-line px-3 pb-3 pt-2 lg:hidden"
+              className="panel-reveal max-h-[calc(100vh-7rem)] overflow-y-auto border-t border-line px-3 pb-3 pt-2 xl:hidden"
               aria-label="Mobile"
             >
               <div className="flex flex-col gap-1">
-                {links.map((link) => (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    className={navClass}
-                    end={link.to === "/"}
-                    onClick={() => setOpen(false)}
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
-                <Link to="/jobs" className="btn-primary mt-2 justify-center" onClick={() => setOpen(false)}>
-                  Browse Jobs
-                  <HiArrowRight aria-hidden="true" />
-                </Link>
+                {primaryNav.map((link) => {
+                  if (link.children) {
+                    return (
+                      <div key={link.label} className="mt-1">
+                        <span className="nav-group-label">{link.label}</span>
+                        {link.children.map((child) => (
+                          <NavLink
+                            key={child.to}
+                            to={child.to}
+                            className={(state) => navClass(state, "nav-sub-link")}
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            {child.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return (
+                    <NavLink
+                      key={link.to}
+                      to={link.to}
+                      className={navClass}
+                      end={link.end}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {link.label}
+                    </NavLink>
+                  );
+                })}
+                <div className="mt-3 border-t border-line pt-3">
+                  <WhatsAppCta className="w-full justify-center" />
+                </div>
               </div>
             </nav>
           ) : null}
