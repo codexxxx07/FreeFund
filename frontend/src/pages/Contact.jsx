@@ -105,7 +105,7 @@ export default function Contact() {
       />
 
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="Contact"
@@ -115,7 +115,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <div className="page-shell py-10">
+      <div className="page-shell py-12 sm:py-14">
         <div className="grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           {composed ? (
             <div className="surface-panel p-6 sm:p-8">

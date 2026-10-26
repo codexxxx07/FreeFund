@@ -24,7 +24,7 @@ export default function PrivacyPolicy() {
       />
 
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="Legal"
@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
         </div>
       </section>
 
-      <div className="page-shell py-10">
+      <div className="page-shell py-12 sm:py-14">
         <article className="surface-panel mx-auto max-w-4xl p-6 sm:p-10">
           <div className="flex flex-wrap items-center gap-2 border-b border-line pb-6">
             <span className="badge badge-primary">Frontend-only website</span>

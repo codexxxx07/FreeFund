@@ -124,12 +124,14 @@ export default function Header() {
       <div className="page-shell">
         <div className="nav-bar">
           <div className="nav-shell">
-            <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
+            <Link to="/" className="flex min-w-0 items-center gap-2.5" onClick={() => setMenuOpen(false)}>
               <span className="brand-mark" aria-hidden="true">
                 <span className="relative z-10">JM</span>
               </span>
               <span className="min-w-0">
-                <span className="block truncate font-display text-sm font-bold sm:text-base">{BRAND_NAME}</span>
+                <span className="block whitespace-nowrap font-display text-sm font-bold leading-tight sm:text-[0.95rem]">
+                  {BRAND_NAME}
+                </span>
                 <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Consultancy</span>
               </span>
             </Link>
@@ -199,11 +201,11 @@ export default function Header() {
               >
                 {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
               </button>
-              <WhatsAppCta className="hidden px-4 text-sm sm:inline-flex" />
+              <WhatsAppCta className="hidden whitespace-nowrap px-4 text-sm sm:inline-flex">WhatsApp Channel</WhatsAppCta>
               <button
                 ref={menuButtonRef}
                 type="button"
-                className="btn-secondary px-3 py-2.5 xl:hidden"
+                className="btn-secondary min-h-0 px-2.5 py-2 xl:hidden"
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
                 onClick={() => setMenuOpen((value) => !value)}

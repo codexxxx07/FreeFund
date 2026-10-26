@@ -30,7 +30,7 @@ export default function CareerGuidance() {
       />
 
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="Career resources"
@@ -72,7 +72,7 @@ export default function CareerGuidance() {
         </div>
       </section>
 
-      <div className="page-shell py-10">
+      <div className="page-shell py-12 sm:py-14">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-muted" aria-live="polite">
             Showing <span className="font-semibold text-fg">{visible.length}</span>{" "}

@@ -688,6 +688,53 @@
     pointer-events: none;
   }
 
+  /* ---------- Notices ---------- */
+
+  /* Inline confirmation banner (About: no-fee policy). */
+  .about-fee-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    padding: 0.6rem 1.05rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    box-shadow: var(--quick-shadow);
+  }
+
+  .about-fee-banner svg {
+    flex-shrink: 0;
+    color: var(--text);
+  }
+
+  /* Honest "this content is a sample / not wired up yet" callout. */
+  .demo-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border: 1px dashed var(--input-border);
+    border-radius: 0.9rem;
+    background: var(--surface-alt);
+    padding: 0.95rem 1.1rem;
+  }
+
+  .demo-notice > svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--text);
+  }
+
+  .demo-notice p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
   /* ---------- Navigation ---------- */
 
   /* site-header is a transparent floating wrapper only.
@@ -744,10 +791,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    /* Increased vertical padding for a spacious, premium feel */
-    padding-block: 0.75rem;
-    padding-inline: 1.25rem;
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+    padding-inline: 1.15rem;
+  }
+
+  /* Tighter navbar gutters on phones (see the phone-only block that follows
+     .brand-mark for the compact mark and theme toggle). */
+  @media (max-width: 639px) {
+    .nav-shell {
+      gap: 0.5rem;
+      padding-inline: 0.7rem;
+    }
   }
 
   /* Outer shell padding that creates the floating gap above/below the pill */
@@ -760,8 +815,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    white-space: nowrap;
     border-radius: 999px;
-    padding: 0.45rem 0.9rem;
+    padding: 0.5rem 0.75rem;
     color: var(--muted);
     font-size: 0.875rem;
     font-weight: 500;
@@ -796,17 +852,22 @@
      action fit inside the 1180px shell without wrapping or shrinking. */
   @media (max-width: 1439px) {
     .nav-shell {
-      gap: 0.7rem;
+      gap: 0.6rem;
     }
 
     .nav-link {
-      padding-inline: 0.7rem;
-      font-size: 0.83rem;
+      padding-inline: 0.65rem;
+      font-size: 0.84rem;
     }
 
     .nav-dropdown-trigger {
-      padding-inline: 0.7rem;
+      padding-inline: 0.65rem;
     }
+  }
+
+  .nav-bar .nav-link,
+  .nav-bar .nav-dropdown-trigger {
+    text-align: center;
   }
 
   .theme-toggle {
@@ -890,12 +951,26 @@
 
   /* ---------- Typography ---------- */
 
+  @media (max-width: 639px) {
+    .brand-mark {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 0.7rem;
+      font-size: 0.8rem;
+    }
+
+    .theme-toggle {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+  }
+
   .hero-title {
     font-family: var(--font-stack);
-    font-size: clamp(4rem, 6.2vw, 4.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
   }
 
   .eyebrow {
@@ -1797,29 +1872,29 @@
     background: var(--cta-muted);
   }
 
+  /* Two thin concentric rings instead of stray rectangles: they read as
+     deliberate ornament and never collide with the icon tile. */
   .cta-shape {
     position: absolute;
     pointer-events: none;
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: transparent;
   }
 
   .cta-shape-lg {
-    right: -2.5rem;
-    top: -3.5rem;
-    width: 12rem;
-    height: 12rem;
-    transform: skewY(-8deg);
+    right: -5rem;
+    top: -6.5rem;
+    width: 20rem;
+    height: 20rem;
   }
 
   .cta-shape-sm {
-    right: 6rem;
-    bottom: -4rem;
-    width: 10rem;
-    height: 10rem;
-    transform: skewY(-6deg);
-    border-color: rgba(255, 255, 255, 0.1);
+    right: 1.5rem;
+    bottom: -7rem;
+    width: 15rem;
+    height: 15rem;
+    border-color: rgba(255, 255, 255, 0.09);
   }
 
   /* ---------- Progress ---------- */

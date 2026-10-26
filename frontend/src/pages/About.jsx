@@ -191,7 +191,7 @@ export default function About() {
 
       {/* ── 1. Hero ──────────────────────────────────────────────────────── */}
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="About"

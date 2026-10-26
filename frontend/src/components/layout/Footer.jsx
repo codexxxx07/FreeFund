@@ -16,15 +16,15 @@ export default function Footer() {
   return (
     <footer className="border-t border-line bg-secondary">
       <div className="page-shell py-12 sm:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[1.5fr_1fr_1.1fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[1.8fr_1fr_1.1fr_1fr_1fr]">
           <div className="xl:pr-6">
             <div className="flex items-center gap-3">
               <span className="brand-mark" aria-hidden="true">
                 <span className="relative z-10">JM</span>
               </span>
-              <div>
-                <p className="font-display text-lg font-bold">{BRAND_NAME}</p>
-                <p className="text-sm text-muted">Recruitment Consultancy</p>
+              <div className="min-w-0">
+                <p className="font-display text-base font-bold leading-tight sm:text-lg">{BRAND_NAME}</p>
+                <p className="mt-0.5 text-sm text-muted">Recruitment Consultancy</p>
               </div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
@@ -75,8 +75,8 @@ export default function Footer() {
 
           {footerGroups.map((group) => (
             <div key={group.title}>
-              <p className="font-display text-sm font-bold">{group.title}</p>
-              <ul className="mt-4 space-y-2.5">
+              <p className="eyebrow">{group.title}</p>
+              <ul className="mt-5 space-y-2">
                 {group.links.map((link) => (
                   <li key={link.label}>
                     {link.whatsapp ? (

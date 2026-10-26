@@ -246,7 +246,7 @@ export default function Home() {
           />
 
           <div className="mt-7 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <ul className="surface-card grid gap-4 p-6 sm:p-8">
+            <ul className="surface-card grid content-center gap-4 p-6 sm:p-8">
               {commitments.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <HiCheckCircle className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
@@ -255,7 +255,7 @@ export default function Home() {
               ))}
             </ul>
 
-            <div className="surface-card flex flex-col p-6 sm:p-8">
+            <div className="surface-card flex flex-col justify-center p-6 sm:p-8">
               <p className="eyebrow">Support</p>
               <h3 className="mt-3 text-2xl">Talk to a person</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">

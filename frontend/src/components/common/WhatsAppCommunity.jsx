@@ -20,8 +20,8 @@ export default function WhatsAppCommunity() {
   return (
     <section id="whatsapp-community" className="section py-12 sm:py-14" aria-labelledby="whatsapp-community-title">
       <div className="page-shell">
-        <div className="surface-card relative overflow-hidden p-8 sm:p-10 lg:p-12">
-          <div className="relative grid gap-8 lg:grid-cols-[1.4fr_auto] lg:items-center">
+        <div className="surface-card relative overflow-hidden p-7 sm:p-9 lg:p-11">
+          <div className="relative grid gap-8 lg:grid-cols-[1.5fr_auto] lg:items-center lg:gap-12">
             <div>
               <p className="eyebrow">Community</p>
               <h2 id="whatsapp-community-title" className="mt-3 text-balance text-3xl sm:text-4xl">
@@ -72,9 +72,15 @@ export default function WhatsAppCommunity() {
             </div>
 
             <div className="hidden lg:flex lg:justify-end">
-              <span className="grid h-24 w-24 place-items-center rounded-3xl border border-line bg-secondary text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_18px_36px_-18px_rgba(17,17,17,0.35)]">
-                <FaWhatsapp size={32} aria-hidden="true" />
-              </span>
+              <div className="surface-inset flex items-center gap-4 px-5 py-4">
+                <span className="icon-tile icon-tile-solid icon-tile-lg">
+                  <FaWhatsapp size={26} aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-fg">WhatsApp Community</p>
+                  <p className="mt-0.5 text-xs text-muted">Updates and opportunities in one place</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

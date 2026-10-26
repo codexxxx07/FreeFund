@@ -35,7 +35,7 @@ export default function CareerArticle() {
         </div>
       </section>
 
-      <div className="page-shell-narrow py-10">
+      <div className="page-shell-narrow py-12 sm:py-14">
         <article className="surface-panel p-6 sm:p-9">
           <div className="grid gap-8">
             {article.sections.map((section) => (

@@ -125,7 +125,7 @@ export default function ResumeBuilder() {
       />
 
       <section className="no-print border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="Career resources"
@@ -189,7 +189,7 @@ export default function ResumeBuilder() {
         </div>
       </section>
 
-      <div className="page-shell py-10">
+      <div className="page-shell py-12 sm:py-14">
         <div className="grid items-start gap-6 lg:grid-cols-2">
           <div id="resume-form" className="no-print">
             <ResumeForm data={data} setData={setData} errors={errors} />

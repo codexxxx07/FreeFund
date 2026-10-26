@@ -59,7 +59,7 @@ export default function FreeTraining() {
       />
 
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell py-10 lg:py-14">
+        <div className="page-shell py-12 sm:py-14">
           <SectionHeading
             as="h1"
             eyebrow="Career resources"
@@ -79,7 +79,7 @@ export default function FreeTraining() {
         </div>
       </section>
 
-      <div className="page-shell py-10">
+      <div className="page-shell py-12 sm:py-14">
         {programs.length ? (
           <div className="grid gap-5 md:grid-cols-2">
             {programs.map((program) => {
