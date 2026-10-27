@@ -30,12 +30,9 @@ const siteConfig = {
   siteUrl: "",
 
   /**
-   * Official WhatsApp Channel invite link, e.g.
-   * "https://whatsapp.com/channel/0029VaXXXXXXXXXXXXXXXX".
-   * Leave "" until the owner supplies it. The navbar, home page and footer then
-   * show a labelled "link to be confirmed" placeholder instead of a dead link.
+   * Official WhatsApp Channel invite link.
    */
-  whatsappChannelUrl: "",
+  whatsappChannelUrl: "https://whatsapp.com/channel/0029Vb6uL6r8KMqr0gWO7r2c",
 
   /**
    * WhatsApp Community invitation link, e.g.
