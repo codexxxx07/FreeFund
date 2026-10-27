@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { HiArrowRight, HiBars3, HiChevronDown, HiMoon, HiSun, HiXMark } from "react-icons/hi2";
 import { BRAND_NAME } from "../../data/constants";
 import { primaryNav } from "../../data/navigation";
-import WhatsAppCta from "../common/WhatsAppCta";
 
 function navClass({ isActive }, extra = "") {
   return `nav-link${isActive ? " is-active" : ""}${extra ? ` ${extra}` : ""}`;
@@ -30,8 +29,7 @@ export default function Header() {
   const itemRefs = useRef([]);
   const location = useLocation();
 
-  // The Contact link lives in the top-right action zone (small caps), not in
-  // the centered pill nav; everything else renders in the nav as before.
+  // Contact Us is rendered as a button outside the centered nav items
   const navItems = primaryNav.filter((item) => item.to !== "/contact");
   const contactItem = primaryNav.find((item) => item.to === "/contact");
 
@@ -196,6 +194,11 @@ export default function Header() {
                   </NavLink>
                 );
               })}
+              {contactItem ? (
+                <Link to={contactItem.to} className="btn-primary nav-contact-btn">
+                  {contactItem.label}
+                </Link>
+              ) : null}
             </nav>
 
             <div className="flex items-center gap-2">
@@ -208,12 +211,6 @@ export default function Header() {
               >
                 {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
               </button>
-              <WhatsAppCta className="hidden whitespace-nowrap px-3 text-xs sm:inline-flex">WhatsApp Channel</WhatsAppCta>
-              {contactItem ? (
-                <Link to={contactItem.to} className="nav-contact hidden sm:inline-flex">
-                  {contactItem.label}
-                </Link>
-              ) : null}
               <button
                 ref={menuButtonRef}
                 type="button"
@@ -265,9 +262,13 @@ export default function Header() {
                     </NavLink>
                   );
                 })}
-                <div className="mt-3 border-t border-line pt-3">
-                  <WhatsAppCta className="w-full justify-center" />
-                </div>
+                {contactItem ? (
+                  <div className="mt-3 border-t border-line pt-3">
+                    <Link to={contactItem.to} className="btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
+                      {contactItem.label}
+                    </Link>
+                  </div>
+                ) : null}
               </div>
             </nav>
           ) : null}

@@ -884,6 +884,34 @@
     border-bottom-color: var(--text);
   }
 
+  .nav-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.35rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.25s var(--btn-ease),
+      color 0.25s var(--btn-ease),
+      border-color 0.25s var(--btn-ease),
+      box-shadow 0.25s var(--btn-ease),
+      transform 0.25s var(--btn-ease);
+  }
+
+  .nav-contact-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .nav-contact-btn:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+
   /* Tighten the navbar below 1440px so all seven links plus the WhatsApp
      action fit inside the 1180px shell without wrapping or shrinking. */
   @media (max-width: 1439px) {
