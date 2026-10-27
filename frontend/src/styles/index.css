@@ -313,7 +313,7 @@
     }
 
     .typewriter-animated {
-      min-width: auto;
+      min-width: 11ch;
     }
 
     *,
@@ -1067,8 +1067,9 @@
     margin-left: 2px;
     background-color: currentColor;
     animation: typewriter-blink 1s step-end infinite;
-    vertical-align: text-bottom;
+    vertical-align: baseline;
     height: 1em;
+    flex-shrink: 0;
   }
 
   @keyframes typewriter-blink {
@@ -1083,8 +1084,16 @@
 
   .typewriter-animated {
     display: inline-block;
-    min-width: 10ch;
+    min-width: 11ch;
     text-align: left;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+
+  .typewriter-inner {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
   }
 
   /* ---------- Buttons ---------- */

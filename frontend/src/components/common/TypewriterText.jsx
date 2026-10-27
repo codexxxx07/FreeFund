@@ -75,8 +75,10 @@ export default function TypewriterText({
 
   return (
     <span className={`typewriter-animated ${className}`} aria-live="polite">
-      <span>{displayText}</span>
-      <span className="typewriter-cursor" aria-hidden="true" />
+      <span className="typewriter-inner">
+        <span>{displayText}</span>
+        <span className="typewriter-cursor" aria-hidden="true" />
+      </span>
     </span>
   );
 }
