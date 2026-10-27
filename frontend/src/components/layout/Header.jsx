@@ -195,9 +195,13 @@ export default function Header() {
                 );
               })}
               {contactItem ? (
-                <Link to={contactItem.to} className="btn-primary nav-contact-btn">
+                <NavLink
+                  to={contactItem.to}
+                  className={({ isActive }) => `nav-link${isActive ? " is-active" : ""}`}
+                  end
+                >
                   {contactItem.label}
-                </Link>
+                </NavLink>
               ) : null}
             </nav>
 
@@ -263,11 +267,14 @@ export default function Header() {
                   );
                 })}
                 {contactItem ? (
-                  <div className="mt-3 border-t border-line pt-3">
-                    <Link to={contactItem.to} className="btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
-                      {contactItem.label}
-                    </Link>
-                  </div>
+                  <NavLink
+                    to={contactItem.to}
+                    className={(state) => navClass(state)}
+                    end
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {contactItem.label}
+                  </NavLink>
                 ) : null}
               </div>
             </nav>
