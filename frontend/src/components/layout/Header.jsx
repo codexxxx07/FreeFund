@@ -30,6 +30,11 @@ export default function Header() {
   const itemRefs = useRef([]);
   const location = useLocation();
 
+  // The Contact link lives in the top-right action zone (small caps), not in
+  // the centered pill nav; everything else renders in the nav as before.
+  const navItems = primaryNav.filter((item) => item.to !== "/contact");
+  const contactItem = primaryNav.find((item) => item.to === "/contact");
+
   // Close every panel when the route changes.
   useEffect(() => {
     setMenuOpen(false);
@@ -129,15 +134,17 @@ export default function Header() {
                 <span className="relative z-10">JM</span>
               </span>
               <span className="min-w-0">
-                <span className="block whitespace-nowrap font-display text-sm font-bold leading-tight sm:text-[0.95rem]">
+                <span className="block whitespace-nowrap font-display text-sm font-bold uppercase leading-tight tracking-wide sm:text-[0.95rem]">
                   {BRAND_NAME}
                 </span>
-                <span className="hidden text-xs font-medium text-muted sm:block">Recruitment Consultancy</span>
+                <span className="hidden text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted sm:block">
+                  Recruitment Consultancy
+                </span>
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
-              {primaryNav.map((link) => {
+            <nav className="primary-nav hidden items-center gap-0 xl:flex" aria-label="Primary">
+              {navItems.map((link) => {
                 if (link.children) {
                   const active = link.children.some((child) => isActivePath(location.pathname, child));
                   return (
@@ -201,7 +208,12 @@ export default function Header() {
               >
                 {theme === "dark" ? <HiSun aria-hidden="true" /> : <HiMoon aria-hidden="true" />}
               </button>
-              <WhatsAppCta className="hidden whitespace-nowrap px-4 text-sm sm:inline-flex">WhatsApp Channel</WhatsAppCta>
+              <WhatsAppCta className="hidden whitespace-nowrap px-3 text-xs sm:inline-flex">WhatsApp Channel</WhatsAppCta>
+              {contactItem ? (
+                <Link to={contactItem.to} className="nav-contact hidden sm:inline-flex">
+                  {contactItem.label}
+                </Link>
+              ) : null}
               <button
                 ref={menuButtonRef}
                 type="button"

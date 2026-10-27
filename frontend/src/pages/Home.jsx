@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   HiArrowRight,
@@ -76,6 +77,36 @@ export default function Home() {
   const showEmail = !isPlaceholder(CONTACT_PLACEHOLDERS.email);
   const showPhone = !isPlaceholder(CONTACT_PLACEHOLDERS.phone);
   const showRegion = !isPlaceholder(CONTACT_PLACEHOLDERS.region);
+  const heroRef = useRef(null);
+  const diagonalRef = useRef(null);
+
+  // Subtle mouse parallax on the diagonal hero visual (off for reduced motion).
+  useEffect(() => {
+    const hero = heroRef.current;
+    const diagonal = diagonalRef.current;
+    if (!hero || !diagonal) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    function onPointerMove(event) {
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      diagonal.style.setProperty("--px", `${(x * 16).toFixed(1)}px`);
+      diagonal.style.setProperty("--py", `${(y * 12).toFixed(1)}px`);
+    }
+
+    function onPointerLeave() {
+      diagonal.style.setProperty("--px", "0px");
+      diagonal.style.setProperty("--py", "0px");
+    }
+
+    hero.addEventListener("pointermove", onPointerMove);
+    hero.addEventListener("pointerleave", onPointerLeave);
+    return () => {
+      hero.removeEventListener("pointermove", onPointerMove);
+      hero.removeEventListener("pointerleave", onPointerLeave);
+    };
+  }, []);
 
   return (
     <div>
@@ -85,82 +116,144 @@ export default function Home() {
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-line bg-secondary">
-        <div className="page-shell relative grid items-center gap-12 py-12 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
-          <div>
-            <p className="eyebrow">Recruitment consultancy</p>
-            <h1 className="hero-title mt-5 max-w-3xl text-balance">
-              Find the <span className="text-accent-word">right role</span>. Apply with{" "}
-              <span className="relative">
-                <TypewriterText words={["Clarity", "Confidence", "Purpose", "Success"]} />
-                <noscript>Clarity</noscript>
-              </span>
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-[1.7] text-muted">
-              {BRAND_NAME} helps candidates prepare properly — with a resume builder, practice tools, free career
-              guidance and a community that shares relevant opportunities.
-            </p>
+      <section className="hero-section" ref={heroRef}>
+        <div className="hero-blob" aria-hidden="true">
+          <span className="blob-a" />
+          <span className="blob-b" />
+          <span className="blob-c" />
+        </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/career-guidance" className="btn-primary btn-lg">
-                Explore Career Resources
-                <HiArrowRight aria-hidden="true" />
-              </Link>
-              <Link to="/resume-builder" className="btn-secondary btn-lg">
-                Build Your Resume
-              </Link>
-              <WhatsAppCta className="btn-secondary btn-lg">
-                Join our WhatsApp Channel
-              </WhatsAppCta>
+        {/* B&W cutout figure (inline SVG — no external image to break) */}
+        <div className="hero-cutout" aria-hidden="true">
+          <svg viewBox="0 0 220 300" role="presentation">
+            <rect className="figure-ink" x="92" y="132" width="36" height="56" rx="16" />
+            <circle className="figure-ink" cx="110" cy="84" r="62" />
+            <path className="figure-ink" d="M6 300c0-62 46-110 104-122 6-1 10-6 11-12 1 6 5 11 11 12 58 12 104 60 104 122z" />
+            <path className="figure-cut" d="M86 190l24 30 24-30" />
+            <path className="figure-cut" d="M110 34c-14 10-22 28-22 48" />
+          </svg>
+        </div>
+
+        <div className="page-shell relative z-[1]">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12">
+            <div>
+              <p className="eyebrow">Recruitment consultancy</p>
+              <h1 className="hero-title mt-6">
+                <span className="hero-line">Find the</span>
+                <span className="hero-line">right role.</span>
+              </h1>
+              <p className="hero-tagline">
+                {BRAND_NAME} helps candidates prepare properly — with a resume builder, practice tools, free career
+                guidance and a community that shares relevant opportunities.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/career-guidance" className="btn-primary btn-lg">
+                  Explore Career Resources
+                  <HiArrowRight aria-hidden="true" />
+                </Link>
+                <Link to="/resume-builder" className="btn-secondary btn-lg">
+                  Build Your Resume
+                </Link>
+                <WhatsAppCta className="btn-secondary btn-lg">
+                  Join our WhatsApp Channel
+                </WhatsAppCta>
+              </div>
             </div>
-          </div>
 
-          <div className="hero-stage">
-            <span className="hero-layer hero-layer-back" aria-hidden="true" />
-            <span className="hero-layer hero-layer-mid" aria-hidden="true" />
-            <div className="hero-panel">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="icon-tile icon-tile-solid">
-                    <HiDocumentText aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="font-display text-base font-bold">Free career resources</p>
-                    <p className="text-xs text-muted">Everything runs in your browser</p>
+            <div className="hero-visual">
+              <p className="hero-accent mb-7">
+                Apply with{" "}
+                <span className="relative">
+                  <TypewriterText words={["Clarity", "Confidence", "Purpose", "Success"]} />
+                  <noscript>Clarity</noscript>
+                </span>
+              </p>
+
+              <div className="hero-stage hero-diagonal" ref={diagonalRef}>
+                <span className="hero-layer hero-layer-back" aria-hidden="true" />
+                <span className="hero-layer hero-layer-mid" aria-hidden="true" />
+                <div className="hero-panel">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="icon-tile icon-tile-solid">
+                        <HiDocumentText aria-hidden="true" />
+                      </span>
+                      <div>
+                        <p className="font-display text-base font-bold uppercase tracking-wide">
+                          Free career resources
+                        </p>
+                        <p className="text-xs text-muted">Everything runs in your browser</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="mt-5 grid gap-2.5">
+                    {resources.map((resource) => {
+                      const Icon = resource.icon;
+                      return (
+                        <li key={resource.to}>
+                          <Link to={resource.to} className="quick-link w-full justify-between">
+                            <span className="flex items-center gap-2.5">
+                              <Icon aria-hidden="true" />
+                              {resource.title}
+                            </span>
+                            <HiArrowRight aria-hidden="true" />
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <div className="mt-5 border-t border-line pt-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Need help?</p>
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      <Link to="/contact" className="quick-link">
+                        Contact us
+                        <HiArrowRight aria-hidden="true" />
+                      </Link>
+                      <Link to="/about" className="quick-link">
+                        About us
+                        <HiArrowRight aria-hidden="true" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <ul className="mt-5 grid gap-2.5">
-                {resources.map((resource) => {
-                  const Icon = resource.icon;
-                  return (
-                    <li key={resource.to}>
-                      <Link to={resource.to} className="quick-link w-full justify-between">
-                        <span className="flex items-center gap-2.5">
-                          <Icon aria-hidden="true" />
-                          {resource.title}
-                        </span>
-                        <HiArrowRight aria-hidden="true" />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="mt-5 border-t border-line pt-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Need help?</p>
-                <div className="mt-2.5 flex flex-wrap gap-2">
-                  <Link to="/contact" className="quick-link">
-                    Contact us
-                    <HiArrowRight aria-hidden="true" />
-                  </Link>
-                  <Link to="/about" className="quick-link">
-                    About us
-                    <HiArrowRight aria-hidden="true" />
-                  </Link>
-                </div>
+              {/* Tiny secondary thumbnail card with caption */}
+              <div className="hero-thumb" aria-hidden="true">
+                <svg className="hero-thumb-graphic" viewBox="0 0 160 96" role="presentation">
+                  <rect className="tg-bg" x="0" y="0" width="160" height="96" />
+                  <rect className="tg-line" x="16" y="20" width="86" height="9" rx="4.5" />
+                  <rect className="tg-line" x="16" y="42" width="124" height="9" rx="4.5" />
+                  <rect className="tg-line" x="16" y="64" width="66" height="9" rx="4.5" />
+                  <circle className="tg-dot" cx="132" cy="68" r="15" />
+                </svg>
+                <span className="hero-thumb-caption">Fig. 01 — Free tools</span>
               </div>
+            </div>
+          </div>
+
+          {/* Bottom row: hairline, big italic stat, small CTA, info card */}
+          <div className="hero-bottom">
+            <div>
+              <span className="hero-stat">100%</span>
+              <span className="hero-stat-label">Free career tools, always</span>
+            </div>
+
+            <Link to="/resume-builder" className="hero-cta-text">
+              Build your resume
+              <HiArrowRight aria-hidden="true" />
+            </Link>
+
+            <div className="hero-info-card">
+              <p className="eyebrow">Support</p>
+              <p>Questions about an offer, a process step or a suspicious message?</p>
+              <Link to="/contact" className="btn-primary justify-self-start">
+                Contact us
+                <HiArrowRight aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </div>
