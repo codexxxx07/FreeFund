@@ -16,6 +16,7 @@ import SectionHeading from "../components/common/SectionHeading";
 import WhatsAppCta from "../components/common/WhatsAppCta";
 import WhatsAppCommunity from "../components/common/WhatsAppCommunity";
 import TypewriterText from "../components/common/TypewriterText";
+import AnimatedCounter from "../components/common/AnimatedCounter";
 import { BRAND_NAME, CONTACT_PLACEHOLDERS, isPlaceholder } from "../data/constants";
 
 const resources = [
@@ -238,7 +239,7 @@ export default function Home() {
           {/* Bottom row: hairline, big italic stat, small CTA, info card */}
           <div className="hero-bottom">
             <div>
-              <span className="hero-stat">100%</span>
+              <AnimatedCounter from={0} to={100} className="hero-stat" suffix="%" />
               <span className="hero-stat-label">Free career tools, always</span>
             </div>
 
