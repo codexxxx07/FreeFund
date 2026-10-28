@@ -476,6 +476,206 @@
     }
   }
 
+  /* ---------- About page: founder profile card ----------
+     One prominent card (photo, name, designation, one-line description,
+     social row) with a soft accent halo behind the circular portrait — the
+     page's single decorative flourish, kept inside the existing token set. */
+
+  .founder-card {
+    text-align: center;
+  }
+
+  .founder-card-mark {
+    position: absolute;
+    top: 1.15rem;
+    right: 1.15rem;
+    color: var(--text);
+    opacity: 0.35;
+    transition: opacity 0.25s ease;
+  }
+
+  .founder-avatar-wrap {
+    position: relative;
+    isolation: isolate;
+    width: clamp(7rem, 24vw, 9.25rem);
+    margin-inline: auto;
+  }
+
+  /* Soft accent halo behind the portrait. */
+  .founder-avatar-halo {
+    position: absolute;
+    inset: -9%;
+    z-index: 0;
+    border-radius: 999px;
+    background: radial-gradient(
+      circle at 50% 55%,
+      color-mix(in srgb, var(--lime) 55%, transparent) 0%,
+      transparent 66%
+    );
+    filter: blur(12px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .founder-avatar {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: var(--surface-raised);
+    box-shadow:
+      0 0 0 1px var(--border),
+      0 0 0 5px var(--card),
+      0 0 0 6px var(--border),
+      0 20px 38px -24px rgba(0, 0, 0, 0.6);
+  }
+
+  .founder-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  /* Shown only if the photo fails to load. */
+  .founder-avatar-fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: inherit;
+    background: var(--surface-alt);
+    color: var(--muted);
+    font-family: var(--font-display-stack);
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .founder-name {
+    font-family: var(--font-display-stack);
+    font-size: clamp(1.35rem, 3.6vw, 1.6rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--text);
+  }
+
+  .founder-designation {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .founder-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .founder-social {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-raised);
+    color: var(--text);
+    font-size: 1.05rem;
+    box-shadow: var(--quick-shadow);
+    transition:
+      transform 0.25s var(--btn-ease),
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .founder-social-pending {
+    border-style: dashed;
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+
+  /* Closing belief panel. */
+  .founder-closing {
+    border: 1px solid var(--cta-border);
+    border-radius: 1.25rem;
+    background: var(--cta-bg);
+    color: var(--cta-text);
+    text-align: center;
+    box-shadow: var(--cta-shadow);
+  }
+
+  .founder-closing .eyebrow {
+    color: var(--cta-muted);
+  }
+
+  .founder-closing .eyebrow::before {
+    border-color: var(--cta-text);
+  }
+
+  .founder-closing-quote {
+    color: var(--cta-text);
+    font-family: var(--font-display-stack);
+    font-size: clamp(1.35rem, 3.4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+
+  .founder-closing-tagline {
+    color: var(--cta-text);
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .founder-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--text) 14%, var(--border));
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .founder-card:hover .founder-avatar-halo {
+      opacity: 0.75;
+    }
+
+    .founder-card:hover .founder-card-mark {
+      opacity: 0.7;
+    }
+
+    a.founder-social:hover {
+      transform: translateY(-2px);
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .founder-card,
+    .founder-social,
+    .founder-avatar-halo,
+    .founder-card-mark {
+      transition: none;
+    }
+
+    .founder-card:hover,
+    a.founder-social:hover {
+      transform: none !important;
+    }
+  }
+
   /* ---------- FAQ accordion (About page) ----------
      Each question is its own rounded, bordered row inside the card shell.
      Answers open with a grid-template-rows (0fr → 1fr) + opacity-free height

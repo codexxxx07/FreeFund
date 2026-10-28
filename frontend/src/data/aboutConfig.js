@@ -48,6 +48,30 @@ const aboutConfig = {
   // LinkedIn page URL — shown only if non-empty.
   // Example: "https://www.linkedin.com/company/jobs-mania-freefund"
   linkedInUrl: "",
+
+  // ── Founder profile card (About page) ────────────────────────────────────
+  // Only information supplied by the founder is stored here — nothing is
+  // inferred. The card renders the social icons either way; an empty URL shows
+  // the icon as a clearly disabled control so no visitor is sent to a broken
+  // or invented link. Paste the real URLs below whenever they are available.
+  founder: {
+    name: "Pahulpreet Singh",
+    designation: "HR & Recruitment Professional",
+    tagline:
+      "Helping candidates discover opportunities, access career guidance, and move forward with confidence.",
+
+    // Square images display best — the card crops the image to a circle.
+    // Swap this file to replace the photo, no code change needed.
+    image: "/images/founder-pahulpreet-singh.png",
+    imageAlt: "Pahulpreet Singh, founder of Jobs Mania - Freefund",
+
+    // Add the real profile links here; leave a value empty until it exists.
+    social: {
+      linkedin: "",
+      whatsapp: "",
+      instagram: "",
+    },
+  },
 };
 
 export default aboutConfig;

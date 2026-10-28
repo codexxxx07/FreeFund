@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
+import FounderCard from "../components/common/FounderCard";
 import FaqList from "../components/common/FaqList";
 import WhatsAppCta from "../components/common/WhatsAppCta";
 import { BRAND_NAME } from "../data/constants";
@@ -70,6 +71,35 @@ const hiringSteps = [
 const commitments = [
   "Your personal details are never displayed publicly.",
   "We provide a clear privacy notice and ask for consent before you share your details.",
+];
+
+// Our Promise — the four commitments shown as cards.
+// Keep these in step with the wording supplied by the founder.
+const promises = [
+  {
+    title: "Free job alerts and employment updates",
+    body: "Job openings and employment updates shared with candidates at no cost.",
+  },
+  {
+    title: "Helpful career resources and guidance",
+    body: "Career resources and guidance candidates can use free of charge.",
+  },
+  {
+    title: "A planned free community for interview preparation",
+    body: "A community for interview preparation that is still being planned.",
+  },
+  {
+    title: "A supportive environment to learn and grow",
+    body: "A place where candidates can learn, practise and grow at their own pace.",
+  },
+];
+
+// Our Future Vision — a free learning community (planned, not yet launched).
+const futureVision = [
+  "Prepare for interviews.",
+  "Improve their communication skills.",
+  "Practise common interview questions.",
+  "Learn how to face interviews with confidence.",
 ];
 
 const safetyTips = [
@@ -207,7 +237,158 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 2. What we do ────────────────────────────────────────────────── */}
+      {/* ── 2. Founder profile card ────────────────────────────────────── */}
+      <section className="section py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading
+            align="center"
+            eyebrow="Meet the founder"
+            title={`The person behind ${BRAND_NAME}`}
+          />
+          <div className="mt-8 flex justify-center">
+            <FounderCard />
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. Our Mission ──────────────────────────────────────────────── */}
+      <section className="section-band py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading eyebrow="Mission" title="Our Mission" />
+          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+            <p>
+              At Jobs Mania Freefund, we believe that everyone deserves a fair opportunity to
+              build a successful career, regardless of their financial background.
+            </p>
+            <p>
+              Our mission is to help job seekers discover employment opportunities, access useful
+              career resources, and move forward with confidence. We aim to make job information
+              and career support accessible to everyone, completely free of cost.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. About the Founder ────────────────────────────────────────── */}
+      <section className="section py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading eyebrow="Founder" title="About the Founder" />
+          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+            <p className="font-semibold text-primary">
+              Pahulpreet Singh <span className="text-muted">|</span> HR &amp; Recruitment
+              Professional
+            </p>
+            <p>
+              Pahulpreet Singh is from Amritsar, Punjab, and has professional experience in HR,
+              recruitment, talent acquisition, and academic counselling.
+            </p>
+            <p>
+              Throughout his professional journey, he has interacted with candidates from
+              different backgrounds and understood the challenges they face while searching for
+              jobs, preparing for interviews, and building their careers.
+            </p>
+            <p>
+              He believes that people sometimes lack not talent, but the right guidance,
+              opportunities, and support.
+            </p>
+            <p>This belief inspired him to create Jobs Mania Freefund.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. Why I Started This Initiative ────────────────────────────── */}
+      <section className="section-band py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading eyebrow="Motivation" title="Why I Started This Initiative" />
+          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+            <p>
+              The vision behind Jobs Mania Freefund is not just to share job openings, but to
+              help people take meaningful steps towards employment and career growth.
+            </p>
+            <p>
+              Through this platform, the aim is to share genuine job opportunities, provide
+              helpful career resources, and guide candidates who need support in their
+              professional journey.
+            </p>
+            <p>
+              Helping someone find a job can make a real difference in their life and their
+              family's future.
+            </p>
+            <p>
+              That is why the goal is to keep job opportunities and candidate support free of
+              charge.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. Our Future Vision ────────────────────────────────────────── */}
+      <section className="section py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading
+            eyebrow="What's next"
+            title="Our Future Vision — A Free Learning Community"
+          />
+          <p className="mt-6 max-w-3xl text-[1.02rem]">
+            Jobs Mania Freefund aims to build a free community where job seekers can:
+          </p>
+          <ul
+            className="mt-4 grid max-w-3xl gap-3 sm:grid-cols-2"
+            aria-label="Planned free learning community"
+          >
+            {futureVision.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <HiCheckCircle aria-hidden="true" className="mt-0.5 shrink-0" size={18} />
+                <span className="text-muted">{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 max-w-3xl text-sm text-muted">
+            This community is a future initiative that is still being planned — it is not a
+            service we offer today. The objective is to help candidates become better prepared
+            for employment without charging them for guidance or interview preparation.
+          </p>
+        </div>
+      </section>
+
+      {/* ── 7. Our Promise ──────────────────────────────────────────────── */}
+      <section className="section-band py-12 sm:py-14">
+        <div className="page-shell">
+          <SectionHeading eyebrow="Our word" title="Our Promise" />
+          <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            {promises.map((item) => (
+              <article key={item.title} className="surface-card surface-card-hover about-card p-5">
+                <div className="flex items-start gap-3">
+                  <span className="icon-tile shrink-0">
+                    <HiCheckCircle aria-hidden="true" />
+                  </span>
+                  <h3 className="text-base leading-snug">{item.title}</h3>
+                </div>
+                <p className="mt-3 text-sm text-muted">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. Closing statement ────────────────────────────────────────── */}
+      <section className="section py-12 sm:py-14">
+        <div className="page-shell">
+          <div className="founder-closing px-6 py-10 sm:px-10 sm:py-14">
+            <p className="eyebrow justify-center">Our belief</p>
+            <p className="founder-closing-quote mx-auto mt-5 max-w-3xl text-balance">
+              &ldquo;Jobs Mania Freefund is built on one simple belief: helping people move
+              forward in their careers should not always come with a price tag.&rdquo;
+            </p>
+            <span className="mx-auto mt-7 block h-px w-20 bg-white/25" aria-hidden="true" />
+            <p className="founder-closing-tagline mx-auto mt-7 max-w-2xl">
+              Your Career. Your Opportunities. Your Future.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 9. What we do ────────────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
@@ -232,7 +413,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 3. How hiring works ──────────────────────────────────────────── */}
+      {/* ── 10. How hiring works ──────────────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
@@ -259,7 +440,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 4. Our commitments ───────────────────────────────────────────── */}
+      {/* ── 11. Our commitments ───────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
@@ -293,7 +474,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 5. Stay safe from job scams ──────────────────────────────────── */}
+      {/* ── 12. Stay safe from job scams ──────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
@@ -338,7 +519,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 6. Company details ───────────────────────────────────────────── */}
+      {/* ── 13. Company details ───────────────────────────────────────────── */}
       {showCompanySection && (
         <section className="section py-12 sm:py-14">
           <div className="page-shell">
@@ -372,7 +553,7 @@ export default function About() {
         </section>
       )}
 
-      {/* ── 7. FAQ ───────────────────────────────────────────────────────── */}
+      {/* ── 14. FAQ ───────────────────────────────────────────────────────── */}
       <section
         id="faq"
         className={`${showCompanySection ? "section-band" : "section"} py-12 sm:py-14`}
@@ -389,7 +570,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 8. Employer / partner enquiry CTA ───────────────────────────── */}
+      {/* ── 15. Employer / partner enquiry CTA ───────────────────────────── */}
       <section className={`${showCompanySection ? "section" : "section-band"} py-12 sm:py-14`}>
         <div className="page-shell">
           <div className="surface-card surface-card-hover about-card p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
@@ -411,7 +592,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 9. Final CTA band ────────────────────────────────────────────── */}
+      {/* ── 16. Final CTA band ────────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <div className="cta-panel p-8 sm:p-10 lg:p-12">
