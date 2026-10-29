@@ -2838,4 +2838,89 @@
       animation: none !important;
     }
   }
+
+  /* Print: show revealed and not-yet-revealed content alike, so a visitor who
+     prints before scrolling does not get blank sections. */
+  @media print {
+    [data-reveal] {
+      opacity: 1 !important;
+      translate: none !important;
+      scale: none !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ---------- Lenis smooth scrolling ----------
+     Lenis writes the scroll position on every animation frame. Native smooth
+     scrolling would run a second animation on top of it and lag behind, so it
+     stands aside while Lenis is active (see SmoothScroll.jsx). */
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  html.lenis {
+    scroll-behavior: auto;
+  }
+
+  /* ---------- Scroll reveal (Intersection Observer) ----------
+     Elements marked `data-reveal` fade up into place once, the first time they
+     enter the viewport. `utils/scrollReveal.js` adds `.is-revealed` and never
+     re-hides an element, so scrolling back past a section does not replay it.
+
+     - Motion uses the standalone `translate` / `scale` properties, never
+       `transform`, so card hover effects that rely on `transform` keep working
+       on the very same element.
+     - For the same reason `transition` (a single property) also lists the card
+       timings: a revealed card must declare its hover transition itself. The
+       card entries carry no reveal delay, so a staggered card still lifts
+       instantly on hover.
+     - Only opacity, offsets and filters animate — layout never changes, so
+       there is no content shift while a section reveals.
+     - `--reveal-delay` staggers groups (inline, in milliseconds). */
+
+  [data-reveal] {
+    opacity: 0;
+    translate: 0 1.15rem;
+    filter: blur(4px);
+    transition:
+      opacity 0.65s ease var(--reveal-delay, 0ms),
+      translate 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+      scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.65s ease var(--reveal-delay, 0ms),
+      transform 0.4s var(--btn-ease),
+      box-shadow 0.4s var(--btn-ease),
+      border-color 0.4s var(--btn-ease);
+  }
+
+  /* Pure fade — for large text blocks where a sliding headline feels heavy. */
+  [data-reveal="fade"] {
+    translate: none;
+    filter: none;
+  }
+
+  /* Emphasised entrance — the founder profile card. */
+  [data-reveal="scale"] {
+    translate: 0 1.5rem;
+    scale: 0.96;
+  }
+
+  [data-reveal].is-revealed {
+    opacity: 1;
+    translate: none;
+    scale: none;
+    filter: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1 !important;
+      translate: none !important;
+      scale: none !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
 }

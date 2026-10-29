@@ -10,6 +10,7 @@ import {
   HiShieldCheck,
   HiUserGroup,
 } from "react-icons/hi2";
+import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import PageMeta from "../components/common/PageMeta";
 import SectionHeading from "../components/common/SectionHeading";
 import FounderCard from "../components/common/FounderCard";
@@ -101,6 +102,55 @@ const futureVision = [
   "Practise common interview questions.",
   "Learn how to face interviews with confidence.",
 ];
+
+// ── Founder contact channels ────────────────────────────────────────────
+// Every value is read from aboutConfig (the single source of truth for the
+// founder's links) so nothing has to be updated in two places. An entry whose
+// value is missing or still a placeholder is filtered out and never rendered.
+const founderProfile = aboutConfig.founder;
+
+const founderContacts = [
+  {
+    key: "email",
+    label: "Email",
+    value: founderProfile.email || "",
+    href: founderProfile.email ? `mailto:${founderProfile.email}` : "",
+    icon: HiEnvelope,
+    external: false,
+    action: "Send an email",
+    ariaLabel: "Email Pahulpreet Singh — opens your email app",
+  },
+  {
+    key: "whatsapp",
+    label: "WhatsApp",
+    value: "Direct message",
+    href: founderProfile.social.whatsapp,
+    icon: FaWhatsapp,
+    external: true,
+    action: "Chat on WhatsApp",
+    ariaLabel: "Chat with Pahulpreet Singh on WhatsApp (opens in a new tab)",
+  },
+  {
+    key: "linkedin",
+    label: "LinkedIn",
+    value: "Pahulpreet Singh",
+    href: founderProfile.social.linkedin,
+    icon: FaLinkedinIn,
+    external: true,
+    action: "View profile",
+    ariaLabel: "Pahulpreet Singh on LinkedIn (opens in a new tab)",
+  },
+  {
+    key: "instagram",
+    label: "Instagram",
+    value: "@hrpahulpreetofficial",
+    href: founderProfile.social.instagram,
+    icon: FaInstagram,
+    external: true,
+    action: "View profile",
+    ariaLabel: "Pahulpreet Singh on Instagram (opens in a new tab)",
+  },
+].filter((item) => hasValue(item.href));
 
 const safetyTips = [
   "Never pay money to anyone — not to an employer, recruiter, or agent — to get a job. Legitimate employers do not ask for payment.",
@@ -244,8 +294,13 @@ export default function About() {
             align="center"
             eyebrow="Meet the founder"
             title={`The person behind ${BRAND_NAME}`}
+            data-reveal
           />
-          <div className="mt-8 flex justify-center">
+          <div
+            className="mt-8 flex justify-center"
+            data-reveal="scale"
+            style={{ "--reveal-delay": "60ms" }}
+          >
             <FounderCard />
           </div>
         </div>
@@ -254,8 +309,12 @@ export default function About() {
       {/* ── 3. Our Mission ──────────────────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
-          <SectionHeading eyebrow="Mission" title="Our Mission" />
-          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+          <SectionHeading eyebrow="Mission" title="Our Mission" data-reveal />
+          <div
+            className="mt-6 max-w-3xl space-y-4 text-[1.02rem]"
+            data-reveal
+            style={{ "--reveal-delay": "90ms" }}
+          >
             <p>
               At Jobs Mania Freefund, we believe that everyone deserves a fair opportunity to
               build a successful career, regardless of their financial background.
@@ -272,8 +331,12 @@ export default function About() {
       {/* ── 4. About the Founder ────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
-          <SectionHeading eyebrow="Founder" title="About the Founder" />
-          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+          <SectionHeading eyebrow="Founder" title="About the Founder" data-reveal />
+          <div
+            className="mt-6 max-w-3xl space-y-4 text-[1.02rem]"
+            data-reveal
+            style={{ "--reveal-delay": "90ms" }}
+          >
             <p className="font-semibold text-primary">
               Pahulpreet Singh <span className="text-muted">|</span> HR &amp; Recruitment
               Professional
@@ -299,8 +362,16 @@ export default function About() {
       {/* ── 5. Why I Started This Initiative ────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
-          <SectionHeading eyebrow="Motivation" title="Why I Started This Initiative" />
-          <div className="mt-6 max-w-3xl space-y-4 text-[1.02rem]">
+          <SectionHeading
+            eyebrow="Motivation"
+            title="Why I Started This Initiative"
+            data-reveal
+          />
+          <div
+            className="mt-6 max-w-3xl space-y-4 text-[1.02rem]"
+            data-reveal
+            style={{ "--reveal-delay": "90ms" }}
+          >
             <p>
               The vision behind Jobs Mania Freefund is not just to share job openings, but to
               help people take meaningful steps towards employment and career growth.
@@ -328,22 +399,28 @@ export default function About() {
           <SectionHeading
             eyebrow="What's next"
             title="Our Future Vision — A Free Learning Community"
+            data-reveal
           />
-          <p className="mt-6 max-w-3xl text-[1.02rem]">
+          <p className="mt-6 max-w-3xl text-[1.02rem]" data-reveal style={{ "--reveal-delay": "90ms" }}>
             Jobs Mania Freefund aims to build a free community where job seekers can:
           </p>
           <ul
             className="mt-4 grid max-w-3xl gap-3 sm:grid-cols-2"
             aria-label="Planned free learning community"
           >
-            {futureVision.map((item) => (
-              <li key={item} className="flex items-start gap-3">
+            {futureVision.map((item, index) => (
+              <li
+                key={item}
+                className="flex items-start gap-3"
+                data-reveal
+                style={{ "--reveal-delay": `${index * 70}ms` }}
+              >
                 <HiCheckCircle aria-hidden="true" className="mt-0.5 shrink-0" size={18} />
                 <span className="text-muted">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-5 max-w-3xl text-sm text-muted">
+          <p className="mt-5 max-w-3xl text-sm text-muted" data-reveal="fade">
             This community is a future initiative that is still being planned — it is not a
             service we offer today. The objective is to help candidates become better prepared
             for employment without charging them for guidance or interview preparation.
@@ -354,10 +431,15 @@ export default function About() {
       {/* ── 7. Our Promise ──────────────────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
-          <SectionHeading eyebrow="Our word" title="Our Promise" />
+          <SectionHeading eyebrow="Our word" title="Our Promise" data-reveal />
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
-            {promises.map((item) => (
-              <article key={item.title} className="surface-card surface-card-hover about-card p-5">
+            {promises.map((item, index) => (
+              <article
+                key={item.title}
+                className="surface-card surface-card-hover about-card p-5"
+                data-reveal
+                style={{ "--reveal-delay": `${index * 70}ms` }}
+              >
                 <div className="flex items-start gap-3">
                   <span className="icon-tile shrink-0">
                     <HiCheckCircle aria-hidden="true" />
@@ -374,7 +456,7 @@ export default function About() {
       {/* ── 8. Closing statement ────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
-          <div className="founder-closing px-6 py-10 sm:px-10 sm:py-14">
+          <div className="founder-closing px-6 py-10 sm:px-10 sm:py-14" data-reveal>
             <p className="eyebrow justify-center">Our belief</p>
             <p className="founder-closing-quote mx-auto mt-5 max-w-3xl text-balance">
               &ldquo;Jobs Mania Freefund is built on one simple belief: helping people move
@@ -388,19 +470,80 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 9. What we do ────────────────────────────────────────────────── */}
+      {/* ── 9. Contact the founder ──────────────────────────────────────── */}
+      {founderContacts.length > 0 && (
+        <section className="section-band py-12 sm:py-14">
+          <div className="page-shell">
+            <SectionHeading
+              eyebrow="Contact"
+              title="Get in touch"
+              description="Questions about an opportunity, a collaboration, or this initiative — reach Pahulpreet Singh directly."
+              data-reveal
+            />
+            <ul
+              className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              aria-label="Founder contact details"
+            >
+              {founderContacts.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.key} data-reveal style={{ "--reveal-delay": `${index * 70}ms` }}>
+                    <a
+                      className="surface-card surface-card-hover about-card group flex h-full flex-col p-5"
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                      aria-label={item.ariaLabel}
+                    >
+                      <span className="icon-tile">
+                        <Icon aria-hidden="true" />
+                      </span>
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+                        {item.label}
+                      </p>
+                      <p className="mt-1 break-words text-sm font-semibold text-primary">{item.value}</p>
+                      <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold">
+                        {item.action}
+                        <HiArrowRight
+                          className="transition-transform group-hover:translate-x-1"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-5 text-sm text-muted" data-reveal="fade">
+              Prefer a form? The{" "}
+              <Link to="/contact" className="font-semibold text-primary underline underline-offset-2">
+                Contact page
+              </Link>{" "}
+              sends your message straight to the team.
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* ── 10. What we do ────────────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="What we do"
             title="Recruitment help, and free preparation tools"
             description="Genuine guidance from a real team, plus free tools that help you arrive better prepared."
+            data-reveal
           />
           <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {whatWeDo.map((item) => {
+            {whatWeDo.map((item, index) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="surface-card surface-card-hover about-card p-5 sm:p-6">
+                <article
+                  key={item.title}
+                  className="surface-card surface-card-hover about-card p-5 sm:p-6"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 70}ms` }}
+                >
                   <span className="icon-tile">
                     <Icon aria-hidden="true" />
                   </span>
@@ -413,17 +556,23 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 10. How hiring works ──────────────────────────────────────────── */}
+      {/* ── 11. How hiring works ──────────────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="How it works"
             title="Your path from search to outcome"
             description="A straightforward five-step journey — no surprises."
+            data-reveal
           />
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5" aria-label="Hiring steps">
             {hiringSteps.map((step, index) => (
-              <li key={step.label} className="surface-card surface-card-hover about-card p-5">
+              <li
+                key={step.label}
+                className="surface-card surface-card-hover about-card p-5"
+                data-reveal
+                style={{ "--reveal-delay": `${index * 60}ms` }}
+              >
                 <div className="flex items-center gap-3">
                   <span className="icon-tile font-display text-sm font-bold" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
@@ -440,17 +589,23 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 11. Our commitments ───────────────────────────────────────────── */}
+      {/* ── 12. Our commitments ───────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="Our commitments"
             title="What you can count on"
             description="These are things we do today, not promises about the future."
+            data-reveal
           />
           <ul className="mt-7 grid gap-4 sm:grid-cols-2" aria-label="Commitments">
-            {commitments.map((c) => (
-              <li key={c} className="surface-card surface-card-hover about-card flex items-start gap-4 p-5">
+            {commitments.map((c, index) => (
+              <li
+                key={c}
+                className="surface-card surface-card-hover about-card flex items-start gap-4 p-5"
+                data-reveal
+                style={{ "--reveal-delay": `${index * 70}ms` }}
+              >
                 <HiCheckCircle
                   aria-hidden="true"
                   className="about-card-icon mt-0.5 shrink-0 text-primary"
@@ -460,7 +615,7 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <p className="mt-5 text-sm text-muted">
+          <p className="mt-5 text-sm text-muted" data-reveal="fade">
             By using this site you agree to our{" "}
         <Link to="/privacy-policy" className="underline underline-offset-2">
           Privacy Policy
@@ -474,15 +629,16 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 12. Stay safe from job scams ──────────────────────────────────── */}
+      {/* ── 13. Stay safe from job scams ──────────────────────────────────── */}
       <section className="section-band py-12 sm:py-14">
         <div className="page-shell">
           <SectionHeading
             eyebrow="Safety"
             title="Stay safe from job scams"
             description="Genuine jobs don't ask for money. Here's how to protect yourself."
+            data-reveal
           />
-          <div className="mt-7 surface-card surface-card-hover about-card p-6 sm:p-8">
+          <div className="mt-7 surface-card surface-card-hover about-card p-6 sm:p-8" data-reveal>
             <div className="flex items-start gap-4 border-b border-line pb-6 mb-6">
               <span className="icon-tile icon-tile-solid shrink-0">
                 <HiExclamationTriangle aria-hidden="true" />
@@ -519,12 +675,15 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 13. Company details ───────────────────────────────────────────── */}
+      {/* ── 14. Company details ───────────────────────────────────────────── */}
       {showCompanySection && (
         <section className="section py-12 sm:py-14">
           <div className="page-shell">
-            <SectionHeading eyebrow="Company" title="Company details" />
-            <dl className="mt-7 surface-card surface-card-hover about-card divide-y divide-line overflow-hidden">
+            <SectionHeading eyebrow="Company" title="Company details" data-reveal />
+            <dl
+              className="mt-7 surface-card surface-card-hover about-card divide-y divide-line overflow-hidden"
+              data-reveal
+            >
               {companyRows.map((row) => (
                 <div
                   key={row.label}
@@ -553,7 +712,7 @@ export default function About() {
         </section>
       )}
 
-      {/* ── 14. FAQ ───────────────────────────────────────────────────────── */}
+      {/* ── 15. FAQ ───────────────────────────────────────────────────────── */}
       <section
         id="faq"
         className={`${showCompanySection ? "section-band" : "section"} py-12 sm:py-14`}
@@ -563,17 +722,21 @@ export default function About() {
             eyebrow="FAQ"
             title="Frequently asked questions"
             description="Honest answers about how this platform works today."
+            data-reveal
           />
-          <div className="mt-7 surface-card surface-card-hover about-card">
+          <div className="mt-7 surface-card surface-card-hover about-card" data-reveal>
             <FaqList items={faqItems} />
           </div>
         </div>
       </section>
 
-      {/* ── 15. Employer / partner enquiry CTA ───────────────────────────── */}
+      {/* ── 16. Employer / partner enquiry CTA ───────────────────────────── */}
       <section className={`${showCompanySection ? "section" : "section-band"} py-12 sm:py-14`}>
         <div className="page-shell">
-          <div className="surface-card surface-card-hover about-card p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
+          <div
+            className="surface-card surface-card-hover about-card p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8"
+            data-reveal
+          >
             <div className="max-w-xl">
               <p className="eyebrow">For employers</p>
               <h2 className="mt-3 text-2xl sm:text-3xl">Want to list a vacancy?</h2>
@@ -592,10 +755,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── 16. Final CTA band ────────────────────────────────────────────── */}
+      {/* ── 17. Final CTA band ────────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
-          <div className="cta-panel p-8 sm:p-10 lg:p-12">
+          <div className="cta-panel p-8 sm:p-10 lg:p-12" data-reveal>
             <span className="cta-shape cta-shape-lg" aria-hidden="true" />
             <span className="cta-shape cta-shape-sm" aria-hidden="true" />
             <div className="relative grid gap-8 lg:grid-cols-[1.25fr_auto] lg:items-center">

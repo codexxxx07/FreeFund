@@ -1,4 +1,12 @@
-export default function SectionHeading({ as, eyebrow, title, description, align = "left", action }) {
+export default function SectionHeading({
+  as,
+  eyebrow,
+  title,
+  description,
+  align = "left",
+  action,
+  ...rest
+}) {
   const Heading = as || "h2";
   const centered = align === "center";
   const headingSize =
@@ -8,6 +16,7 @@ export default function SectionHeading({ as, eyebrow, title, description, align 
 
   return (
     <div
+      {...rest}
       className={`flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between ${
         centered ? "items-center text-center" : ""
       }`}

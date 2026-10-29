@@ -270,15 +270,18 @@ export default function Home() {
             eyebrow="Career resources"
             title="Everything around the job search"
             description="Free tools that support the consultancy work — so you arrive at an application better prepared."
+            data-reveal
           />
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
-            {resources.map((resource) => {
+            {resources.map((resource, index) => {
               const Icon = resource.icon;
               return (
                 <Link
                   key={resource.to}
                   to={resource.to}
                   className="surface-card surface-card-hover group flex h-full flex-col p-6"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 70}ms` }}
                 >
                   <span className="icon-tile icon-tile-lg">
                     <Icon size={22} aria-hidden="true" />
@@ -306,12 +309,18 @@ export default function Home() {
             eyebrow="About us"
             title="What Jobs Mania – Freefund does"
             description="A recruitment consultancy first: genuine guidance for candidates, free preparation tools, and support when you need it."
+            data-reveal
           />
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
-            {whatWeDo.map((item) => {
+            {whatWeDo.map((item, index) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="surface-card surface-card-hover p-6">
+                <article
+                  key={item.title}
+                  className="surface-card surface-card-hover p-6"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 70}ms` }}
+                >
                   <span className="icon-tile">
                     <Icon aria-hidden="true" />
                   </span>
@@ -337,10 +346,11 @@ export default function Home() {
             eyebrow="Trust and support"
             title="What you can count on"
             description="These are things the site does today, not promises about the future."
+            data-reveal
           />
 
           <div className="mt-7 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <ul className="surface-card grid content-center gap-4 p-6 sm:p-8">
+            <ul className="surface-card grid content-center gap-4 p-6 sm:p-8" data-reveal>
               {commitments.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <HiCheckCircle className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
@@ -349,7 +359,11 @@ export default function Home() {
               ))}
             </ul>
 
-            <div className="surface-card flex flex-col justify-center p-6 sm:p-8">
+            <div
+              className="surface-card flex flex-col justify-center p-6 sm:p-8"
+              data-reveal
+              style={{ "--reveal-delay": "90ms" }}
+            >
               <p className="eyebrow">Support</p>
               <h3 className="mt-3 text-2xl">Talk to a person</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -382,7 +396,7 @@ export default function Home() {
       {/* ── Final CTA ────────────────────────────────────────────────── */}
       <section className="section py-12 sm:py-14">
         <div className="page-shell">
-          <div className="cta-panel p-8 sm:p-10 lg:p-12">
+          <div className="cta-panel p-8 sm:p-10 lg:p-12" data-reveal>
             <span className="cta-shape cta-shape-lg" aria-hidden="true" />
             <span className="cta-shape cta-shape-sm" aria-hidden="true" />
             <div className="relative grid gap-8 lg:grid-cols-[1.25fr_auto] lg:items-center">

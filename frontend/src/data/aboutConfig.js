@@ -53,7 +53,8 @@ const aboutConfig = {
   // Only information supplied by the founder is stored here — nothing is
   // inferred. The card renders the social icons either way; an empty URL shows
   // the icon as a clearly disabled control so no visitor is sent to a broken
-  // or invented link. Paste the real URLs below whenever they are available.
+  // or invented link. The same URLs feed the About page contact section, so
+  // they only ever need to be changed in this one place.
   founder: {
     name: "Pahulpreet Singh",
     designation: "HR & Recruitment Professional",
@@ -65,11 +66,16 @@ const aboutConfig = {
     image: "/images/founder-pahulpreet-singh.png",
     imageAlt: "Pahulpreet Singh, founder of Jobs Mania - Freefund",
 
-    // Add the real profile links here; leave a value empty until it exists.
+    // Verified email — rendered as a mailto: link in the contact section.
+    email: "hrpahulpreetofficial@zohomail.in",
+
+    // Verified profile links. "whatsapp" is the founder's DIRECT contact
+    // (wa.me link) and is deliberately separate from the WhatsApp Community
+    // invitation in siteConfig.whatsappCommunityUrl.
     social: {
-      linkedin: "",
-      whatsapp: "",
-      instagram: "",
+      linkedin: "https://www.linkedin.com/in/hrpahulpreetofficial",
+      whatsapp: "https://wa.me/message/BZGWIOX7TUQFN1",
+      instagram: "https://www.instagram.com/hrpahulpreetofficial",
     },
   },
 };

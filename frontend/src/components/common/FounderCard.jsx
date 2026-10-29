@@ -8,9 +8,14 @@ import aboutConfig from "../../data/aboutConfig";
  * name, designation, one-line description and the LinkedIn / WhatsApp /
  * Instagram row.
  *
- * Social URLs live in src/data/aboutConfig.js → founder.social. An entry left
- * empty renders as a clearly disabled control (no href, no invented link) with
- * an accessible label, so the icon can be wired up later without touching JSX.
+ * Social URLs live in src/data/aboutConfig.js → founder.social — the same
+ * values the About page contact section uses, so they are edited in one place.
+ * An entry left empty renders as a clearly disabled control (no href, no
+ * invented link) with an accessible label, so the icon can be wired up later
+ * without touching JSX.
+ *
+ * The card itself reveals through `data-reveal="scale"` on its wrapper; the
+ * social icons stagger in just after it via `utils/scrollReveal.js`.
  */
 
 const founder = aboutConfig.founder;
@@ -117,8 +122,12 @@ export default function FounderCard() {
       </p>
 
       <ul className="founder-socials mt-6" aria-label={`${founder.name} on social media`}>
-        {socials.map(({ key, label, icon, url }) => (
-          <li key={key}>
+        {socials.map(({ key, label, icon, url }, index) => (
+          <li
+            key={key}
+            data-reveal
+            style={{ "--reveal-delay": `${160 + index * 70}ms` }}
+          >
             <SocialButton label={label} icon={icon} url={url} />
           </li>
         ))}

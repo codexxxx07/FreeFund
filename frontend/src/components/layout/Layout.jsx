@@ -1,8 +1,15 @@
-﻿import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import initScrollReveal from "../../utils/scrollReveal";
 
 export default function Layout() {
+  // One shared IntersectionObserver for every [data-reveal] section on the
+  // site. It scans on mount and then watches for nodes added later, so route
+  // changes reveal their content too; the cleanup disconnects both observers.
+  useEffect(() => initScrollReveal(), []);
+
   return (
     <div className="site-frame">
       <div className="site-canvas flex flex-col">

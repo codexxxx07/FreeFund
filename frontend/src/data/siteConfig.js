@@ -35,14 +35,14 @@ const siteConfig = {
   whatsappChannelUrl: "https://whatsapp.com/channel/0029Vb6uL6r8KMqr0gWO7r2c",
 
   /**
-   * WhatsApp Community invitation link, e.g.
-   * "https://whatsapp.com/channel/0029VaXXXXXXXXXXXXXXXX" or the community
-   * invite URL supplied by WhatsApp.
-   * Leave "" until the owner supplies it. The Home page "Join Community"
-   * button then explains that the link is coming soon instead of navigating
-   * to an invalid URL.
+   * WhatsApp Community invitation link used by every "Join Our WhatsApp
+   * Community" call to action (home page section).
+   * This is the COMMUNITY invite — it is not the founder's direct WhatsApp
+   * contact, which lives in aboutConfig.founder.social.whatsapp.
+   * Set back to "" and the Join Community button explains that the link is
+   * coming soon instead of navigating to an invalid URL.
    */
-  whatsappCommunityUrl: "",
+  whatsappCommunityUrl: "https://chat.whatsapp.com/ByOxpemBNOa39uHNgyodZX",
 
   /**
    * WhatsApp number for one-to-one enquiries, digits only with country code,

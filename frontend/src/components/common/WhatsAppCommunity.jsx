@@ -12,13 +12,20 @@ import siteConfig, { hasWhatsAppCommunity } from "../../data/siteConfig";
  * instead of navigating to an invalid URL.
  *
  * Adding the real link means editing siteConfig.js once — no other file changes.
+ *
+ * The whole section reveals on scroll via `data-reveal` (utils/scrollReveal.js).
  */
 export default function WhatsAppCommunity() {
   const configured = hasWhatsAppCommunity();
   const [showPending, setShowPending] = useState(false);
 
   return (
-    <section id="whatsapp-community" className="section py-12 sm:py-14" aria-labelledby="whatsapp-community-title">
+    <section
+      id="whatsapp-community"
+      className="section py-12 sm:py-14"
+      aria-labelledby="whatsapp-community-title"
+      data-reveal
+    >
       <div className="page-shell">
         <div className="surface-card relative overflow-hidden p-7 sm:p-9 lg:p-11">
           <div className="relative grid gap-8 lg:grid-cols-[1.5fr_auto] lg:items-center lg:gap-12">
