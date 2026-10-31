@@ -4,12 +4,12 @@ import { useId, useState } from "react";
  * Accordion — one open panel at a time. Items: [{ id, title, content }].
  * `indexLabel` renders a two-digit counter in the trigger.
  */
-export default function Accordion({ items, initial = 0, className = "" }) {
+export default function Accordion({ items, initial = 0, className = "", ...rest }) {
   const [openId, setOpenId] = useState(items[initial]?.id ?? null);
   const baseId = useId();
 
   return (
-    <div className={`tr-accordion ${className}`.trim()}>
+    <div className={`tr-accordion ${className}`.trim()} {...rest}>
       {items.map((item, index) => {
         const open = openId === item.id;
         const panelId = `${baseId}-${item.id}-panel`;

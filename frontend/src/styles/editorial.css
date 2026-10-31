@@ -3874,3 +3874,47 @@
 .hm-cta :focus-visible {
   outline-color: var(--ink);
 }
+
+/* ═══ 11. Scroll reveal on cards with their own hover transitions ═════════
+   editorial.css is unlayered, so an element's own `transition` would otherwise
+   win over the shared reveal transition declared in the layered stylesheet.
+   These rules keep the reveal timing and the card's hover timing together. */
+
+[data-reveal].ed-limecard {
+  transition:
+    opacity 0.65s ease var(--reveal-delay, 0ms),
+    translate 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s ease var(--reveal-delay, 0ms),
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+[data-reveal].hm-partner {
+  transition:
+    opacity 0.65s ease var(--reveal-delay, 0ms),
+    translate 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s ease var(--reveal-delay, 0ms),
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+[data-reveal].tl-card {
+  transition:
+    opacity 0.65s ease var(--reveal-delay, 0ms),
+    translate 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s ease var(--reveal-delay, 0ms),
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+[data-reveal].cg-read {
+  transition:
+    opacity 0.65s ease var(--reveal-delay, 0ms),
+    translate 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s ease var(--reveal-delay, 0ms),
+    color 0.15s ease;
+}

@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="page-shell flex min-h-[70vh] items-center py-16">
       <PageMeta title="Not Found" description="The requested page could not be found." />
-      <div className="surface-panel mx-auto w-full max-w-xl p-8 text-center sm:p-10">
+      <div className="surface-panel mx-auto w-full max-w-xl p-8 text-center sm:p-10" data-reveal>
         <span className="icon-tile icon-tile-solid icon-tile-lg mx-auto">
           <HiMagnifyingGlass size={24} aria-hidden="true" />
         </span>

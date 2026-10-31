@@ -195,7 +195,7 @@ export default function FreeTraining() {
       <section className="tr-hero" aria-labelledby="training-title">
         <div className="ed-shell">
           <div className="tr-hero__grid">
-            <div>
+            <div data-reveal>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
                 <span className="ed-badge ed-badge--lime">{cohort.code}</span>
                 <span className="ed-badge">{cohort.duration}</span>
@@ -242,7 +242,12 @@ export default function FreeTraining() {
               </p>
             </div>
 
-            <aside className="tr-hero__aside" aria-label="Next batch countdown and seats">
+            <aside
+              className="tr-hero__aside"
+              aria-label="Next batch countdown and seats"
+              data-reveal
+              style={{ "--reveal-delay": "90ms" }}
+            >
               <p className="ed-label ed-label--lime">
                 <Asterisk size={12} /> Next batch starts in
               </p>
@@ -306,9 +311,14 @@ export default function FreeTraining() {
       {/* ── Weekly timeline ──────────────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="schedule-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ 14 days · 16 sessions ]">The schedule</SectionLabel>
+          <SectionLabel aside="[ 14 days · 16 sessions ]" data-reveal="fade">
+            The schedule
+          </SectionLabel>
 
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}
+          >
             <h2 id="schedule-title" className="ed-display ed-h2">
               Two weeks,
               <br />
@@ -321,8 +331,13 @@ export default function FreeTraining() {
           </div>
 
           <div className="tr-timeline">
-            {weeks.map((week) => (
-              <article className="tr-week" key={week.week}>
+            {weeks.map((week, weekIndex) => (
+              <article
+                className="tr-week"
+                key={week.week}
+                data-reveal
+                style={{ "--reveal-delay": `${weekIndex * 70}ms` }}
+              >
                 <div>
                   <p className="tr-week__num">{week.week}</p>
                   <p className="tr-week__day">{week.dates}</p>
@@ -351,9 +366,14 @@ export default function FreeTraining() {
       {/* ── Syllabus accordion ───────────────────────────────────────── */}
       <section className="ed-section" id="syllabus" aria-labelledby="syllabus-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ 4 modules · 16 sessions ]">Syllabus</SectionLabel>
+          <SectionLabel aside="[ 4 modules · 16 sessions ]" data-reveal="fade">
+            Syllabus
+          </SectionLabel>
 
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}
+          >
             <h2 id="syllabus-title" className="ed-display ed-h2">
               Open a module.
               <br />
@@ -366,6 +386,8 @@ export default function FreeTraining() {
           </div>
 
           <Accordion
+            data-reveal
+            style={{ "--reveal-delay": "80ms" }}
             items={modules.map((module) => ({
               id: module.id,
               title: module.title,
@@ -390,9 +412,14 @@ export default function FreeTraining() {
       {/* ── Mentors ──────────────────────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="mentors-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Sample profiles ]">Who teaches</SectionLabel>
+          <SectionLabel aside="[ Sample profiles ]" data-reveal="fade">
+            Who teaches
+          </SectionLabel>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1.25rem", marginTop: "1.5rem" }}
+          >
             <h2 id="mentors-title" className="ed-display ed-h2">
               Three people
               <br />
@@ -405,8 +432,13 @@ export default function FreeTraining() {
           </div>
 
           <div className="tr-mentors">
-            {mentors.map((mentor) => (
-              <article className="tr-mentor" key={mentor.id}>
+            {mentors.map((mentor, mentorIndex) => (
+              <article
+                className="tr-mentor"
+                key={mentor.id}
+                data-reveal
+                style={{ "--reveal-delay": `${mentorIndex * 80}ms` }}
+              >
                 <div className="tr-mentor__mono" aria-hidden="true">
                   {mentor.initials}
                 </div>
@@ -427,17 +459,29 @@ export default function FreeTraining() {
       {/* ── Outcomes + what you get ──────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="outcomes-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ What you leave with ]">Outcomes</SectionLabel>
+          <SectionLabel aside="[ What you leave with ]" data-reveal="fade">
+            Outcomes
+          </SectionLabel>
 
-          <h2 id="outcomes-title" className="ed-display ed-h2" style={{ marginTop: "1.5rem" }}>
+          <h2
+            id="outcomes-title"
+            className="ed-display ed-h2"
+            style={{ marginTop: "1.5rem" }}
+            data-reveal
+          >
             Six things at
             <br />
             the <span style={{ color: "var(--lime)" }}>end.</span>
           </h2>
 
           <div className="tr-outcomes">
-            {outcomes.map((outcome) => (
-              <span className="tr-outcome" key={outcome}>
+            {outcomes.map((outcome, outcomeIndex) => (
+              <span
+                className="tr-outcome"
+                key={outcome}
+                data-reveal="fade"
+                style={{ "--reveal-delay": `${outcomeIndex * 50}ms` }}
+              >
                 <HiCheck aria-hidden="true" size={15} />
                 {outcome}
               </span>
@@ -445,7 +489,7 @@ export default function FreeTraining() {
           </div>
 
           <div className="tr-get">
-            <div>
+            <div data-reveal>
               <p className="ed-label ed-label--lime" style={{ marginBottom: "0.85rem" }}>
                 <Asterisk size={12} /> What you get
               </p>
@@ -459,7 +503,7 @@ export default function FreeTraining() {
               </div>
             </div>
 
-            <aside className="tr-get__card">
+            <aside className="tr-get__card" data-reveal style={{ "--reveal-delay": "90ms" }}>
               <p className="ed-label ed-label--lime">
                 <Asterisk size={12} /> What this is not
               </p>
@@ -486,10 +530,12 @@ export default function FreeTraining() {
       {/* ── FAQ ──────────────────────────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="training-faq-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Still deciding? ]">Questions</SectionLabel>
+          <SectionLabel aside="[ Still deciding? ]" data-reveal="fade">
+            Questions
+          </SectionLabel>
 
           <div className="tr-faq" style={{ marginTop: "1.5rem" }}>
-            <div>
+            <div data-reveal>
               <h2 id="training-faq-title" className="ed-display ed-h2">
                 Ask before
                 <br />
@@ -512,7 +558,7 @@ export default function FreeTraining() {
               </p>
             </div>
 
-            <FaqList items={faqs} />
+            <FaqList items={faqs} data-reveal style={{ "--reveal-delay": "90ms" }} />
           </div>
         </div>
       </section>

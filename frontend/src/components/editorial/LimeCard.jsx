@@ -14,12 +14,13 @@ export default function LimeCard({
   children,
   action,
   className = "",
+  ...rest
 }) {
   const Tag = to ? Link : "article";
   const props = to ? { to } : {};
 
   return (
-    <Tag className={`ed-limecard ${className}`.trim()} {...props}>
+    <Tag className={`ed-limecard ${className}`.trim()} {...props} {...rest}>
       <div className="ed-limecard__bar">
         <span>{label || title}</span>
         {index ? <span>{index}</span> : <Asterisk size={13} />}

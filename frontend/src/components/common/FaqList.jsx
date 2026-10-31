@@ -35,9 +35,9 @@ function FaqItem({ item }) {
  * items: [{ id, question, answer }] — answer may be a string or a node.
  * The row styles live in styles/index.css (.faq-*).
  */
-export default function FaqList({ items, className = "" }) {
+export default function FaqList({ items, className = "", ...rest }) {
   return (
-    <div className={`faq-list ${className}`}>
+    <div className={`faq-list ${className}`} {...rest}>
       {items.map((item) => (
         <FaqItem key={item.id} item={item} />
       ))}

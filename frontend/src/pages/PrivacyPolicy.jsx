@@ -5,7 +5,7 @@ import siteConfig from "../data/siteConfig";
 
 function Section({ title, children, first = false }) {
   return (
-    <section className={first ? "" : "border-t border-line pt-8"}>
+    <section className={first ? "" : "border-t border-line pt-8"} data-reveal>
       <h2 className="text-xl sm:text-2xl">{title}</h2>
       <div className="mt-2.5 grid gap-3 text-muted">{children}</div>
     </section>
@@ -30,18 +30,19 @@ export default function PrivacyPolicy() {
             eyebrow="Legal"
             title="Privacy Policy"
             description="Last updated: 25 October 2026. This policy describes what the website actually does today. Items that still need the owner's confirmation are marked."
+            data-reveal
           />
         </div>
       </section>
 
       <div className="page-shell py-12 sm:py-14">
         <article className="surface-panel mx-auto max-w-4xl p-6 sm:p-10">
-          <div className="flex flex-wrap items-center gap-2 border-b border-line pb-6">
+          <div className="flex flex-wrap items-center gap-2 border-b border-line pb-6" data-reveal="fade">
             <span className="badge badge-primary">Frontend-only website</span>
             <span className="badge">Owner details pending confirmation</span>
           </div>
 
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-muted" data-reveal>
             {BRAND_NAME} runs entirely in your browser. There is no user account, no login and no server-side database
             behind this release. This page explains exactly what that means for the information you type.
           </p>
@@ -137,7 +138,7 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="mt-8 border-t border-line pt-6">
-            <p className="text-sm text-muted">
+            <p className="text-sm text-muted" data-reveal="fade">
               Questions about this policy can be raised through the{" "}
               <a href="/contact" className="font-semibold underline underline-offset-2">
                 contact page

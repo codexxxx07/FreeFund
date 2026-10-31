@@ -19,7 +19,7 @@ export default function CareerArticle() {
       <PageMeta title={article.title} description={article.summary} />
 
       <section className="border-b border-line bg-secondary">
-        <div className="page-shell-narrow py-8 lg:py-12">
+        <div className="page-shell-narrow py-8 lg:py-12" data-reveal>
           <Link to="/career-guidance" className="btn-ghost -ml-2 inline-flex items-center gap-2">
             <HiArrowLeft aria-hidden="true" />
             All career guidance
@@ -38,8 +38,12 @@ export default function CareerArticle() {
       <div className="page-shell-narrow py-12 sm:py-14">
         <article className="surface-panel p-6 sm:p-9">
           <div className="grid gap-8">
-            {article.sections.map((section) => (
-              <section key={section.heading}>
+            {article.sections.map((section, sectionIndex) => (
+              <section
+                key={section.heading}
+                data-reveal
+                style={{ "--reveal-delay": `${sectionIndex * 60}ms` }}
+              >
                 <h2 className="text-xl sm:text-2xl">{section.heading}</h2>
                 {section.body ? <p className="mt-2.5 leading-relaxed text-muted">{section.body}</p> : null}
                 {section.bullets?.length ? (
@@ -71,7 +75,7 @@ export default function CareerArticle() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-6">
+          <div className="mt-8 flex flex-wrap gap-3 border-t border-line pt-6" data-reveal="fade">
             <Link to="/resume-builder" className="btn-primary">
               Resume Builder
               <HiArrowRight aria-hidden="true" />
@@ -87,7 +91,7 @@ export default function CareerArticle() {
 
         {related.length ? (
           <section className="mt-12">
-            <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
               <div>
                 <p className="eyebrow">Keep reading</p>
                 <h2 className="mt-3 text-2xl">Related articles</h2>
@@ -98,14 +102,19 @@ export default function CareerArticle() {
               </Link>
             </div>
             <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {related.map((item) => (
-                <ArticleCard key={item.slug} article={item} />
+              {related.map((item, index) => (
+                <ArticleCard
+                  key={item.slug}
+                  article={item}
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 70}ms` }}
+                />
               ))}
             </div>
           </section>
         ) : null}
 
-        <p className="mt-10 text-xs text-muted">
+        <p className="mt-10 text-xs text-muted" data-reveal="fade">
           Guidance provided by {BRAND_NAME} for general information only. No career outcome is guaranteed.
         </p>
       </div>

@@ -111,6 +111,7 @@ export default function Contact() {
             eyebrow="Contact"
             title="Get in touch"
             description="Candidate question, employer listing, training enquiry, or a suspicious offer you want us to check — write it once and send it through the channel you prefer."
+            data-reveal
           />
         </div>
       </section>
@@ -118,7 +119,7 @@ export default function Contact() {
       <div className="page-shell py-12 sm:py-14">
         <div className="grid items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           {composed ? (
-            <div className="surface-panel p-6 sm:p-8">
+            <div className="surface-panel p-6 sm:p-8" data-reveal>
               <span className="icon-tile icon-tile-solid icon-tile-lg">
                 <HiCheckCircle aria-hidden="true" size={26} />
               </span>
@@ -190,7 +191,7 @@ export default function Contact() {
               </div>
             </div>
           ) : (
-            <form className="surface-panel p-6 sm:p-8" onSubmit={onSubmit} noValidate>
+            <form className="surface-panel p-6 sm:p-8" onSubmit={onSubmit} noValidate data-reveal>
               <div className="flex items-start gap-3 border-b border-line pb-6">
                 <span className="icon-tile icon-tile-solid">
                   <HiChatBubbleLeftRight aria-hidden="true" />
@@ -293,7 +294,7 @@ export default function Contact() {
             </form>
           )}
 
-          <aside className="surface-panel p-6 sm:p-8">
+          <aside className="surface-panel p-6 sm:p-8" data-reveal style={{ "--reveal-delay": "90ms" }}>
             <p className="eyebrow">Contact</p>
             <h2 className="mt-3 text-xl">Details</h2>
             {contactRows.length ? (

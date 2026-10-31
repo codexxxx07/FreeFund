@@ -44,9 +44,9 @@ function Figure({ person, index }) {
   );
 }
 
-export default function PeopleRow() {
+export default function PeopleRow({ ...rest }) {
   return (
-    <div className="ed-footer__people" aria-hidden="true">
+    <div className="ed-footer__people" aria-hidden="true" {...rest}>
       {PEOPLE.map((person, index) => (
         <div key={index} style={{ transform: `translateY(${Math.round(person.height % 7)}px)` }}>
           <Figure person={person} index={index} />

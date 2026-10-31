@@ -231,7 +231,10 @@ export default function ResumeBuilder() {
         </div>
 
         <div className="ed-shell" style={{ paddingBlock: "1.5rem" }}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem" }}
+          >
             <div>
               <p className="ed-label ed-label--lime">[ Split editor · A4 ]</p>
               <h1 className="ed-display" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)", marginTop: "0.4rem" }}>
@@ -258,7 +261,7 @@ export default function ResumeBuilder() {
 
       <div className="ed-shell rb-main" id="resume-form-top">
         <div className="rb-split">
-          <div className="rb-form-column">
+          <div className="rb-form-column" data-reveal>
             <div className="rb-panel">
               <div className="rb-panel__head">
                 <div>
@@ -301,7 +304,7 @@ export default function ResumeBuilder() {
             </p>
           </div>
 
-          <div className="rb-side">
+          <div className="rb-side" data-reveal style={{ "--reveal-delay": "90ms" }}>
             <div className="rb-side__head">
               <p className="ed-label ed-label--lime">
                 <HiCheck aria-hidden="true" size={13} /> Live A4 preview

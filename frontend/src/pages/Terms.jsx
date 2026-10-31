@@ -4,7 +4,7 @@ import { BRAND_NAME, IS_DEMO } from "../data/constants";
 
 function Section({ title, children, first = false }) {
   return (
-    <section className={first ? "" : "border-t border-line pt-8"}>
+    <section className={first ? "" : "border-t border-line pt-8"} data-reveal>
       <h2 className="text-xl sm:text-2xl">{title}</h2>
       <div className="mt-2.5 grid gap-3 text-muted">{children}</div>
     </section>
@@ -27,18 +27,19 @@ export default function Terms() {
             eyebrow="Legal"
             title="Terms & Conditions"
             description="Last updated: 25 October 2026. These terms cover how this website may be used. Commercial and jurisdiction details are marked where the owner still needs to confirm them."
+            data-reveal
           />
         </div>
       </section>
 
       <div className="page-shell py-12 sm:py-14">
         <article className="surface-panel mx-auto max-w-4xl p-6 sm:p-10">
-          <div className="flex flex-wrap items-center gap-2 border-b border-line pb-6">
+          <div className="flex flex-wrap items-center gap-2 border-b border-line pb-6" data-reveal="fade">
             <span className="badge badge-primary">Frontend-only website</span>
             <span className="badge">Owner details pending confirmation</span>
           </div>
 
-          <p className="mt-6 text-muted">
+          <p className="mt-6 text-muted" data-reveal>
             These terms describe acceptable use of the {BRAND_NAME} website. They are not a complete commercial
             contract and have not been independently legally reviewed.
           </p>

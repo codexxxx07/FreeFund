@@ -103,7 +103,7 @@ export default function CareerGuidance() {
       <section className="cg-hero" aria-labelledby="guidance-title">
         <div className="ed-shell">
           <div className="cg-hero__top">
-            <div>
+            <div data-reveal>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
                 <span className="ed-badge ed-badge--lime">[ Career fit ]</span>
                 <span className="ed-badge">5 questions</span>
@@ -116,13 +116,17 @@ export default function CareerGuidance() {
               </h1>
             </div>
 
-            <p className="ed-lead" style={{ maxWidth: "38ch", paddingBottom: "0.5rem" }}>
+            <p
+              className="ed-lead"
+              style={{ maxWidth: "38ch", paddingBottom: "0.5rem", "--reveal-delay": "80ms" }}
+              data-reveal
+            >
               Not a personality test. Five choices about how you like to work, followed by a concrete
               direction, a skill-gap plan and the salary band to check before you commit.
             </p>
           </div>
 
-          <div className="cg-quiz">
+          <div className="cg-quiz" data-reveal style={{ "--reveal-delay": "140ms" }}>
             {phase === "quiz" ? (
               <>
                 <div className="cg-quiz__head">
@@ -218,11 +222,13 @@ export default function CareerGuidance() {
         style={{ outline: "none" }}
       >
         <div className="ed-shell">
-          <SectionLabel aside="[ Indicative, not a verdict ]">Your result</SectionLabel>
+          <SectionLabel aside="[ Indicative, not a verdict ]" data-reveal="fade">
+            Your result
+          </SectionLabel>
 
           {phase === "result" ? (
             <div className="cg-result" style={{ marginTop: "1.5rem" }}>
-              <div className="cg-result__hero">
+              <div className="cg-result__hero" data-reveal>
                 <p className="cg-result__label">
                   <HiSparkles aria-hidden="true" style={{ verticalAlign: "-3px", marginRight: "0.4rem" }} />
                   Recommended direction
@@ -239,7 +245,7 @@ export default function CareerGuidance() {
               </div>
 
               <div style={{ display: "grid", gap: "1.5rem" }}>
-                <div>
+                <div data-reveal style={{ "--reveal-delay": "60ms" }}>
                   <p className="ed-label ed-label--lime" style={{ marginBottom: "0.75rem" }}>
                     Roles to search for
                   </p>
@@ -257,7 +263,7 @@ export default function CareerGuidance() {
                   </p>
                 </div>
 
-                <div>
+                <div data-reveal style={{ "--reveal-delay": "120ms" }}>
                   <p className="ed-label ed-label--lime" style={{ marginBottom: "0.75rem" }}>
                     Skill-gap roadmap
                   </p>
@@ -275,7 +281,7 @@ export default function CareerGuidance() {
                   </div>
                 </div>
 
-                <div>
+                <div data-reveal style={{ "--reveal-delay": "180ms" }}>
                   <p className="ed-label ed-label--lime" style={{ marginBottom: "0.6rem" }}>
                     Skills to close
                   </p>
@@ -289,7 +295,17 @@ export default function CareerGuidance() {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", borderTop: "1px solid var(--line)", paddingTop: "1.25rem" }}>
+                <div
+                  data-reveal
+                  style={{
+                    "--reveal-delay": "240ms",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "0.6rem",
+                    borderTop: "1px solid var(--line)",
+                    paddingTop: "1.25rem",
+                  }}
+                >
                   <a href="#book" className="ed-btn ed-btn--lime">
                     Book a 1:1 with a counsellor
                     <HiCalendarDays aria-hidden="true" size={15} />
@@ -300,7 +316,7 @@ export default function CareerGuidance() {
               </div>
             </div>
           ) : (
-            <div style={{ marginTop: "1.5rem", maxWidth: "62ch" }}>
+            <div style={{ marginTop: "1.5rem", maxWidth: "62ch" }} data-reveal>
               <h2 id="result-title" className="ed-display ed-h2">
                 Your plan appears here.
               </h2>
@@ -324,7 +340,7 @@ export default function CareerGuidance() {
       <section className="ed-section" id="book" aria-labelledby="booking-title">
         <div className="ed-shell">
           <div className="cg-booking">
-            <div className="cg-booking__copy">
+            <div className="cg-booking__copy" data-reveal>
               <SectionLabel aside="[ 20 minutes ]">1:1 counselling</SectionLabel>
               <h2 id="booking-title" className="ed-display ed-h2" style={{ marginTop: "1.25rem" }}>
                 Bring the result.
@@ -356,7 +372,7 @@ export default function CareerGuidance() {
               </p>
             </div>
 
-            <div className="cg-slots">
+            <div className="cg-slots" data-reveal style={{ "--reveal-delay": "90ms" }}>
               <p className="ed-label ed-label--lime">
                 <HiCalendarDays aria-hidden="true" size={13} /> Pick a day
               </p>
@@ -434,9 +450,14 @@ export default function CareerGuidance() {
       {/* ── Success stories carousel ─────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="stories-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Illustrative stories ]">Success stories</SectionLabel>
+          <SectionLabel aside="[ Illustrative stories ]" data-reveal="fade">
+            Success stories
+          </SectionLabel>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.25rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.25rem" }}
+          >
             <h2 id="stories-title" className="ed-display ed-h2">
               The direction
               <br />
@@ -448,7 +469,7 @@ export default function CareerGuidance() {
           </div>
 
           <div className="cg-stories">
-            <div className="cg-story">
+            <div className="cg-story" data-reveal style={{ "--reveal-delay": "80ms" }}>
               <p className="cg-story__quote">
                 “{successStories[storyIndex].quote}”
               </p>
@@ -490,9 +511,14 @@ export default function CareerGuidance() {
       {/* ── Reading room ─────────────────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="reading-title">
         <div className="ed-shell">
-          <SectionLabel aside={`[ ${careerArticles.length} guides ]`}>Reading room</SectionLabel>
+          <SectionLabel aside={`[ ${careerArticles.length} guides ]`} data-reveal="fade">
+            Reading room
+          </SectionLabel>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.25rem" }}>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.25rem" }}
+          >
             <h2 id="reading-title" className="ed-display ed-h2">
               Read before
               <br />
@@ -505,8 +531,14 @@ export default function CareerGuidance() {
           </div>
 
           <div className="cg-reading">
-            {careerArticles.slice(0, 5).map((article) => (
-              <Link className="cg-read" to={`/career-guidance/${article.slug}`} key={article.slug}>
+            {careerArticles.slice(0, 5).map((article, articleIndex) => (
+              <Link
+                className="cg-read"
+                to={`/career-guidance/${article.slug}`}
+                key={article.slug}
+                data-reveal
+                style={{ "--reveal-delay": `${articleIndex * 70}ms` }}
+              >
                 <div>
                   <p className="cg-read__title">{article.title}</p>
                   <p className="cg-read__meta">

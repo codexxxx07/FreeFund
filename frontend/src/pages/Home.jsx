@@ -114,19 +114,24 @@ export default function Home() {
         </div>
 
         <div className="ed-shell hm-hero__inner">
-          <p className="ed-label ed-label--lime hm-hero__eyebrow">
+          <p className="ed-label ed-label--lime hm-hero__eyebrow" data-reveal>
             <Asterisk size={14} />
             [ People first, paperwork second ]
           </p>
 
-          <h1 id="home-title" className="ed-display hm-word">
+          <h1
+            id="home-title"
+            className="ed-display hm-word"
+            data-reveal="fade"
+            style={{ "--reveal-delay": "60ms" }}
+          >
             <span>Jobs</span>
             <span>
               Man<em>ia</em>
             </span>
           </h1>
 
-          <div className="hm-hero__foot">
+          <div className="hm-hero__foot" data-reveal style={{ "--reveal-delay": "120ms" }}>
             <div>
               <p className="hm-hero__claim">
                 Recruitment without the runaround. Free preparation tools, honest guidance, and a human
@@ -155,7 +160,7 @@ export default function Home() {
       {/* ── Live statistics ──────────────────────────────────────────── */}
       <section aria-labelledby="stats-title">
         <div className="ed-shell" style={{ paddingTop: "1.25rem" }}>
-          <div className="ed-sechead" style={{ paddingBottom: "0.75rem" }}>
+          <div className="ed-sechead" style={{ paddingBottom: "0.75rem" }} data-reveal="fade">
             <span className="ed-label ed-label--lime">
               <Asterisk size={13} />
               [ By the numbers ]
@@ -166,19 +171,48 @@ export default function Home() {
           </div>
         </div>
         <div className="hm-stats">
-          <StatCard value={1240} suffix="+" label="Placements supported" note="Across support, sales and back office" />
-          <StatCard value={38} label="Hiring partners" note="Verified employer mandates" />
-          <StatCard value={4600} suffix="+" label="Candidates coached" note="Tools, cohorts and 1:1 sessions" />
-          <StatCard value="₹0" label="Candidate fees" note="Always. Report anyone who asks." />
+          <StatCard
+            value={1240}
+            suffix="+"
+            label="Placements supported"
+            note="Across support, sales and back office"
+            data-reveal
+            style={{ "--reveal-delay": "0ms" }}
+          />
+          <StatCard
+            value={38}
+            label="Hiring partners"
+            note="Verified employer mandates"
+            data-reveal
+            style={{ "--reveal-delay": "70ms" }}
+          />
+          <StatCard
+            value={4600}
+            suffix="+"
+            label="Candidates coached"
+            note="Tools, cohorts and 1:1 sessions"
+            data-reveal
+            style={{ "--reveal-delay": "140ms" }}
+          />
+          <StatCard
+            value="₹0"
+            label="Candidate fees"
+            note="Always. Report anyone who asks."
+            data-reveal
+            style={{ "--reveal-delay": "210ms" }}
+          />
         </div>
       </section>
 
       {/* ── Four ways in ─────────────────────────────────────────────── */}
       <section className="ed-section" id="the-work" aria-labelledby="work-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Four ways in ]">What we do</SectionLabel>
+          <SectionLabel aside="[ Four ways in ]" data-reveal="fade">
+            What we do
+          </SectionLabel>
 
           <div
+            data-reveal
             style={{
               display: "grid",
               gap: "1.5rem",
@@ -199,7 +233,7 @@ export default function Home() {
           </div>
 
           <div className="hm-services">
-            {services.map((service) => (
+            {services.map((service, serviceIndex) => (
               <LimeCard
                 key={service.to}
                 to={service.to}
@@ -209,6 +243,8 @@ export default function Home() {
                 meta={service.meta}
                 action={service.action}
                 className="hm-service"
+                data-reveal
+                style={{ "--reveal-delay": `${serviceIndex * 70}ms` }}
               >
                 {service.body}
               </LimeCard>
@@ -232,8 +268,13 @@ export default function Home() {
       {/* ── Hiring partners ──────────────────────────────────────────── */}
       <section className="hm-partners" aria-labelledby="partners-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Placeholder marks ]">Hiring partners</SectionLabel>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}>
+          <SectionLabel aside="[ Placeholder marks ]" data-reveal="fade">
+            Hiring partners
+          </SectionLabel>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}
+          >
             <h2 id="partners-title" className="ed-display" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
               Teams that hire through us
             </h2>
@@ -242,8 +283,13 @@ export default function Home() {
             </p>
           </div>
           <div className="hm-partners__grid">
-            {partners.map((partner) => (
-              <div className="hm-partner" key={partner}>
+            {partners.map((partner, partnerIndex) => (
+              <div
+                className="hm-partner"
+                key={partner}
+                data-reveal
+                style={{ "--reveal-delay": `${partnerIndex * 50}ms` }}
+              >
                 {partner}
               </div>
             ))}
@@ -254,8 +300,13 @@ export default function Home() {
       {/* ── Testimonials ─────────────────────────────────────────────── */}
       <section className="ed-section" aria-labelledby="quotes-title">
         <div className="ed-shell">
-          <SectionLabel aside="[ Illustrative · replace with consented quotes ]">Candidate stories</SectionLabel>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}>
+          <SectionLabel aside="[ Illustrative · replace with consented quotes ]" data-reveal="fade">
+            Candidate stories
+          </SectionLabel>
+          <div
+            data-reveal
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}
+          >
             <h2 id="quotes-title" className="ed-display ed-h2">
               What happens
               <br />
@@ -268,8 +319,13 @@ export default function Home() {
           </div>
 
           <div className="hm-quotes">
-            {quotes.map((quote) => (
-              <figure className="hm-quote" key={quote.name}>
+            {quotes.map((quote, quoteIndex) => (
+              <figure
+                className="hm-quote"
+                key={quote.name}
+                data-reveal
+                style={{ "--reveal-delay": `${quoteIndex * 90}ms` }}
+              >
                 <span className="hm-quote__mark" aria-hidden="true">
                   “
                 </span>
@@ -288,7 +344,10 @@ export default function Home() {
             ))}
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
+          <div
+            data-reveal="fade"
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}
+          >
             <BracketLink to="/about" arrow>
               How we work
             </BracketLink>
@@ -304,7 +363,7 @@ export default function Home() {
 
       {/* ── Final CTA ────────────────────────────────────────────────── */}
       <section className="hm-cta" aria-labelledby="home-cta-title">
-        <div className="ed-shell">
+        <div className="ed-shell" data-reveal>
           <p className="ed-label ed-label--ink">
             <Asterisk size={13} />
             [ No account · no upload · no fee ]

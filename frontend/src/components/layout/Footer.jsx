@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="ed-footer">
       <div className="ed-shell">
         <div className="ed-footer__top">
-          <div className="ed-footer__brand">
+          <div className="ed-footer__brand" data-reveal>
             <p className="ed-label ed-label--lime">
               <Asterisk size={13} />
               Recruitment consultancy · India
@@ -32,7 +32,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="ed-footer__cols">
+          <div className="ed-footer__cols" data-reveal style={{ "--reveal-delay": "80ms" }}>
             {footerGroups.map((group) => (
               <div key={group.title}>
                 <p className="ed-footer__colhead">{group.title}</p>
@@ -56,9 +56,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <PeopleRow />
+        <PeopleRow data-reveal="fade" style={{ "--reveal-delay": "60ms" }} />
 
-        <div className="ed-footer__bar">
+        <div className="ed-footer__bar" data-reveal="fade" style={{ "--reveal-delay": "120ms" }}>
           <p>
             © {new Date().getFullYear()} {BRAND_NAME}
           </p>

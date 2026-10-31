@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi2";
 
 /** Reusable career guidance article card used on the listing page. */
-export default function ArticleCard({ article }) {
+export default function ArticleCard({ article, ...rest }) {
   return (
-    <article className="surface-card surface-card-hover flex h-full flex-col p-6">
+    <article className="surface-card surface-card-hover flex h-full flex-col p-6" {...rest}>
       <div className="flex flex-wrap items-center gap-2">
         <span className="badge badge-primary">{article.category}</span>
         <span className="badge">{article.readMinutes} min read</span>

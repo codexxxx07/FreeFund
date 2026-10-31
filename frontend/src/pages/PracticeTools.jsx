@@ -73,7 +73,12 @@ function Quickfire({ onRecord, onOpenFull }) {
   const score = QUICKFIRE.reduce((sum, q, i) => (answers[i] === q.answer ? sum + 1 : sum), 0);
 
   return (
-    <div className="tl-quickfire" aria-labelledby="quickfire-title">
+    <div
+      className="tl-quickfire"
+      aria-labelledby="quickfire-title"
+      data-reveal
+      style={{ "--reveal-delay": "160ms" }}
+    >
       <div className="tl-quickfire__head">
         <div>
           <p className="ed-label ed-label--lime">
@@ -269,21 +274,26 @@ export default function PracticeTools() {
       {/* ── Tool hub hero ────────────────────────────────────────────── */}
       <section className="tl-hero" aria-labelledby="tools-title">
         <div className="ed-shell">
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+          <div
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}
+            data-reveal="fade"
+          >
             <span className="ed-badge ed-badge--lime">[ Tool hub ]</span>
             <span className="ed-badge">8 drills</span>
             <span className="ed-badge">No login</span>
             <span className="ed-badge">Runs locally</span>
           </div>
 
-          <h1 id="tools-title" className="ed-display tl-title">
+          <h1 id="tools-title" className="ed-display tl-title" data-reveal="fade" style={{ "--reveal-delay": "60ms" }}>
             The practice
             <br />
             <em>floor.</em>
           </h1>
 
           <div
+            data-reveal
             style={{
+              "--reveal-delay": "120ms",
               display: "flex",
               flexWrap: "wrap",
               alignItems: "flex-end",
@@ -302,7 +312,7 @@ export default function PracticeTools() {
             </p>
           </div>
 
-          <div className="tl-search">
+          <div className="tl-search" data-reveal style={{ "--reveal-delay": "180ms" }}>
             <HiMagnifyingGlass aria-hidden="true" size={19} />
             <input
               type="search"
@@ -316,7 +326,13 @@ export default function PracticeTools() {
             </span>
           </div>
 
-          <div className="tl-chips" role="group" aria-label="Filter tools by category">
+          <div
+            className="tl-chips"
+            role="group"
+            aria-label="Filter tools by category"
+            data-reveal="fade"
+            style={{ "--reveal-delay": "240ms" }}
+          >
             {TOOL_CATEGORIES.map((item) => (
               <button
                 key={item}
@@ -338,7 +354,7 @@ export default function PracticeTools() {
           <div className="tl-main">
             {filtered.length ? (
               <div className="tl-bento">
-                {filtered.map((tool) => {
+                {filtered.map((tool, toolIndex) => {
                   const best = getBest(attempts, tool.id);
                   const tries = countAttempts(attempts, tool.id);
                   return (
@@ -348,6 +364,8 @@ export default function PracticeTools() {
                       className={`tl-card${tool.wide ? " tl-card--wide" : ""}`}
                       onClick={(event) => openTool(tool, event)}
                       aria-label={`Start ${tool.name}`}
+                      data-reveal
+                      style={{ "--reveal-delay": `${toolIndex * 50}ms` }}
                     >
                       <span className="tl-card__kicker">
                         <span>
@@ -380,7 +398,10 @@ export default function PracticeTools() {
                 />
               </div>
             ) : (
-              <div style={{ border: "1px solid var(--line)", padding: "2rem", background: "var(--surface)" }}>
+              <div
+                data-reveal
+                style={{ border: "1px solid var(--line)", padding: "2rem", background: "var(--surface)" }}
+              >
                 <p className="ed-label ed-label--lime">[ No match ]</p>
                 <h2 className="ed-display" style={{ fontSize: "2rem", marginTop: "0.6rem" }}>
                   Nothing under this filter.
@@ -406,7 +427,7 @@ export default function PracticeTools() {
           </div>
 
           <aside className="tl-aside" aria-label="Your practice progress">
-            <div className="tl-panel">
+            <div className="tl-panel" data-reveal style={{ "--reveal-delay": "80ms" }}>
               <p className="tl-panel__title">
                 <span>
                   <HiArrowTrendingUp aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: "0.35rem" }} />
@@ -443,7 +464,7 @@ export default function PracticeTools() {
               </p>
             </div>
 
-            <div className="tl-panel">
+            <div className="tl-panel" data-reveal style={{ "--reveal-delay": "150ms" }}>
               <p className="tl-panel__title">
                 <span>Recent attempts</span>
                 <span>{recent.length ? `${recent.length}/5` : "Empty"}</span>
@@ -483,7 +504,7 @@ export default function PracticeTools() {
               ) : null}
             </div>
 
-            <div className="tl-panel">
+            <div className="tl-panel" data-reveal style={{ "--reveal-delay": "220ms" }}>
               <p className="tl-panel__title">
                 <span>Not sure where to start?</span>
               </p>
