@@ -119,15 +119,21 @@ export default function Home() {
             [ People first, paperwork second ]
           </p>
 
-          <h1
-            id="home-title"
-            className="ed-display hm-word"
-            data-reveal="fade"
-            style={{ "--reveal-delay": "60ms" }}
-          >
-            <span>Jobs</span>
-            <span>
-              Man<em>ia</em>
+          <h1 id="home-title" className="ed-display hm-word" aria-label="Jobs Mania">
+            <span className="hm-word__line" aria-hidden="true">
+              <span className="hm-word__letter" style={{ "--letter-index": 0 }}>J</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>o</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 2 }}>b</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 3 }}>s</span>
+            </span>
+            <span className="hm-word__line" aria-hidden="true">
+              <span className="hm-word__letter" style={{ "--letter-index": 4 }}>M</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 5 }}>a</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 6 }}>n</span>
+              <em>
+                <span className="hm-word__letter" style={{ "--letter-index": 7 }}>i</span>
+                <span className="hm-word__letter" style={{ "--letter-index": 8 }}>a</span>
+              </em>
             </span>
           </h1>
 

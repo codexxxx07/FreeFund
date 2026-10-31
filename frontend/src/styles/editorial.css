@@ -1083,21 +1083,53 @@
   margin-bottom: 1.25rem;
 }
 
+/* Sized against both axes so the whole two-line wordmark stays inside the
+   first viewport: the vw/vh terms keep "MANIA" from overflowing sideways and
+   the last term reserves room for the header, eyebrow and hero top padding on
+   short (landscape) screens. */
 .hm-word {
   display: block;
-  font-size: clamp(5rem, 37vw, 38rem);
+  font-size: clamp(4rem, min(36vw, 39svh, 62.5svh - 144px), 30rem);
   line-height: 0.78;
   letter-spacing: -0.02em;
   padding-bottom: 0.04em;
 }
 
-.hm-word span {
+.hm-word__line {
   display: block;
+  white-space: nowrap;
+}
+
+.hm-word__letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.08em);
+  animation: hm-letter-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--letter-index, 0) * 34ms);
 }
 
 .hm-word em {
   font-style: normal;
   color: var(--lime);
+}
+
+@keyframes hm-letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.08em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-word__letter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hm-hero__foot {
