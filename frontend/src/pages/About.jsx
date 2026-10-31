@@ -342,7 +342,7 @@ export default function About() {
               Professional
             </p>
             <p>
-              Pahulpreet Singh is from Amritsar, Punjab, and has professional experience in HR,
+              Pahulpreet Singh is from Amritsar, Punjab, with professional experience in HR,
               recruitment, talent acquisition, and academic counselling.
             </p>
             <p>
@@ -351,8 +351,8 @@ export default function About() {
               jobs, preparing for interviews, and building their careers.
             </p>
             <p>
-              He believes that people sometimes lack not talent, but the right guidance,
-              opportunities, and support.
+              He believes that sometimes people do not lack talent; they simply lack the right
+              guidance, opportunities, and support.
             </p>
             <p>This belief inspired him to create Jobs Mania Freefund.</p>
           </div>

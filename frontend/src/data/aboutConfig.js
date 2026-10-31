@@ -59,7 +59,7 @@ const aboutConfig = {
     name: "Pahulpreet Singh",
     designation: "HR & Recruitment Professional",
     tagline:
-      "Helping candidates discover opportunities, access career guidance, and move forward with confidence.",
+      "Pahulpreet Singh has professional experience in HR, recruitment, talent acquisition, and academic counselling.",
 
     // Square images display best — the card crops the image to a circle.
     // Swap this file to replace the photo, no code change needed.

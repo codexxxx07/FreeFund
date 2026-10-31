@@ -1,0 +1,413 @@
+/**
+ * tokens.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Editorial design tokens. Imported after index.css, so these values retune the
+ * legacy components used by About, Contact and the legal pages while the new
+ * pages build on the same variables.
+ *
+ * Palette: one accent only. Lime appears on near-black, never as body text on
+ * a light surface. Type scale is fluid; the display face is Anton.
+ *
+ * The @theme block exposes the same tokens to Tailwind v4 utilities (no
+ * tailwind.config.js is needed in this stack). Keep values in sync with the
+ * :root block below — :root is what the hand-written CSS consumes.
+ */
+
+@theme {
+  --color-ink: #1e1e20;
+  --color-surface: #26262a;
+  --color-surface-2: #2c2c31;
+  --color-surface-3: #333338;
+  --color-paper: #f5f5ef;
+  --color-muted: #b4b4b8;
+  --color-lime: #dfff5e;
+  --color-line: rgba(255, 255, 255, 0.18);
+
+  --font-display: "Anton", "Archivo Narrow", "Arial Narrow", ui-sans-serif, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --spacing-gutter: clamp(1rem, 3vw, 3rem);
+  --spacing-section: clamp(3.5rem, 7vw, 7rem);
+
+  --radius-editorial: 2px;
+}
+
+:root {
+  color-scheme: dark;
+
+  --ink: #1e1e20;
+  --surface: #26262a;
+  --surface-2: #2c2c31;
+  --surface-3: #333338;
+  --paper: #f5f5ef;
+  --muted: #b4b4b8;
+  --lime: #dfff5e;
+  --line: rgba(255, 255, 255, 0.18);
+  --line-strong: rgba(255, 255, 255, 0.32);
+  --ink-on-lime: #1e1e20;
+
+  --font-stack: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display-stack: "Anton", "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-stack: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ── Legacy token remap ───────────────────────────────────────────────── */
+  --frame-bg: var(--ink);
+  --bg: var(--ink);
+  --card: var(--surface);
+  --surface-alt: var(--surface-3);
+  --surface-raised: var(--surface-2);
+  --text: var(--paper);
+  --border: var(--line);
+  --input-border: rgba(255, 255, 255, 0.26);
+  --ring: var(--lime);
+  --accent: var(--lime);
+  --on-accent: var(--ink-on-lime);
+  --danger: #ff8a7a;
+  --danger-text: #ff9d90;
+  --highlight: rgba(255, 255, 255, 0.06);
+  --edge-sheen: transparent;
+  --btn-edge-sheen: transparent;
+  --active-shadow: none;
+  --quick-shadow: none;
+  --quick-shadow-hover: none;
+  --input-shadow: none;
+  --input-focus-shadow: 0 0 0 2px var(--lime);
+  --icon-shadow: none;
+  --pressed-shift: 1px;
+  --notice-shadow: none;
+  --hero-layer-back-shadow: none;
+  --hero-layer-mid-shadow: none;
+
+  --btn-primary-start: var(--lime);
+  --btn-primary-end: var(--lime);
+  --btn-primary-start-hover: var(--paper);
+  --btn-primary-end-hover: var(--paper);
+  --btn-primary-text: var(--ink-on-lime);
+  --btn-primary-text-hover: var(--ink-on-lime);
+  --btn-primary-border: var(--lime);
+  --btn-primary-border-hover: var(--paper);
+  --btn-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: var(--paper);
+  --btn-secondary-bg-hover: var(--lime);
+  --btn-secondary-text-hover: var(--ink-on-lime);
+  --btn-secondary-border-hover: var(--lime);
+
+  --navbar-bg: rgba(30, 30, 32, 0.88);
+  --active-bg: var(--surface-2);
+
+  --brand-bg: var(--lime);
+  --brand-fg: var(--ink);
+
+  --solid-bg: var(--lime);
+  --solid-fg: var(--ink);
+
+  --tile-start: var(--surface-2);
+  --tile-end: var(--surface);
+  --input-bg: #202023;
+
+  --cta-bg: var(--lime);
+  --cta-text: var(--ink);
+  --cta-muted: rgba(30, 30, 32, 0.74);
+  --cta-border: var(--lime);
+
+  --inverse-bg: var(--ink);
+  --inverse-bg-hover: var(--surface-3);
+  --inverse-text: var(--paper);
+
+  --badge-bg: transparent;
+
+  --soft-shadow: none;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --panel-shadow: none;
+  --nav-shadow: none;
+  --primary-shadow: none;
+  --primary-shadow-hover: none;
+  --secondary-shadow: none;
+  --secondary-shadow-hover: none;
+  --inset-shadow: none;
+  --cta-shadow: none;
+  --pressed-shadow: none;
+
+  /* Layout rhythm: 8px scale. */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --gutter: clamp(1rem, 3vw, 3rem);
+  --header-h: 72px;
+}
+
+/* The old frame and rounded canvas are gone: the page is the canvas. */
+.site-frame {
+  padding: 0;
+  background: var(--ink);
+}
+
+.site-canvas {
+  background: var(--ink);
+  border-radius: 0;
+  clip-path: none;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display-stack);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-stack);
+}
+
+p {
+  color: var(--muted);
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: 0;
+}
+
+/* Legacy primary button becomes the lime editorial button. */
+.btn-primary {
+  border-radius: 2px;
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink-on-lime);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  box-shadow: none;
+}
+
+.btn-primary:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink-on-lime);
+}
+
+.btn-secondary {
+  border-radius: 2px;
+  border-color: var(--line-strong);
+  color: var(--paper);
+  background: transparent;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink-on-lime);
+}
+
+.btn-ghost {
+  color: var(--paper);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.76rem;
+}
+
+.btn-ghost:hover {
+  color: var(--lime);
+  background: transparent;
+}
+
+.btn-tab {
+  border-radius: 2px;
+  border-color: var(--line);
+  color: var(--paper);
+  background: transparent;
+}
+
+.btn-tab:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+.btn-tab.is-selected {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+}
+
+.surface-card,
+.surface-panel,
+.surface-soft,
+.surface-inset {
+  background: var(--surface);
+  border-color: var(--line);
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.surface-card-hover:hover {
+  transform: none;
+  border-color: var(--lime);
+  box-shadow: none;
+}
+
+.surface-soft {
+  background: #222226;
+}
+
+.surface-inset {
+  background: #202023;
+}
+
+.badge {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 2px;
+}
+
+.badge-primary {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+}
+
+.badge-neutral {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.meta-chip {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 2px;
+}
+
+.eyebrow {
+  color: var(--lime);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+}
+
+.section-band {
+  background: #232327;
+  border-color: var(--line);
+}
+
+.icon-tile,
+.icon-tile-solid {
+  background: transparent;
+  border-color: var(--line);
+  border-radius: 2px;
+  color: var(--lime);
+}
+
+.icon-tile-solid {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+}
+
+.field-input,
+.field-textarea,
+.field-select {
+  background: #202023;
+  border-color: var(--line);
+  border-radius: 2px;
+  color: var(--paper);
+}
+
+.field-input::placeholder,
+.field-textarea::placeholder {
+  color: #7f7f84;
+}
+
+.field-input:focus,
+.field-textarea:focus,
+.field-select:focus {
+  border-color: var(--lime);
+  box-shadow: none;
+}
+
+.field-label {
+  color: var(--paper);
+}
+
+.demo-notice {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 2px;
+}
+
+.demo-notice > svg {
+  color: var(--lime);
+}
+
+.faq-item {
+  border-color: var(--line);
+}
+
+.faq-trigger {
+  color: var(--paper);
+}
+
+.faq-trigger:hover {
+  color: var(--lime);
+}
+
+.faq-chevron-tile {
+  border-color: var(--line);
+  border-radius: 2px;
+  color: var(--lime);
+}
+
+.progress-bar {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+.progress-bar-fill {
+  background: var(--lime);
+  border-radius: 999px;
+}
+
+.skip-link {
+  background: var(--lime);
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

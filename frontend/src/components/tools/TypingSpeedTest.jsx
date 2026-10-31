@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { HiArrowPath, HiClock, HiPlay } from "react-icons/hi2";
 import { typingPassages } from "../../data/practiceQuestions";
+import Button from "../editorial/Button";
 
 const DURATION_SECONDS = 60;
 
@@ -13,7 +14,6 @@ function pickPassage(previousIndex) {
   return { text: typingPassages[index], index };
 }
 
-/** Whole seconds elapsed since `start`, never less than 1, guarding a null start. */
 function secondsSince(startAt) {
   if (!startAt) return 1;
   return Math.max((Date.now() - startAt) / 1000, 1);
@@ -34,22 +34,23 @@ function evaluate(typed, target) {
  * Typing speed test: 60-second run against a short passage.
  * WPM = correct characters / 5 ÷ minutes elapsed. Everything runs locally.
  */
-export default function TypingSpeedTest() {
-  const [passage, setPassage] = useState(() => typingPassages[Math.floor(Math.random() * typingPassages.length)] || typingPassages[0]);
+export default function TypingSpeedTest({ onComplete }) {
+  const [passage, setPassage] = useState(
+    () => typingPassages[Math.floor(Math.random() * typingPassages.length)] || typingPassages[0],
+  );
   const [phase, setPhase] = useState("idle"); // idle | running | done
   const [typed, setTyped] = useState("");
   const [elapsed, setElapsed] = useState(0);
   const [result, setResultState] = useState(null);
-  const [focused, setFocused] = useState(false);
 
   const startRef = useRef(null);
   const typedRef = useRef("");
   const inputRef = useRef(null);
   const indexRef = useRef(-1);
+  const finishedRef = useRef(false);
 
   typedRef.current = typed;
 
-  // Countdown for the active run.
   useEffect(() => {
     if (phase !== "running") return undefined;
     const timer = window.setInterval(() => {
@@ -72,18 +73,28 @@ export default function TypingSpeedTest() {
   const liveAccuracy = typed.length ? Math.round((counts.correct / typed.length) * 100) : 100;
 
   function finish(finalTyped, seconds) {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
     const stats = evaluate(finalTyped, passage);
     const minutes = Math.max(seconds, 1) / 60;
+    const wpm = Math.round(stats.correct / 5 / minutes);
+    const accuracy = finalTyped.length ? Math.round((stats.correct / finalTyped.length) * 100) : 100;
     setElapsed(seconds);
     setResultState({
-      wpm: Math.round(stats.correct / 5 / minutes),
-      accuracy: finalTyped.length ? Math.round((stats.correct / finalTyped.length) * 100) : 100,
+      wpm,
+      accuracy,
       correct: stats.correct,
       incorrect: stats.incorrect,
       seconds: Math.round(seconds),
       completed: finalTyped.length >= passage.length,
     });
     setPhase("done");
+    onComplete?.({
+      score: wpm,
+      total: null,
+      percent: accuracy,
+      detail: `${wpm} WPM · ${accuracy}% accuracy`,
+    });
   }
 
   function reset(withNewPassage = true) {
@@ -92,6 +103,8 @@ export default function TypingSpeedTest() {
       indexRef.current = next.index;
       setPassage(next.text);
     }
+    finishedRef.current = false;
+    startRef.current = null;
     setTyped("");
     typedRef.current = "";
     setElapsed(0);
@@ -104,6 +117,7 @@ export default function TypingSpeedTest() {
     const value = event.target.value.slice(0, passage.length);
     if (phase === "idle" && value.length > 0) {
       startRef.current = Date.now();
+      finishedRef.current = false;
       setPhase("running");
     }
     setTyped(value);
@@ -116,147 +130,127 @@ export default function TypingSpeedTest() {
   const remaining = Math.max(0, Math.ceil(DURATION_SECONDS - elapsed));
 
   return (
-    <div className="surface-panel p-6 sm:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <div className="typebox">
+      <div className="typebox__bar">
         <div>
-          <p className="eyebrow">Typing speed test</p>
-          <h3 className="mt-3 text-2xl">Type the passage below</h3>
-          <p className="mt-1.5 text-sm text-muted">
-            The clock starts on your first keystroke and stops after 60 seconds or when you finish the passage.
+          <p className="ed-label ed-label--lime">[ Typing sprint · 60 seconds ]</p>
+          <h3 className="eq__title" style={{ marginTop: "0.5rem" }}>
+            Type the passage below
+          </h3>
+          <p style={{ marginTop: "0.4rem", fontSize: "0.84rem" }}>
+            The clock starts on your first keystroke. Mistakes are highlighted; Backspace fixes them.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2" aria-live="polite">
-          <span className="meta-chip">
-            <HiClock aria-hidden="true" />
+        <div className="typebox__stats" aria-live="polite">
+          <span className="ed-badge">
+            <HiClock aria-hidden="true" size={12} />
             {phase === "done" ? "Finished" : `${remaining}s left`}
           </span>
           {liveWpm !== null && phase === "running" ? (
             <>
-              <span className="meta-chip">
-                <span className="sr-only">Current speed: </span>
-                {liveWpm} WPM
-              </span>
-              <span className="meta-chip">
-                <span className="sr-only">Current accuracy: </span>
-                {liveAccuracy}%
-              </span>
+              <span className="ed-badge ed-badge--lime">{liveWpm} WPM</span>
+              <span className="ed-badge">{liveAccuracy}%</span>
             </>
           ) : null}
         </div>
       </div>
 
-      <div className="relative mt-6">
-        <div className="type-canvas surface-inset p-4 sm:p-5" aria-hidden="true">
-          {Array.from(passage).map((char, i) => {
-            let state = "type-char-pending";
-            if (i < typed.length) state = typed[i] === char ? "type-char-correct" : "type-char-wrong";
-            else if (i === typed.length && phase !== "done") state += " type-char-current";
-            return (
-              <span key={`${i}-${char}`} className={`type-char ${state}`}>
-                {char}
-              </span>
-            );
-          })}
-        </div>
+      <div className="typebox__passage" aria-hidden="true">
+        {Array.from(passage).map((char, i) => {
+          let state = "type-char-pending";
+          if (i < typed.length) state = typed[i] === char ? "type-char-correct" : "type-char-wrong";
+          else if (i === typed.length && phase !== "done") state += " type-char-current";
+          return (
+            <span key={`${i}-${char}`} className={`type-char ${state}`}>
+              {char}
+            </span>
+          );
+        })}
 
         <textarea
           ref={inputRef}
           value={typed}
           onChange={handleChange}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          onPaste={(event) => {
-            // Pasting would produce a meaningless speed and accuracy result.
-            event.preventDefault();
-          }}
+          onPaste={(event) => event.preventDefault()}
           disabled={phase === "done"}
           spellCheck={false}
           autoComplete="off"
           aria-label="Type the passage shown above"
-          aria-describedby="typing-help"
-          className="absolute inset-0 h-full w-full resize-none overflow-hidden border-0 bg-transparent p-4 text-transparent caret-transparent outline-none sm:p-5"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            resize: "none",
+            border: 0,
+            background: "transparent",
+            color: "transparent",
+            caretColor: "transparent",
+            outline: "none",
+            padding: "1.1rem",
+          }}
         />
-
-        {phase === "idle" && !focused ? (
-          <div className="pointer-events-none absolute inset-0 grid place-items-center rounded-xl bg-bg/75 backdrop-blur-[2px]">
-            <span className="surface-soft inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold">
-              <HiPlay aria-hidden="true" />
-              Click here or start typing to begin
-            </span>
-          </div>
-        ) : null}
       </div>
 
-      <p id="typing-help" className="mt-3 text-xs text-muted">
-        Type the passage exactly as shown. Mistakes are highlighted in red and can be corrected with Backspace.
-      </p>
-
-      <div className="mt-6 flex flex-wrap gap-3 border-t border-line pt-6">
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
         {phase === "done" ? (
-          <button type="button" className="btn-primary" onClick={() => reset(true)}>
-            <HiArrowPath aria-hidden="true" />
+          <Button onClick={() => reset(true)} variant="lime">
+            <HiArrowPath aria-hidden="true" size={15} />
             Try another passage
-          </button>
+          </Button>
         ) : (
           <>
-            <button
-              type="button"
-              className="btn-primary"
+            <Button
+              variant="lime"
               onClick={() => {
                 startRef.current = Date.now();
+                finishedRef.current = false;
                 setPhase("running");
                 inputRef.current?.focus();
               }}
               disabled={phase === "running"}
             >
-              <HiPlay aria-hidden="true" />
-              {phase === "idle" ? "Start test" : "Running…"}
-            </button>
-            <button type="button" className="btn-secondary" onClick={() => reset(false)}>
-              <HiArrowPath aria-hidden="true" />
+              <HiPlay aria-hidden="true" size={15} />
+              {phase === "idle" ? "Start sprint" : "Running…"}
+            </Button>
+            <Button onClick={() => reset(false)}>
+              <HiArrowPath aria-hidden="true" size={15} />
               Restart
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
+            </Button>
+            <Button
               onClick={() => finish(typedRef.current, secondsSince(startRef.current))}
               disabled={phase !== "running"}
             >
               Finish now
-            </button>
+            </Button>
           </>
         )}
       </div>
 
       {phase === "done" && result ? (
-        <div className="mt-6 border-t border-line pt-6">
-          <p className="eyebrow">Results</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="surface-soft p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Speed</p>
-              <p className="mt-1 text-3xl font-bold text-fg">{result.wpm}</p>
-              <p className="text-sm text-muted">words per minute</p>
+        <div style={{ display: "grid", gap: "0.9rem" }}>
+          <p className="ed-label ed-label--lime">[ Result · this attempt is saved locally ]</p>
+          <div className="typebox__results">
+            <div className="typebox__stat">
+              <b>{result.wpm}</b>
+              <span>Words / min</span>
             </div>
-            <div className="surface-soft p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Accuracy</p>
-              <p className="mt-1 text-3xl font-bold text-fg">{result.accuracy}%</p>
-              <p className="text-sm text-muted">characters typed correctly</p>
+            <div className="typebox__stat">
+              <b>{result.accuracy}%</b>
+              <span>Accuracy</span>
             </div>
-            <div className="surface-soft p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Correct</p>
-              <p className="mt-1 text-3xl font-bold text-fg">{result.correct}</p>
-              <p className="text-sm text-muted">characters</p>
+            <div className="typebox__stat">
+              <b>{result.correct}</b>
+              <span>Correct chars</span>
             </div>
-            <div className="surface-soft p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Errors</p>
-              <p className="mt-1 text-3xl font-bold text-fg">{result.incorrect}</p>
-              <p className="text-sm text-muted">characters</p>
+            <div className="typebox__stat">
+              <b>{result.incorrect}</b>
+              <span>Errors</span>
             </div>
           </div>
-          <p className="mt-5 text-xs text-muted">
+          <p style={{ fontSize: "0.8rem" }}>
             {result.completed ? "You finished the full passage in " : "Time ran out after "}
-            {result.seconds} {result.seconds === 1 ? "second" : "seconds"}. This score is for your own practice and is
-            not an official certification.
+            {result.seconds} {result.seconds === 1 ? "second" : "seconds"}. Practice only — not a certification.
           </p>
         </div>
       ) : null}

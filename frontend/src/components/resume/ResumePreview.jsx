@@ -1,12 +1,12 @@
 /**
- * Live resume preview.
- * Single-column, plain-text-first layout so the printed/PDF output stays
- * readable for both recruiters and applicant tracking systems.
- * The `.resume-sheet` class is the print target (see styles/index.css).
+ * Live A4 resume preview. Four templates share one semantic structure; CSS
+ * changes the masthead, rules, density and section headings. All templates stay
+ * single-column so the printed output remains readable for recruiters and
+ * screening software.
  */
 
-function lines(text) {
-  return String(text || "")
+function lines(value) {
+  return String(value || "")
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
@@ -23,18 +23,24 @@ function dateRange(start, end) {
   return `${from || "—"} – ${to || "Present"}`;
 }
 
+const TEMPLATE_LABELS = {
+  folio: { summary: "Profile", experience: "Experience", education: "Education", skills: "Skills", projects: "Projects", credentials: "Certifications" },
+  ledger: { summary: "Summary", experience: "Experience", education: "Education", skills: "Skills", projects: "Selected Projects", credentials: "Certifications" },
+  grid: { summary: "Professional Summary", experience: "Work Experience", education: "Education", skills: "Core Skills", projects: "Projects", credentials: "Certifications" },
+  compact: { summary: "Profile", experience: "Experience", education: "Education", skills: "Skills", projects: "Projects", credentials: "Credentials" },
+};
+
 function Section({ title, children }) {
   return (
-    <section className="mb-5">
-      <h2 className="mb-2 border-b border-[#d4d4d4] pb-1 text-[0.82rem] font-bold uppercase tracking-[0.14em]">
-        {title}
-      </h2>
+    <section className="r-sec">
+      <h2 className="r-sec__h">{title}</h2>
       {children}
     </section>
   );
 }
 
-export default function ResumePreview({ data }) {
+export default function ResumePreview({ data, template = "folio" }) {
+  const labels = TEMPLATE_LABELS[template] || TEMPLATE_LABELS.folio;
   const contactBits = [data.email, data.phone, data.location].filter((value) => String(value || "").trim());
   const links = lines(data.links);
   const experience = data.experience.filter((entry) => hasEntry(entry, ["role", "company", "description"]));
@@ -53,121 +59,107 @@ export default function ResumePreview({ data }) {
     credentials.length === 0;
 
   return (
-    <article className="resume-sheet" aria-label="Resume preview">
-      <header className="mb-5">
-        <h1 className="text-2xl font-bold leading-tight">
-          {String(data.fullName || "").trim() || "Your Name"}
-        </h1>
-        {String(data.jobTitle || "").trim() ? (
-          <p className="mt-0.5 text-[0.98rem] font-semibold">{data.jobTitle}</p>
-        ) : null}
-        {contactBits.length || links.length ? (
-          <p className="mt-1.5 break-words text-[0.86rem]">
-            {[...contactBits, ...links].join("  ·  ")}
-          </p>
-        ) : null}
-      </header>
-
-      {isEmpty ? (
-        <div className="border border-dashed border-[#d4d4d4] p-6 text-center text-[0.9rem]">
-          <p className="font-semibold">Your preview appears here as you type.</p>
-          <p className="mt-1.5">
-            Start with your name and a short professional summary, then add experience, education and skills. Use
-            Download PDF when you are ready.
-          </p>
-        </div>
-      ) : (
-        <>
-          {String(data.summary || "").trim() ? (
-            <Section title="Professional Summary">
-              <p className="whitespace-pre-line text-[0.9rem] leading-relaxed">{data.summary}</p>
-            </Section>
+    <article className="rb-a4" data-template={template} aria-label="Resume A4 preview">
+      <div className="rb-a4__inner">
+        <header className="r-hd">
+          <div>
+            <h1 className="r-name">{String(data.fullName || "").trim() || "Your Name"}</h1>
+            {String(data.jobTitle || "").trim() ? <p className="r-title">{data.jobTitle}</p> : null}
+          </div>
+          {contactBits.length || links.length ? (
+            <p className="r-contact">{[...contactBits, ...links].join("  ·  ")}</p>
           ) : null}
+        </header>
 
-          {experience.length ? (
-            <Section title="Experience">
-              <div className="grid gap-3.5">
+        {isEmpty ? (
+          <div className="r-empty" style={{ marginTop: "8cqw" }}>
+            <p style={{ fontWeight: 700 }}>Your A4 page appears here as you type.</p>
+            <p style={{ marginTop: "1.5cqw" }}>
+              Start with your name, target role and a short summary. Then add experience, education and
+              skills.
+            </p>
+          </div>
+        ) : (
+          <>
+            {String(data.summary || "").trim() ? (
+              <Section title={labels.summary}>
+                <p style={{ fontSize: "1.48cqw", lineHeight: 1.45, whiteSpace: "pre-line" }}>{data.summary}</p>
+              </Section>
+            ) : null}
+
+            {experience.length ? (
+              <Section title={labels.experience}>
                 {experience.map((entry) => (
-                  <div key={entry.id}>
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                      <p className="text-[0.95rem] font-semibold">
+                  <div className="r-entry" key={entry.id}>
+                    <div className="r-entry__top">
+                      <p className="r-entry__role">
                         {entry.role}
                         {entry.company ? ` · ${entry.company}` : ""}
                       </p>
-                      <p className="text-[0.82rem]">{dateRange(entry.start, entry.end)}</p>
+                      <p className="r-entry__date">{dateRange(entry.start, entry.end)}</p>
                     </div>
-                    {entry.location ? <p className="text-[0.84rem]">{entry.location}</p> : null}
+                    {entry.location ? <p className="r-entry__sub">{entry.location}</p> : null}
                     {lines(entry.description).length ? (
-                      <ul className="mt-1.5 grid gap-1 pl-4 text-[0.88rem] leading-relaxed">
+                      <ul className="r-list">
                         {lines(entry.description).map((line) => (
-                          <li key={line} className="list-disc">
-                            {line}
-                          </li>
+                          <li key={line}>{line}</li>
                         ))}
                       </ul>
                     ) : null}
                   </div>
                 ))}
-              </div>
-            </Section>
-          ) : null}
+              </Section>
+            ) : null}
 
-          {education.length ? (
-            <Section title="Education">
-              <div className="grid gap-2.5">
+            {education.length ? (
+              <Section title={labels.education}>
                 {education.map((entry) => (
-                  <div key={entry.id}>
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                      <p className="text-[0.95rem] font-semibold">
+                  <div className="r-entry" key={entry.id}>
+                    <div className="r-entry__top">
+                      <p className="r-entry__role">
                         {entry.degree}
                         {entry.school ? ` · ${entry.school}` : ""}
                       </p>
-                      <p className="text-[0.82rem]">{dateRange(entry.start, entry.end)}</p>
+                      <p className="r-entry__date">{dateRange(entry.start, entry.end)}</p>
                     </div>
-                    {entry.detail ? <p className="text-[0.86rem]">{entry.detail}</p> : null}
+                    {entry.detail ? <p className="r-entry__sub">{entry.detail}</p> : null}
                   </div>
                 ))}
-              </div>
-            </Section>
-          ) : null}
+              </Section>
+            ) : null}
 
-          {skills.length ? (
-            <Section title="Skills">
-              <p className="text-[0.9rem] leading-relaxed">{skills.map((skill) => skill.name).join(" · ")}</p>
-            </Section>
-          ) : null}
+            {skills.length ? (
+              <Section title={labels.skills}>
+                <p className="r-skills">{skills.map((skill) => skill.name).join(" · ")}</p>
+              </Section>
+            ) : null}
 
-          {projects.length ? (
-            <Section title="Projects">
-              <div className="grid gap-2.5">
+            {projects.length ? (
+              <Section title={labels.projects}>
                 {projects.map((entry) => (
-                  <div key={entry.id}>
-                    <p className="text-[0.95rem] font-semibold">
-                      {entry.name}
-                      {entry.link ? <span className="ml-2 text-[0.82rem] font-normal">{entry.link}</span> : null}
-                    </p>
-                    {entry.description ? (
-                      <p className="mt-0.5 text-[0.88rem] leading-relaxed">{entry.description}</p>
-                    ) : null}
+                  <div className="r-entry" key={entry.id}>
+                    <div className="r-entry__top">
+                      <p className="r-entry__role">{entry.name}</p>
+                      {entry.link ? <p className="r-entry__date">{entry.link}</p> : null}
+                    </div>
+                    {entry.description ? <p className="r-entry__sub">{entry.description}</p> : null}
                   </div>
                 ))}
-              </div>
-            </Section>
-          ) : null}
+              </Section>
+            ) : null}
 
-          {credentials.length ? (
-            <Section title="Certifications & Achievements">
-              <ul className="grid gap-1 pl-4 text-[0.88rem] leading-relaxed">
-                {credentials.map((entry) => (
-                  <li key={entry.id} className="list-disc">
-                    {entry.text}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-          ) : null}
-        </>
-      )}
+            {credentials.length ? (
+              <Section title={labels.credentials}>
+                <ul className="r-list">
+                  {credentials.map((entry) => (
+                    <li key={entry.id}>{entry.text}</li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+          </>
+        )}
+      </div>
     </article>
   );
 }

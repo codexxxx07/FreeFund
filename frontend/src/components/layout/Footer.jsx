@@ -1,110 +1,69 @@
 import { Link } from "react-router-dom";
-import { FaLinkedin } from "react-icons/fa";
-import { HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
-import { BRAND_NAME, CONTACT_PLACEHOLDERS, IS_DEMO, isPlaceholder } from "../../data/constants";
+import { HiArrowUpRight } from "react-icons/hi2";
+import { BRAND_NAME, IS_DEMO } from "../../data/constants";
 import { footerGroups } from "../../data/navigation";
-import aboutConfig from "../../data/aboutConfig";
+import Asterisk from "../editorial/Asterisk";
+import PeopleRow from "../editorial/PeopleRow";
 import WhatsAppCta from "../common/WhatsAppCta";
 
 export default function Footer() {
-  const showEmail = !isPlaceholder(CONTACT_PLACEHOLDERS.email);
-  const showPhone = !isPlaceholder(CONTACT_PLACEHOLDERS.phone);
-  const showRegion = !isPlaceholder(CONTACT_PLACEHOLDERS.region);
-  const showContact = showEmail || showPhone || showRegion;
-  const showSocial = Boolean(aboutConfig.linkedInUrl);
-
   return (
-    <footer className="border-t border-line bg-secondary">
-      <div className="page-shell py-12 sm:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[1.8fr_1fr_1.1fr_1fr_1fr]">
-          <div className="xl:pr-6">
-            <div className="flex items-center gap-3">
-              <span className="brand-mark" aria-hidden="true">
-                <span className="relative z-10">JM</span>
-              </span>
-              <div className="min-w-0">
-                <p className="font-display text-base font-bold leading-tight sm:text-lg">{BRAND_NAME}</p>
-                <p className="mt-0.5 text-sm text-muted">Recruitment Consultancy</p>
-              </div>
-            </div>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
-              Build an ATS-friendly resume, practise for interviews, and use free career resources prepared for
-              candidates.
+    <footer className="ed-footer">
+      <div className="ed-shell">
+        <div className="ed-footer__top">
+          <div className="ed-footer__brand">
+            <p className="ed-label ed-label--lime">
+              <Asterisk size={13} />
+              Recruitment consultancy · India
             </p>
-
-            {showContact ? (
-              <ul className="mt-6 space-y-2.5 text-sm text-muted">
-                {showEmail ? (
-                  <li className="flex items-start gap-2.5">
-                    <HiEnvelope className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                    <span className="break-words">{CONTACT_PLACEHOLDERS.email}</span>
-                  </li>
-                ) : null}
-                {showPhone ? (
-                  <li className="flex items-start gap-2.5">
-                    <HiPhone className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                    <span>{CONTACT_PLACEHOLDERS.phone}</span>
-                  </li>
-                ) : null}
-                {showRegion ? (
-                  <li className="flex items-start gap-2.5">
-                    <HiMapPin className="mt-1 shrink-0 text-primary" aria-hidden="true" />
-                    <span>{CONTACT_PLACEHOLDERS.region}</span>
-                  </li>
-                ) : null}
-              </ul>
-            ) : null}
-
-            {showSocial ? (
-              <ul className="mt-5 flex flex-wrap gap-2">
-                <li>
-                  <a
-                    href={aboutConfig.linkedInUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary min-h-0 px-3 py-2"
-                    aria-label="Jobs Mania - Freefund on LinkedIn (opens in a new tab)"
-                  >
-                    <FaLinkedin aria-hidden="true" />
-                    LinkedIn
-                  </a>
-                </li>
-              </ul>
-            ) : null}
+            <p className="ed-footer__word ed-display" style={{ marginTop: "1rem" }}>
+              Jobs <em>Mania</em>
+            </p>
+            <p style={{ marginTop: "1.25rem", maxWidth: "38ch", lineHeight: 1.65, fontSize: "0.92rem" }}>
+              Candidate-first recruitment, free preparation tools and honest guidance. No candidate fees,
+              no invented job listings, no data leaving your browser.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1.5rem" }}>
+              <Link className="ed-btn ed-btn--lime" to="/contact">
+                Start a conversation
+                <HiArrowUpRight aria-hidden="true" size={14} />
+              </Link>
+              <WhatsAppCta className="ed-btn">WhatsApp Channel</WhatsAppCta>
+            </div>
           </div>
 
-          {footerGroups.map((group) => (
-            <div key={group.title}>
-              <p className="eyebrow">{group.title}</p>
-              <ul className="mt-5 space-y-2">
-                {group.links.map((link) => (
-                  <li key={link.label}>
-                    {link.whatsapp ? (
-                      <WhatsAppCta variant="link" showIcon={false}>
-                        {link.label}
-                      </WhatsAppCta>
-                    ) : (
-                      <Link className="footer-link" to={link.to}>
-                        {link.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="ed-footer__cols">
+            {footerGroups.map((group) => (
+              <div key={group.title}>
+                <p className="ed-footer__colhead">{group.title}</p>
+                <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                  {group.links.map((link) => (
+                    <li key={link.label}>
+                      {link.whatsapp ? (
+                        <WhatsAppCta variant="link" showIcon={false} className="ed-footer__link">
+                          {link.label}
+                        </WhatsAppCta>
+                      ) : (
+                        <Link className="ed-footer__link" to={link.to}>
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-10 border-t border-line pt-6">
-          <div className="flex flex-col gap-3 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              © {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.
-            </p>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-              {IS_DEMO ? <p>Sample content where labelled</p> : null}
-              <p>Career tools run entirely in your browser.</p>
-            </div>
-          </div>
+        <PeopleRow />
+
+        <div className="ed-footer__bar">
+          <p>
+            © {new Date().getFullYear()} {BRAND_NAME}
+          </p>
+          <p>{IS_DEMO ? "Sample content is labelled · " : ""}Career tools run in your browser</p>
+          <p>Designed for candidates, not for algorithms.</p>
         </div>
       </div>
     </footer>

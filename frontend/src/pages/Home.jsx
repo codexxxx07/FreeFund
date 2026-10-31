@@ -1,427 +1,335 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  HiArrowRight,
-  HiBriefcase,
-  HiCheckCircle,
-  HiClipboardDocumentCheck,
-  HiCommandLine,
-  HiDocumentText,
-  HiAcademicCap,
-  HiShieldCheck,
-  HiUserGroup,
-} from "react-icons/hi2";
+import { HiArrowDown, HiArrowRight, HiArrowUpRight, HiCheckBadge } from "react-icons/hi2";
 import PageMeta from "../components/common/PageMeta";
-import SectionHeading from "../components/common/SectionHeading";
-import WhatsAppCta from "../components/common/WhatsAppCta";
+import Asterisk from "../components/editorial/Asterisk";
+import BracketLink from "../components/editorial/BracketLink";
+import Button from "../components/editorial/Button";
+import LimeCard from "../components/editorial/LimeCard";
+import Marquee from "../components/editorial/Marquee";
+import SectionLabel from "../components/editorial/SectionLabel";
+import StatCard from "../components/editorial/StatCard";
 import WhatsAppCommunity from "../components/common/WhatsAppCommunity";
-import TypewriterText from "../components/common/TypewriterText";
-import AnimatedCounter from "../components/common/AnimatedCounter";
-import { BRAND_NAME, CONTACT_PLACEHOLDERS, isPlaceholder } from "../data/constants";
+import { BRAND_NAME } from "../data/constants";
 
-const resources = [
+const services = [
   {
     to: "/resume-builder",
+    label: "01 · Resume",
+    index: "A4",
     title: "Resume Builder",
-    body: "Fill in a guided form and export a clean, ATS-friendly resume as a PDF — stored only in your browser.",
-    icon: HiDocumentText,
-  },
-  {
-    to: "/practice-tools",
-    title: "Free Practice Tools",
-    body: "Typing speed, English and basic computer tests that run entirely in your browser with instant results.",
-    icon: HiClipboardDocumentCheck,
-  },
-  {
-    to: "/career-guidance",
-    title: "Career Guidance",
-    body: "Short, practical articles on resume writing, job search, interviews and workplace readiness.",
-    icon: HiAcademicCap,
+    meta: "Live editor · 4 templates",
+    body:
+      "Type once and watch a real A4 page assemble itself. Four layout directions, an honest ATS score, and a print-ready PDF when you are done.",
+    action: "Open the editor",
   },
   {
     to: "/free-training",
+    label: "02 · Cohort",
+    index: "14d",
     title: "Free Training",
-    body: "Job-readiness programmes run by our team — eligibility, skills covered and how to register.",
-    icon: HiCommandLine,
+    meta: "Next batch · seats limited",
+    body:
+      "A fixed two-week cohort with live mentors, a session-by-session plan and no cost to join. You leave with an application you can actually send.",
+    action: "See the next batch",
+  },
+  {
+    to: "/practice-tools",
+    label: "03 · Practice",
+    index: "8×",
+    title: "Practice Tools",
+    meta: "Aptitude · Typing · English",
+    body:
+      "A practice floor, not a quiz graveyard. Search a weak spot, start in one click, and let the streak panel remember what you have worked on.",
+    action: "Start a drill",
+  },
+  {
+    to: "/career-guidance",
+    label: "04 · Direction",
+    index: "5Q",
+    title: "Career Guidance",
+    meta: "Quiz · Roadmap · 1:1",
+    body:
+      "Five questions, one honest recommendation. Then a skill-gap roadmap, realistic salary bands and a slot with a counsellor if you want a second opinion.",
+    action: "Find your direction",
   },
 ];
 
-const whatWeDo = [
-  {
-    icon: HiBriefcase,
-    title: "A recruitment consultancy first",
-    body: "We work with authorised employers hiring across India, and guide candidates through each step of the hiring process.",
-  },
-  {
-    icon: HiCheckCircle,
-    title: "Preparation tools that are free to use",
-    body: "A resume builder, practice tests and short guidance articles — all running in your browser, with nothing to install.",
-  },
-  {
-    icon: HiShieldCheck,
-    title: "Honest guidance, no false promises",
-    body: "We never ask candidates for money, and suspicious offers or listings can be raised through the contact page.",
-  },
-  {
-    icon: HiUserGroup,
-    title: "Candidate support",
-    body: "Questions about an offer, a process step or a suspicious message can be raised through the contact page and will be reviewed.",
-  },
+const partners = [
+  "Northline",
+  "Vertex BPO",
+  "Kite Retail",
+  "Blue Oak",
+  "Signal Ops",
+  "Harbor Care",
 ];
 
-const commitments = [
-  "Your personal details are never displayed publicly on this website.",
-  "Career tools and practice tests run in your browser and are not submitted anywhere.",
+const quotes = [
+  {
+    text:
+      "I rebuilt my resume on a Sunday and had two interview calls by Wednesday. The ATS feedback was the part nobody had explained to me before.",
+    name: "Priya S.",
+    role: "Customer Support Executive",
+  },
+  {
+    text:
+      "The interview drill showed me I was answering the question next to the one being asked. Fixing that changed the whole conversation.",
+    name: "Arjun M.",
+    role: "Operations Associate",
+  },
+  {
+    text:
+      "No fees, no vague promises. Someone actually read my profile before sending me a role that made sense for my shift and my city.",
+    name: "Neha K.",
+    role: "MIS Executive",
+  },
 ];
 
 export default function Home() {
-  const showEmail = !isPlaceholder(CONTACT_PLACEHOLDERS.email);
-  const showPhone = !isPlaceholder(CONTACT_PLACEHOLDERS.phone);
-  const showRegion = !isPlaceholder(CONTACT_PLACEHOLDERS.region);
-  const heroRef = useRef(null);
-  const diagonalRef = useRef(null);
-
-  // Subtle mouse parallax on the diagonal hero visual (off for reduced motion).
-  useEffect(() => {
-    const hero = heroRef.current;
-    const diagonal = diagonalRef.current;
-    if (!hero || !diagonal) return undefined;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-
-    function onPointerMove(event) {
-      const rect = hero.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      diagonal.style.setProperty("--px", `${(x * 16).toFixed(1)}px`);
-      diagonal.style.setProperty("--py", `${(y * 12).toFixed(1)}px`);
-    }
-
-    function onPointerLeave() {
-      diagonal.style.setProperty("--px", "0px");
-      diagonal.style.setProperty("--py", "0px");
-    }
-
-    hero.addEventListener("pointermove", onPointerMove);
-    hero.addEventListener("pointerleave", onPointerLeave);
-    return () => {
-      hero.removeEventListener("pointermove", onPointerMove);
-      hero.removeEventListener("pointerleave", onPointerLeave);
-    };
-  }, []);
-
   return (
     <div>
       <PageMeta
-        title="Home"
-        description={`${BRAND_NAME} is a recruitment consultancy offering a resume builder, free practice tools, career guidance and a WhatsApp community for career updates.`}
+        title="Recruitment Consultancy & Free Career Tools"
+        description={`${BRAND_NAME} places candidates and prepares them properly: a live resume builder, free practice tools, cohort training and a 5-question career quiz. No candidate fees.`}
       />
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="hero-section" ref={heroRef}>
-        <div className="hero-blob" aria-hidden="true">
-          <span className="blob-a" />
-          <span className="blob-b" />
-          <span className="blob-c" />
+      <section className="hm-hero" aria-labelledby="home-title">
+        <div className="hm-hero__art" aria-hidden="true">
+          <img
+            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=80"
+            alt=""
+            loading="eager"
+            width="1600"
+            height="1067"
+          />
         </div>
 
-        {/* B&W cutout figure (inline SVG — no external image to break) */}
-        <div className="hero-cutout" aria-hidden="true">
-          <svg viewBox="0 0 220 300" role="presentation">
-            <rect className="figure-ink" x="92" y="132" width="36" height="56" rx="16" />
-            <circle className="figure-ink" cx="110" cy="84" r="62" />
-            <path className="figure-ink" d="M6 300c0-62 46-110 104-122 6-1 10-6 11-12 1 6 5 11 11 12 58 12 104 60 104 122z" />
-            <path className="figure-cut" d="M86 190l24 30 24-30" />
-            <path className="figure-cut" d="M110 34c-14 10-22 28-22 48" />
-          </svg>
+        <div className="hm-hero__meta hm-hero__meta--tl">
+          <span>Recruitment consultancy</span>
+          <span>India</span>
+        </div>
+        <div className="hm-hero__meta hm-hero__meta--tr">
+          <span>No candidate fees</span>
+          <span>Est. 2021</span>
         </div>
 
-        <div className="page-shell relative z-[1]">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12">
+        <div className="ed-shell hm-hero__inner">
+          <p className="ed-label ed-label--lime hm-hero__eyebrow">
+            <Asterisk size={14} />
+            [ People first, paperwork second ]
+          </p>
+
+          <h1 id="home-title" className="ed-display hm-word">
+            <span>Jobs</span>
+            <span>
+              Man<em>ia</em>
+            </span>
+          </h1>
+
+          <div className="hm-hero__foot">
             <div>
-              <p className="eyebrow">Recruitment consultancy</p>
-              <h1 className="hero-title mt-6">
-                <span className="hero-line">Find the</span>
-                <span className="hero-line">right role.</span>
-              </h1>
-              <p className="hero-tagline">
-                {BRAND_NAME} helps candidates prepare properly — with a resume builder, practice tools, free career
-                guidance and a community that shares relevant opportunities.
+              <p className="hm-hero__claim">
+                Recruitment without the runaround. Free preparation tools, honest guidance, and a human
+                who answers when you ask what happens next.
               </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/career-guidance" className="btn-primary btn-lg">
-                  Explore Career Resources
-                  <HiArrowRight aria-hidden="true" />
-                </Link>
-                <Link to="/resume-builder" className="btn-secondary btn-lg">
-                  Build Your Resume
-                </Link>
-                <WhatsAppCta className="btn-secondary btn-lg">
-                  Join our WhatsApp Channel
-                </WhatsAppCta>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", marginTop: "1.5rem" }}>
+                <Button to="/contact" variant="lime" size="lg">
+                  Talk to a recruiter
+                  <HiArrowUpRight aria-hidden="true" size={16} />
+                </Button>
+                <Button to="/free-training" size="lg">
+                  Join the next cohort
+                  <HiArrowRight aria-hidden="true" size={16} />
+                </Button>
               </div>
             </div>
 
-            <div className="hero-visual">
-              <p className="hero-accent mb-7">
-                Apply with{" "}
-                <span className="relative">
-                  <TypewriterText words={["Clarity", "Confidence", "Purpose", "Success"]} />
-                  <noscript>Clarity</noscript>
-                </span>
-              </p>
-
-              <div className="hero-stage hero-diagonal" ref={diagonalRef}>
-                <span className="hero-layer hero-layer-back" aria-hidden="true" />
-                <span className="hero-layer hero-layer-mid" aria-hidden="true" />
-                <div className="hero-panel">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="icon-tile icon-tile-solid">
-                        <HiDocumentText aria-hidden="true" />
-                      </span>
-                      <div>
-                        <p className="font-display text-base font-bold uppercase tracking-wide">
-                          Free career resources
-                        </p>
-                        <p className="text-xs text-muted">Everything runs in your browser</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <ul className="mt-5 grid gap-2.5">
-                    {resources.map((resource) => {
-                      const Icon = resource.icon;
-                      return (
-                        <li key={resource.to}>
-                          <Link to={resource.to} className="quick-link w-full justify-between">
-                            <span className="flex items-center gap-2.5">
-                              <Icon aria-hidden="true" />
-                              {resource.title}
-                            </span>
-                            <HiArrowRight aria-hidden="true" />
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-
-                  <div className="mt-5 border-t border-line pt-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Need help?</p>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      <Link to="/contact" className="quick-link">
-                        Contact us
-                        <HiArrowRight aria-hidden="true" />
-                      </Link>
-                      <Link to="/about" className="quick-link">
-                        About us
-                        <HiArrowRight aria-hidden="true" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Tiny secondary thumbnail card with caption */}
-              <div className="hero-thumb" aria-hidden="true">
-                <svg className="hero-thumb-graphic" viewBox="0 0 160 96" role="presentation">
-                  <rect className="tg-bg" x="0" y="0" width="160" height="96" />
-                  <rect className="tg-line" x="16" y="20" width="86" height="9" rx="4.5" />
-                  <rect className="tg-line" x="16" y="42" width="124" height="9" rx="4.5" />
-                  <rect className="tg-line" x="16" y="64" width="66" height="9" rx="4.5" />
-                  <circle className="tg-dot" cx="132" cy="68" r="15" />
-                </svg>
-                <span className="hero-thumb-caption">Fig. 01 — Free tools</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom row: hairline, big italic stat, small CTA, info card */}
-          <div className="hero-bottom">
-            <div>
-              <AnimatedCounter from={0} to={100} className="hero-stat" suffix="%" />
-              <span className="hero-stat-label">Free career tools, always</span>
-            </div>
-
-            <Link to="/resume-builder" className="hero-cta-text">
-              Build your resume
-              <HiArrowRight aria-hidden="true" />
-            </Link>
-
-            <div className="hero-info-card">
-              <p className="eyebrow">Support</p>
-              <p>Questions about an offer, a process step or a suspicious message?</p>
-              <Link to="/contact" className="btn-primary justify-self-start">
-                Contact us
-                <HiArrowRight aria-hidden="true" />
-              </Link>
-            </div>
+            <a href="#the-work" className="hm-scroll">
+              Scroll to explore
+              <HiArrowDown aria-hidden="true" size={15} />
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ── WhatsApp community ───────────────────────────────────────── */}
+      {/* ── Live statistics ──────────────────────────────────────────── */}
+      <section aria-labelledby="stats-title">
+        <div className="ed-shell" style={{ paddingTop: "1.25rem" }}>
+          <div className="ed-sechead" style={{ paddingBottom: "0.75rem" }}>
+            <span className="ed-label ed-label--lime">
+              <Asterisk size={13} />
+              [ By the numbers ]
+            </span>
+            <span id="stats-title" className="ed-label">
+              [ Sample data · replace with verified figures ]
+            </span>
+          </div>
+        </div>
+        <div className="hm-stats">
+          <StatCard value={1240} suffix="+" label="Placements supported" note="Across support, sales and back office" />
+          <StatCard value={38} label="Hiring partners" note="Verified employer mandates" />
+          <StatCard value={4600} suffix="+" label="Candidates coached" note="Tools, cohorts and 1:1 sessions" />
+          <StatCard value="₹0" label="Candidate fees" note="Always. Report anyone who asks." />
+        </div>
+      </section>
+
+      {/* ── Four ways in ─────────────────────────────────────────────── */}
+      <section className="ed-section" id="the-work" aria-labelledby="work-title">
+        <div className="ed-shell">
+          <SectionLabel aside="[ Four ways in ]">What we do</SectionLabel>
+
+          <div
+            style={{
+              display: "grid",
+              gap: "1.5rem",
+              marginTop: "2rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              alignItems: "end",
+            }}
+          >
+            <h2 id="work-title" className="ed-display ed-h2">
+              Pick the part
+              <br />
+              you need <span style={{ color: "var(--lime)" }}>today.</span>
+            </h2>
+            <p className="ed-lead" style={{ justifySelf: "end", maxWidth: "42ch" }}>
+              Everything below is free and works without an account. Start with the tool that matches
+              the problem in front of you — the resume, the interview, or the direction.
+            </p>
+          </div>
+
+          <div className="hm-services">
+            {services.map((service) => (
+              <LimeCard
+                key={service.to}
+                to={service.to}
+                label={service.label}
+                index={service.index}
+                title={service.title}
+                meta={service.meta}
+                action={service.action}
+                className="hm-service"
+              >
+                {service.body}
+              </LimeCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Marquee
+        items={[
+          "No candidate fees",
+          "Real humans on WhatsApp",
+          "ATS-friendly resumes",
+          "Cohort training",
+          "Practice with a memory",
+        ]}
+        lime
+        duration={38}
+      />
+
+      {/* ── Hiring partners ──────────────────────────────────────────── */}
+      <section className="hm-partners" aria-labelledby="partners-title">
+        <div className="ed-shell">
+          <SectionLabel aside="[ Placeholder marks ]">Hiring partners</SectionLabel>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}>
+            <h2 id="partners-title" className="ed-display" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
+              Teams that hire through us
+            </h2>
+            <p className="ed-label" style={{ textTransform: "none", letterSpacing: "0.02em", maxWidth: "36ch" }}>
+              Partner names are placeholders until signed mandates are confirmed.
+            </p>
+          </div>
+          <div className="hm-partners__grid">
+            {partners.map((partner) => (
+              <div className="hm-partner" key={partner}>
+                {partner}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials ─────────────────────────────────────────────── */}
+      <section className="ed-section" aria-labelledby="quotes-title">
+        <div className="ed-shell">
+          <SectionLabel aside="[ Illustrative · replace with consented quotes ]">Candidate stories</SectionLabel>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", marginTop: "1.5rem" }}>
+            <h2 id="quotes-title" className="ed-display ed-h2">
+              What happens
+              <br />
+              after the <span style={{ color: "var(--lime)" }}>first draft.</span>
+            </h2>
+            <p className="ed-lead" style={{ maxWidth: "40ch" }}>
+              These are sample stories used to test the layout. Verified, consented quotes will replace
+              them before launch — we do not publish invented outcomes.
+            </p>
+          </div>
+
+          <div className="hm-quotes">
+            {quotes.map((quote) => (
+              <figure className="hm-quote" key={quote.name}>
+                <span className="hm-quote__mark" aria-hidden="true">
+                  “
+                </span>
+                <blockquote className="hm-quote__text">{quote.text}</blockquote>
+                <figcaption className="hm-quote__person">
+                  <div>
+                    <p className="hm-quote__name">{quote.name}</p>
+                    <p className="hm-quote__role">{quote.role}</p>
+                  </div>
+                  <span className="ed-badge ed-badge--lime">
+                    <HiCheckBadge aria-hidden="true" size={14} />
+                    Sample
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
+            <BracketLink to="/about" arrow>
+              How we work
+            </BracketLink>
+            <BracketLink to="/contact" arrow>
+              Ask us anything
+            </BracketLink>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WhatsApp community ─────────────────────────────────────── */}
       <WhatsAppCommunity />
 
-      {/* ── Career resources preview ─────────────────────────────────── */}
-      <section className="section-band py-12 sm:py-14">
-        <div className="page-shell">
-          <SectionHeading
-            eyebrow="Career resources"
-            title="Everything around the job search"
-            description="Free tools that support the consultancy work — so you arrive at an application better prepared."
-            data-reveal
-          />
-          <div className="mt-7 grid gap-5 sm:grid-cols-2">
-            {resources.map((resource, index) => {
-              const Icon = resource.icon;
-              return (
-                <Link
-                  key={resource.to}
-                  to={resource.to}
-                  className="surface-card surface-card-hover group flex h-full flex-col p-6"
-                  data-reveal
-                  style={{ "--reveal-delay": `${index * 70}ms` }}
-                >
-                  <span className="icon-tile icon-tile-lg">
-                    <Icon size={22} aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 text-xl">{resource.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{resource.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold">
-                    Open
-                    <HiArrowRight
-                      className="transition-transform group-hover:translate-x-1"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Consultancy introduction ─────────────────────────────────── */}
-      <section className="section py-12 sm:py-14">
-        <div className="page-shell">
-          <SectionHeading
-            eyebrow="About us"
-            title="What Jobs Mania – Freefund does"
-            description="A recruitment consultancy first: genuine guidance for candidates, free preparation tools, and support when you need it."
-            data-reveal
-          />
-          <div className="mt-7 grid gap-5 sm:grid-cols-2">
-            {whatWeDo.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <article
-                  key={item.title}
-                  className="surface-card surface-card-hover p-6"
-                  data-reveal
-                  style={{ "--reveal-delay": `${index * 70}ms` }}
-                >
-                  <span className="icon-tile">
-                    <Icon aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 text-lg">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
-                </article>
-              );
-            })}
-          </div>
-          <div className="mt-7">
-            <Link to="/about" className="btn-secondary">
-              More about us
-              <HiArrowRight aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Trust and support ────────────────────────────────────────── */}
-      <section className="section-band py-12 sm:py-14">
-        <div className="page-shell">
-          <SectionHeading
-            eyebrow="Trust and support"
-            title="What you can count on"
-            description="These are things the site does today, not promises about the future."
-            data-reveal
-          />
-
-          <div className="mt-7 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <ul className="surface-card grid content-center gap-4 p-6 sm:p-8" data-reveal>
-              {commitments.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <HiCheckCircle className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-                  <p className="text-sm leading-relaxed text-muted">{item}</p>
-                </li>
-              ))}
-            </ul>
-
-            <div
-              className="surface-card flex flex-col justify-center p-6 sm:p-8"
-              data-reveal
-              style={{ "--reveal-delay": "90ms" }}
-            >
-              <p className="eyebrow">Support</p>
-              <h3 className="mt-3 text-2xl">Talk to a person</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                Questions about an offer, a process step or a suspicious message can be raised on the contact page.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                <Link to="/contact" className="btn-primary">
-                  Contact us
-                  <HiArrowRight aria-hidden="true" />
-                </Link>
-                <WhatsAppCta className="btn-secondary">WhatsApp Channel</WhatsAppCta>
-              </div>
-
-              {showEmail || showPhone || showRegion ? (
-                <ul className="mt-6 grid gap-2 border-t border-line pt-5 text-sm text-muted">
-                  {showEmail ? <li className="break-words">{CONTACT_PLACEHOLDERS.email}</li> : null}
-                  {showPhone ? <li>{CONTACT_PLACEHOLDERS.phone}</li> : null}
-                  {showRegion ? <li>{CONTACT_PLACEHOLDERS.region}</li> : null}
-                </ul>
-              ) : (
-                <p className="mt-6 border-t border-line pt-5 text-sm text-muted">
-                  Verified contact details will appear here once confirmed by the owner.
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Final CTA ────────────────────────────────────────────────── */}
-      <section className="section py-12 sm:py-14">
-        <div className="page-shell">
-          <div className="cta-panel p-8 sm:p-10 lg:p-12" data-reveal>
-            <span className="cta-shape cta-shape-lg" aria-hidden="true" />
-            <span className="cta-shape cta-shape-sm" aria-hidden="true" />
-            <div className="relative grid gap-8 lg:grid-cols-[1.25fr_auto] lg:items-center">
-              <div className="max-w-2xl">
-                <p className="eyebrow">Ready to start</p>
-                <h2 className="mt-3 text-balance text-3xl sm:text-4xl">Looking for your next opportunity?</h2>
-                <p className="mt-3 text-lg">
-                  Prepare a resume that reads well, practise before the interview, and reach out when you are ready to
-                  talk.
-                </p>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link to="/resume-builder" className="btn-inverse btn-lg">
-                    Build Your Resume
-                    <HiArrowRight aria-hidden="true" />
-                  </Link>
-                  <Link to="/practice-tools" className="btn-outline-inverse btn-lg">
-                    Free Practice Tools
-                  </Link>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <span className="grid h-24 w-24 place-items-center rounded-3xl border border-white/20 bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_18px_36px_-18px_rgba(17,17,17,0.45)]">
-                  <HiBriefcase size={30} aria-hidden="true" />
-                </span>
-              </div>
+      <section className="hm-cta" aria-labelledby="home-cta-title">
+        <div className="ed-shell">
+          <p className="ed-label ed-label--ink">
+            <Asterisk size={13} />
+            [ No account · no upload · no fee ]
+          </p>
+          <h2 id="home-cta-title" className="ed-display hm-cta__word" style={{ marginTop: "1rem" }}>
+            <span>Ready</span>
+            <span>when you</span>
+            <span>
+              <em>are.</em>
+            </span>
+          </h2>
+
+          <div className="hm-cta__row">
+            <p className="hm-cta__copy">
+              Start with a resume, a practice drill, or one message to a recruiter. You do not need an
+              account, a paid plan, or a perfect draft to begin.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+              <Link to="/resume-builder" className="ed-btn ed-btn--ink ed-btn--lg">
+                Build my resume
+                <HiArrowRight aria-hidden="true" size={16} />
+              </Link>
+              <Link to="/career-guidance" className="ed-btn ed-btn--lg" style={{ borderColor: "rgba(30,30,32,.4)", color: "var(--ink)" }}>
+                Take the 5-question quiz
+              </Link>
             </div>
           </div>
         </div>

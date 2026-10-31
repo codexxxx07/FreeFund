@@ -1,12 +1,18 @@
 /**
  * navigation.js
  * ─────────────────────────────────────────────────────────────────────────────
- * Single source of truth for the site's navigation. The Navbar, the mobile menu
- * and the Footer all render from these structures, so adding a page means
- * editing this file (and the route) once.
+ * Single source of truth for navigation. The header, mobile menu, footer and
+ * sitemap all read from here, so adding a page is a one-file change.
  */
 
-/** Primary navigation, in order. `children` renders as a dropdown / sub-list. */
+/**
+ * Primary navigation, in order. Contact is rendered as a separate CTA.
+ *
+ * An item with `children` renders as a "Career Resources" dropdown in the
+ * header and as an expandable group in the mobile menu. The parent is a
+ * disclosure button (there is no index route for it) — only the children
+ * navigate.
+ */
 export const primaryNav = [
   { to: "/", label: "Home", end: true },
   { to: "/resume-builder", label: "Resume Builder" },
@@ -19,32 +25,32 @@ export const primaryNav = [
   },
   { to: "/free-training", label: "Free Training" },
   { to: "/about", label: "About Us" },
-  { to: "/contact", label: "Contact Us" },
 ];
+
+export const contactLink = { to: "/contact", label: "Contact Us" };
 
 /** Footer link groups. `whatsapp: true` renders the WhatsApp Channel action. */
 export const footerGroups = [
   {
-    title: "Company",
+    title: "Career resources",
+    links: [
+      { to: "/free-training", label: "Free Training" },
+      { to: "/practice-tools", label: "Practice Tools" },
+      { to: "/resume-builder", label: "Resume Builder" },
+      { to: "/career-guidance", label: "Career Guidance" },
+    ],
+  },
+  {
+    title: "Consultancy",
     links: [
       { to: "/about", label: "About Us" },
       { to: "/contact", label: "Contact Us" },
+      { to: "/contact?topic=employer", label: "Hire Talent" },
     ],
   },
   {
-    title: "Career Resources",
-    links: [
-      { to: "/resume-builder", label: "Resume Builder" },
-      { to: "/practice-tools", label: "Free Practice Tools" },
-      { to: "/career-guidance", label: "Career Guidance" },
-      { to: "/free-training", label: "Free Training" },
-    ],
-  },
-  {
-    title: "Job Seekers",
-    links: [
-      { whatsapp: true, label: "WhatsApp Channel" },
-    ],
+    title: "Stay in the loop",
+    links: [{ whatsapp: true, label: "WhatsApp Channel" }],
   },
   {
     title: "Legal",

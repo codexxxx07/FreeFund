@@ -21,6 +21,6 @@ npm run build
 - Home (including the WhatsApp Community section), resume builder, practice tools, career guidance, free training, about, contact, privacy and terms pages
 - Frontend-only form validation
 - Owner-editable configuration in `src/data/siteConfig.js` (WhatsApp Channel link, WhatsApp Community invitation link, enquiry number, contact details, site URL)
-- Minimal + Skewmorphic visual system in `src/styles/index.css`, built on white surfaces, `#111111` typography, black-and-white buttons, and layered depth shadows
+- Editorial dark/lime visual system in `src/styles/tokens.css` and `src/styles/editorial.css`: charcoal surfaces, Anton display type, a single lime accent, and one distinct layout archetype per page (see `../REDESIGN.md`)
 
 Everything runs in the browser. Forms do not email, store, or deliver anything to HR.
