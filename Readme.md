@@ -1,6 +1,6 @@
-# Jobs Mania - Freefund
+# PP Consultancy
 
-Recruitment consultancy website and planned recruitment management system under the brand **Jobs Mania - Freefund**.
+Recruitment consultancy website and planned recruitment management system under the brand **PP Consultancy**.
 
 This repository ships **Phase 1: Website** — a frontend-only React application combining two purposes:
 
@@ -19,7 +19,7 @@ There is no backend, database, authentication, CRM or email/WhatsApp delivery in
 | Career Guidance (category filter) | `/career-guidance` |
 | Career article | `/career-guidance/:slug` |
 | Free Training | `/free-training` |
-| About Us (FAQ accordion) | `/about` |
+| About Us (founder card, contact details, FAQ accordion) | `/about` |
 | Contact Us | `/contact` |
 | Privacy Policy | `/privacy-policy` (alias `/privacy`) |
 | Terms & Conditions | `/terms-and-conditions` (alias `/terms`) |
@@ -27,7 +27,7 @@ There is no backend, database, authentication, CRM or email/WhatsApp delivery in
 
 ## Frontend-only rules
 
-- React + JavaScript + Vite + Tailwind CSS (compiled at build time) + React Router + React Icons. No new runtime dependencies were added.
+- React + JavaScript + Vite + Tailwind CSS (compiled at build time) + React Router + React Icons + Lenis (smooth scrolling). Lenis is the only runtime dependency that was added.
 - No server, no API keys, no secrets in the bundle. Anything in `src/data/siteConfig.js` is public to every visitor.
 - Career tools, practice tests and the resume builder all run in the browser.
 
@@ -46,20 +46,23 @@ All owner-editable values live in **`frontend/src/data/siteConfig.js`**:
 
 - `siteUrl` — production origin used for canonical URLs, Open Graph tags and the sitemap.
 - `whatsappChannelUrl` — official WhatsApp Channel invite link. Until it is set, the navbar, home page and footer show a clearly disabled placeholder instead of a broken link.
-- `whatsappCommunityUrl` — WhatsApp Community invitation link used by the home page "Join Our WhatsApp Community" box. Until it is set, the Join Community button explains that the link is coming soon instead of navigating anywhere.
+- `whatsappCommunityUrl` — WhatsApp Community invitation link used by the home page "Join Our WhatsApp Community" box. Set it back to `""` and the Join Community button explains that the link is coming soon instead of navigating anywhere.
 - `whatsappEnquiryNumber` — digits-only number for `wa.me` enquiry links.
 - `contact` — public email, phone and region (placeholders are detected and hidden).
 
-Business facts for the About page live in `frontend/src/data/aboutConfig.js` (legal name, address, no-fee policy, LinkedIn URL). Sample programmes live in `frontend/src/data/trainingPrograms.js`.
+Business facts and founder contact details live in `frontend/src/data/aboutConfig.js` (legal name, address, no-fee policy, plus `founder.name`, `founder.designation`, `founder.tagline`, `founder.image`, `founder.email` and `founder.social` — LinkedIn, direct WhatsApp, Instagram). The About page profile card and its contact section both read from that one object, so a link is edited in a single place; the founder's direct WhatsApp contact is deliberately separate from `siteConfig.whatsappCommunityUrl`. Sample programmes live in `frontend/src/data/trainingPrograms.js`.
 
 Content modules — `careerArticles.js`, `practiceQuestions.js`, `trainingPrograms.js`, `navigation.js` — are plain local data files: edit them to change the site, no CMS required.
 
 ## Design system
 
-- Tokens in `frontend/src/styles/index.css` as CSS variables + Tailwind theme values.
-- Black-and-white palette: `#111111` primary/buttons, `#ffffff` background, `#f7f7f5` / `#f2f2f0` surfaces, `#666666` muted text, `#e5e5e5` borders, `#b42318` destructive. No brand blue or unrelated accent colours.
-- Light and Night Mode both supported (`data-theme`), with `prefers-reduced-motion` respected.
-- Shared components: Navbar with a Career Resources dropdown, mobile menu, Footer, buttons, section headings, accessible listbox dropdown, FAQ accordion, article card, empty states, WhatsApp CTA, WhatsApp Community section.
+- **Editorial dark/lime system.** Near-black charcoal `#1E1E20`, surfaces `#26262A`, hairlines `rgba(255,255,255,.18)`, one accent `#DFFF5E`, off-white body text `#F5F5EF`. No second accent colour. Details in `REDESIGN.md` and `frontend/src/styles/tokens.css`.
+- **Type:** Anton for uppercase display, Inter for body and UI. Fluid `clamp()` scale, body copy never below 16px, lime reserved for large type and short labels.
+- **Tokens:** CSS variables plus a Tailwind v4 `@theme` block in `frontend/src/styles/tokens.css`; the hand-written layout layer is `frontend/src/styles/editorial.css`.
+- **Shared primitives:** Button, BracketLink, LimeCard, Marquee, Counter, StatCard, SectionLabel, Accordion, Drawer, Asterisk, cursor follower, PeopleRow, plus the QuizTool, TypingSpeedTest and ResumePreview feature components.
+- **One layout archetype per page:** wordmark hero (Home), cohort/countdown (Free Training), search + bento hub (Practice Tools), split editor (Resume Builder), quiz + roadmap (Career Guidance). The section-order matrix and uniqueness checklist are in `REDESIGN.md`.
+- **Motion:** Lenis smooth scrolling, one-shot scroll reveals, marquees and number counters, all disabled or simplified under `prefers-reduced-motion`.
+- **Accessibility:** 44px minimum targets, visible lime focus ring, AA body contrast, grayscale imagery with `alt` text where it carries meaning.
 
 ## SEO
 
