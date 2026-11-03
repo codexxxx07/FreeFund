@@ -119,20 +119,24 @@ export default function Home() {
             [ People first, paperwork second ]
           </p>
 
-          <h1 id="home-title" className="ed-display hm-word" aria-label="Jobs Mania">
+          <h1 id="home-title" className="ed-display hm-word" aria-label="PP Consultancy">
             <span className="hm-word__line" aria-hidden="true">
-              <span className="hm-word__letter" style={{ "--letter-index": 0 }}>J</span>
-              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>o</span>
-              <span className="hm-word__letter" style={{ "--letter-index": 2 }}>b</span>
-              <span className="hm-word__letter" style={{ "--letter-index": 3 }}>s</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 0 }}>P</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>P</span>
             </span>
             <span className="hm-word__line" aria-hidden="true">
-              <span className="hm-word__letter" style={{ "--letter-index": 4 }}>M</span>
-              <span className="hm-word__letter" style={{ "--letter-index": 5 }}>a</span>
-              <span className="hm-word__letter" style={{ "--letter-index": 6 }}>n</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 2 }}>C</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 3 }}>o</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 4 }}>n</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 5 }}>s</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 6 }}>u</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 7 }}>l</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 8 }}>t</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 9 }}>a</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 10 }}>n</span>
               <em>
-                <span className="hm-word__letter" style={{ "--letter-index": 7 }}>i</span>
-                <span className="hm-word__letter" style={{ "--letter-index": 8 }}>a</span>
+                <span className="hm-word__letter" style={{ "--letter-index": 11 }}>c</span>
+                <span className="hm-word__letter" style={{ "--letter-index": 12 }}>y</span>
               </em>
             </span>
           </h1>

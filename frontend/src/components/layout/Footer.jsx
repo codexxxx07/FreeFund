@@ -17,7 +17,7 @@ export default function Footer() {
               Recruitment consultancy · India
             </p>
             <p className="ed-footer__word ed-display" style={{ marginTop: "1rem" }}>
-              Jobs <em>Mania</em>
+              PP <em>Consultancy</em>
             </p>
             <p style={{ marginTop: "1.25rem", maxWidth: "38ch", lineHeight: 1.65, fontSize: "0.92rem" }}>
               Candidate-first recruitment, free preparation tools and honest guidance. No candidate fees,

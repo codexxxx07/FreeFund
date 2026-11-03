@@ -189,8 +189,8 @@ export default function Header() {
               <Asterisk size={20} />
             </span>
             <span className="ed-brand__text">
-              <span className="ed-brand__name">Jobs Mania</span>
-              <span className="ed-brand__sub">Freefund · Recruitment</span>
+              <span className="ed-brand__name">PP Consultancy</span>
+              <span className="ed-brand__sub">Recruitment · India</span>
             </span>
           </Link>
 

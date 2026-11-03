@@ -164,7 +164,7 @@ const faqItems = [
     id: "faq-free",
     question: "Is it free to apply?",
     answer: aboutConfig.noFeePolicyConfirmed
-      ? "Yes — applying through Jobs Mania - Freefund costs nothing. We do not charge candidates any fee at any stage."
+      ? "Yes — applying through PP Consultancy costs nothing. We do not charge candidates any fee at any stage."
       : "We do not charge candidates a platform fee to browse or submit applications through this website. However, please read our Terms and the specific job listing carefully, as individual hiring processes can vary. If you are ever asked to pay money to secure a job, stop and report it.",
   },
   {
@@ -203,8 +203,8 @@ const faqItems = [
     question: "How do I report a fake or suspicious job?",
     answer: (
       <>
-        If someone contacts you claiming to be from Jobs Mania -{" "}
-        Freefund but asks for money or sensitive information, please{" "}
+        If someone contacts you claiming to be from PP Consultancy but asks for money or
+        sensitive information, please{" "}
         <Link to="/contact" className="underline underline-offset-2">
           contact us immediately
         </Link>
@@ -316,7 +316,7 @@ export default function About() {
             style={{ "--reveal-delay": "90ms" }}
           >
             <p>
-              At Jobs Mania Freefund, we believe that everyone deserves a fair opportunity to
+              At PP Consultancy, we believe that everyone deserves a fair opportunity to
               build a successful career, regardless of their financial background.
             </p>
             <p>
@@ -354,7 +354,7 @@ export default function About() {
               He believes that sometimes people do not lack talent; they simply lack the right
               guidance, opportunities, and support.
             </p>
-            <p>This belief inspired him to create Jobs Mania Freefund.</p>
+            <p>This belief inspired him to create PP Consultancy.</p>
           </div>
         </div>
       </section>
@@ -373,7 +373,7 @@ export default function About() {
             style={{ "--reveal-delay": "90ms" }}
           >
             <p>
-              The vision behind Jobs Mania Freefund is not just to share job openings, but to
+              The vision behind PP Consultancy is not just to share job openings, but to
               help people take meaningful steps towards employment and career growth.
             </p>
             <p>
@@ -402,7 +402,7 @@ export default function About() {
             data-reveal
           />
           <p className="mt-6 max-w-3xl text-[1.02rem]" data-reveal style={{ "--reveal-delay": "90ms" }}>
-            Jobs Mania Freefund aims to build a free community where job seekers can:
+            PP Consultancy aims to build a free community where job seekers can:
           </p>
           <ul
             className="mt-4 grid max-w-3xl gap-3 sm:grid-cols-2"
@@ -459,7 +459,7 @@ export default function About() {
           <div className="founder-closing px-6 py-10 sm:px-10 sm:py-14" data-reveal>
             <p className="eyebrow justify-center">Our belief</p>
             <p className="founder-closing-quote mx-auto mt-5 max-w-3xl text-balance">
-              &ldquo;Jobs Mania Freefund is built on one simple belief: helping people move
+              &ldquo;PP Consultancy is built on one simple belief: helping people move
               forward in their careers should not always come with a price tag.&rdquo;
             </p>
             <span className="mx-auto mt-7 block h-px w-20 bg-white/25" aria-hidden="true" />

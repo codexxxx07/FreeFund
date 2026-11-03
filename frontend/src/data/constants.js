@@ -7,7 +7,7 @@ import siteConfig from "./siteConfig";
  * contact details, production origin) lives in ./siteConfig.js.
  */
 
-export const BRAND_NAME = "Jobs Mania - Freefund";
+export const BRAND_NAME = "PP Consultancy";
 
 // Before switching to "live": replace sample content with verified content and connect a working submit endpoint.
 export const SITE_MODE = "demo"; // "demo" | "live"

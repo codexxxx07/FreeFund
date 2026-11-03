@@ -18,7 +18,7 @@
 const aboutConfig = {
   // ── Company details ──────────────────────────────────────────────────────
   // The registered legal / trade name of the entity that owns this platform.
-  // Example: "Mania Recruitment Services Pvt. Ltd."
+  // Example: "PP Consultancy Services Pvt. Ltd."
   legalName: "",
 
   // Full registered address (building, street, city, state, PIN, country).
@@ -26,7 +26,7 @@ const aboutConfig = {
   registeredAddress: "",
 
   // Public contact email address for candidate queries.
-  // Example: "support@jobsmania.in"
+  // Example: "support@ppconsultancy.in"
   contactEmail: "",
 
   // Public contact phone number (with country code).
@@ -46,7 +46,7 @@ const aboutConfig = {
 
   // ── Social / web presence (optional) ─────────────────────────────────────
   // LinkedIn page URL — shown only if non-empty.
-  // Example: "https://www.linkedin.com/company/jobs-mania-freefund"
+  // Example: "https://www.linkedin.com/company/pp-consultancy"
   linkedInUrl: "",
 
   // ── Founder profile card (About page) ────────────────────────────────────
@@ -64,7 +64,7 @@ const aboutConfig = {
     // Square images display best — the card crops the image to a circle.
     // Swap this file to replace the photo, no code change needed.
     image: "/images/founder-pahulpreet-singh.png",
-    imageAlt: "Pahulpreet Singh, founder of Jobs Mania - Freefund",
+    imageAlt: "Pahulpreet Singh, founder of PP Consultancy",
 
     // Verified email — rendered as a mailto: link in the contact section.
     email: "hrpahulpreetofficial@zohomail.in",

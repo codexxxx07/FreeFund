@@ -567,7 +567,7 @@
 }
 
 .ed-footer__word {
-  font-size: clamp(3.2rem, 9.5vw, 9rem);
+  font-size: clamp(2.6rem, 7vw, 6.2rem);
   color: var(--paper);
 }
 
@@ -1084,12 +1084,12 @@
 }
 
 /* Sized against both axes so the whole two-line wordmark stays inside the
-   first viewport: the vw/vh terms keep "MANIA" from overflowing sideways and
-   the last term reserves room for the header, eyebrow and hero top padding on
-   short (landscape) screens. */
+   first viewport: the vw/vh terms keep "CONSULTANCY" from overflowing sideways
+   and the last term reserves room for the header, eyebrow and hero top padding
+   on short (landscape) screens. */
 .hm-word {
   display: block;
-  font-size: clamp(4rem, min(36vw, 39svh, 62.5svh - 144px), 30rem);
+  font-size: clamp(3rem, min(15vw, 30svh, 50svh - 120px), 18rem);
   line-height: 0.78;
   letter-spacing: -0.02em;
   padding-bottom: 0.04em;

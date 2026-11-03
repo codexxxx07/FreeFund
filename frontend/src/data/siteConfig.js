@@ -23,7 +23,7 @@ const PLACEHOLDER_REGION = "India (full address to be confirmed)";
 const siteConfig = {
   /**
    * Production origin used for <link rel="canonical">, Open Graph URLs and the
-   * generated sitemap — for example "https://jobsmania.example.com".
+   * generated sitemap — for example "https://ppconsultancy.example.com".
    * No trailing slash. Leave "" and canonical/OG URLs fall back to the origin
    * the visitor is currently on, and the build skips sitemap URL generation.
    */

@@ -1,4 +1,4 @@
-# Jobs Mania - Freefund — robots.txt
+# PP Consultancy — robots.txt
 # Generated copies may append the absolute Sitemap line at build time when
 # siteConfig.siteUrl is set in src/data/siteConfig.js.
 

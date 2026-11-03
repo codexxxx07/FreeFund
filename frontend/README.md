@@ -1,4 +1,4 @@
-# Jobs Mania - Freefund (Phase 1 frontend)
+# PP Consultancy (Phase 1 frontend)
 
 React website for a recruitment consultancy: free career resources, training information and company pages.
 

@@ -168,7 +168,7 @@ export const faqs = [
     id: "training-faq-fee",
     question: "Is the cohort really free?",
     answer:
-      "Yes. There is no fee, no deposit and no paid upgrade. We ask for your time and honest participation. If anyone asks you to pay to join a Jobs Mania cohort, report it through the contact page.",
+      "Yes. There is no fee, no deposit and no paid upgrade. We ask for your time and honest participation. If anyone asks you to pay to join a PP Consultancy cohort, report it through the contact page.",
   },
   {
     id: "training-faq-attend",
