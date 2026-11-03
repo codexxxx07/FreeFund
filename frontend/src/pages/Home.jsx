@@ -123,6 +123,10 @@ export default function Home() {
             <span className="hm-word__line" aria-hidden="true">
               <span className="hm-word__letter" style={{ "--letter-index": 0 }}>P</span>
               <span className="hm-word__letter" style={{ "--letter-index": 1 }}>P</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>R</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>E</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>E</span>
+              <span className="hm-word__letter" style={{ "--letter-index": 1 }}>T</span>
             </span>
             <span className="hm-word__line" aria-hidden="true">
               <span className="hm-word__letter" style={{ "--letter-index": 2 }}>C</span>
